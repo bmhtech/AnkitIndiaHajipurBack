@@ -510,7 +510,25 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 		/*End checking transaction no for unique */
 		
 		
-		if(wgmnt.getWeight2().compareTo("weight2")==0) {}   // previous 22-12-2023
+		// Weightment No Alternate Starts
+		
+		String snov=wm_unload_wgmntRepository.countVechicle();
+		long slnov=0;
+		if(snov != null )
+		{
+			slnov=Integer.parseInt(snov);
+		}
+		String datev[] = wgmnt.getWgment_date().split("-");
+		prefix1="WE"+"-"+datev[0]+datev[1]+datev[2];
+		String gen_tslnov=UniqueIDTransaction.uniqueId4(prefix1,slnov);
+		wgmnt.setWgment_no_alt(gen_tslnov);
+		System.out.println(" Check ALTWGT 1st NO : : "+wgmnt.getWgment_no_alt());
+		
+		// Weightment No Alternate Ends
+				
+		if(wgmnt.getWeight2().compareToIgnoreCase("weight2")==0) 
+		{
+		}  
 		
 		
 		else 
@@ -735,6 +753,16 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 			
 			if(wgmnt.getWeight2().compareTo("weight2")==0)
 			{
+				// Weightment No Alternate same Vehicle start
+				System.out.println(" Check ad ALTWGT : : "+wgmnt.getAdvice());
+				
+				if(wgmnt.getWeight2().compareToIgnoreCase("weight2")==0) 
+				{
+					wgmnt.setWgment_no_alt(wm_unload_wgmntRepository.getAltWgtNo(wgmnt.getAdvice()));
+				} // Weightment No Alternate same Vehicle
+				
+				System.out.println(" Check ALTWGT NO : : "+wgmnt.getWgment_no_alt());
+				
 				if(wgmnt.getWgment_for().compareTo("Sale")==0)
 				{
 					System.out.println(" Check : : "+wgmnt.getAdvice());

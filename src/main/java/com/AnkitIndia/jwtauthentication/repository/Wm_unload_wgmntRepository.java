@@ -148,4 +148,10 @@ public interface Wm_unload_wgmntRepository extends JpaRepository<Wm_unload_wgmnt
 	@Query(value="SELECT w.wgment_id, w.wgment_no,w.net_weight FROM wm_unload_wgmnt w WHERE w.modified_type='INSERTED'",nativeQuery=true)
 	List<Map<String,Object>> getOtherWgnmtList();
 	
+	@Query("SELECT COUNT(DISTINCT advice) FROM Wm_unload_wgmnt where modified_type = 'INSERTED'")
+	String countVechicle();
+	
+	@Query(value="SELECT wgment_no_alt FROM wm_unload_wgmnt WHERE modified_type = 'INSERTED' AND advice=:advice_id", nativeQuery = true)
+	String getAltWgtNo(@Param("advice_id") String advice_id);
+	
 }

@@ -177,6 +177,9 @@ public class Wm_unload_wgmnt extends CommonProperties{
 	@Column(columnDefinition = "Double(12,2) default 0.00")
 	private double shifting_price;
 	
+	@Column(columnDefinition="varchar(100) default 'NA'")
+	private String wgment_no_alt;
+	
 	//Dynamic
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="wm_unload_wgmnt",cascade = CascadeType.ALL)
 	private Set<Wm_unload_wgmnt_dtls> wm_unload_wgmnt_dtls;
