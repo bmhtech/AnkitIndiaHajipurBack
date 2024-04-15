@@ -48,7 +48,8 @@ public class Tallyrequest_Openingbalanceofmaster {
 public String SendToTally(String name) throws Exception{
     
        
-       String Url = "http://192.168.10.100:9000/";     
+       //String Url = "http://192.168.10.100:9000/";  
+		String Url = "http://192.168.10.201:9000/";
     	 
     
         String SOAPAction = "";

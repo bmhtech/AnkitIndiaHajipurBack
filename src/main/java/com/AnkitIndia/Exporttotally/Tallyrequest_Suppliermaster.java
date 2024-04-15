@@ -94,7 +94,8 @@ String TXML = null;
     	
     	//Properties prop = readPropertiesFile("src/main/resources/credentials.properties");
        
-       String Url = "http://192.168.10.100:9000/";
+       //String Url = "http://192.168.10.100:9000/";
+    	String Url = "http://192.168.10.201:9000/";
       // String Url = "http://localhost:9000/";
     	//String Url = "http://192.168.1.254:9000/";
         //String Url = prop.getProperty("tallyurl"); 

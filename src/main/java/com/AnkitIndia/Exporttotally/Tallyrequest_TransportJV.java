@@ -273,7 +273,9 @@ public class Tallyrequest_TransportJV {
 	    public String SendToTally(String date,String voucherno,String tds,double tdsamount,String roundoff,double roundoffamount,String transportername,double amount,boolean tdsstatus,boolean roundoffstatus,String transportationcharges,double transportationamount,boolean rounddrcr,String remarks,String referanceno) throws Exception{
 	    	
 	    	
-	        String Url = "http://192.168.10.100:9000/";  
+	        //String Url = "http://192.168.10.100:9000/";  
+	    	
+	    	String Url = "http://192.168.10.201:9000/";
 	   
 	        String SOAPAction = "";
 	       

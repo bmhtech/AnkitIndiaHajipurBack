@@ -351,7 +351,8 @@ System.out.println("TXML  :: " + TXML);
     	
     	//Properties prop = readPropertiesFile("src/main/resources/credentials.properties");
        
-        String Url = "http://192.168.10.100:9000/";
+        //String Url = "http://192.168.10.100:9000/";
+    	String Url = "http://192.168.10.201:9000/";
     	// String Url = "http://localhost:9000/";
         System.out.println("hello  " + Url );
     	//String Url = "http://192.168.10.105:9000/";     

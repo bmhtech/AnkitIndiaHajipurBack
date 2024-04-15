@@ -166,7 +166,8 @@ public class Tallyrequest_ProductionSpecial {
 	    	
 	    	//Properties prop = readPropertiesFile("src/main/resources/credentials.properties");
 	       
-	        String Url = "http://192.168.10.100:9000/";
+	        //String Url = "http://192.168.10.100:9000/";
+		 	String Url = "http://192.168.10.201:9000/";
 	    
 	        String SOAPAction = "";
 	       

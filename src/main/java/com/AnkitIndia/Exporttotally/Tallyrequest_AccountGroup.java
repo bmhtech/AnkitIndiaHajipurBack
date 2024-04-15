@@ -95,7 +95,8 @@ public class Tallyrequest_AccountGroup
     	
     	
        
-       String Url = "http://192.168.10.100:9000/";     
+       //String Url = "http://192.168.10.100:9000/";   
+    	String Url = "http://192.168.10.201:9000/";
     	
         String SOAPAction = "";
        
