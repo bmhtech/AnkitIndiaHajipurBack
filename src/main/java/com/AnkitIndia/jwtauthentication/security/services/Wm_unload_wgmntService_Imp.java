@@ -1660,7 +1660,7 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 	@Transactional
 	public Terminatekata terminatekata(Terminatekata terminatekata) 
 	{
-		System.out.println(terminatekata.getWeighment_id()+" / "+terminatekata.getUsername()+" / "+terminatekata.getTerminate_remarks()+" / "+terminatekata.getTer_oth_wgmnt_no());
+		System.out.println(terminatekata.getWeighment_id()+" / "+terminatekata.getUsername()+" / "+terminatekata.getTerminate_remarks()+" / "+terminatekata.getTer_oth_wgmnt_no()+" / "+terminatekata.getWgment_for());
 		wm_unload_wgmntRepository.terminatekatamain(terminatekata.getWeighment_id(),terminatekata.getUsername(),terminatekata.getTer_oth_wgmnt_no(),terminatekata.getTerminate_remarks());
 		if(terminatekata.getWgment_for().compareToIgnoreCase("Purchase Order")==0)		
 		{
