@@ -174,5 +174,7 @@ public interface Item_masterService {
 	
 	public Map<String, Object> retrivePackingDtls(String packingMasterCode, String packingid);
 	
+	public List<Map<String,Object>> getItemMasterPackMatNew(String code);
 	
+	public Map<String,Object> getItemPackUomNew(String code,String code1,String company);
 }

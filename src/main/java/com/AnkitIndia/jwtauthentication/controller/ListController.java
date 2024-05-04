@@ -4205,6 +4205,31 @@ public class ListController {
 				return ResponseEntity.ok().body(check);
 			}
 			
+			@GetMapping("/getUnloadAdvRefPOwt2ArgnewMultiItemGRN/{bunit}/{supplier}/{itype}/{ptype}/{psubtype}/{orderdate}")
+			public List<Map<String,Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(@PathVariable(value = "bunit") String bunit,@PathVariable(value = "supplier") String supplier,
+					@PathVariable(value = "itype") String itype,@PathVariable(value = "ptype") String ptype,@PathVariable(value = "psubtype") String psubtype,
+					@PathVariable(value = "orderdate") String orderdate)
+			{
+				return wm_unload_adviceService.getUnloadAdvRefPOwt2ArgnewMultiItemGRN(bunit,supplier,itype,ptype,psubtype,orderdate);
+			}
+			
+			@GetMapping("/getItemPackUomNew/{code}/{code1}/{company}")
+			public Map<String,Object> getItemPackUomNew(@PathVariable(value = "code") String code,@PathVariable(value = "code1") String code1,@PathVariable(value = "company") String company)
+			{
+				return item_masterService.getItemPackUomNew(code,code1,company);
+			}
+			
+			@GetMapping("/getPurOrdItemDtlsMultipleItemGRN/{orderid}/{itemcode}")
+			public List<Map<String,Object>> getPurOrdItemDtlsMultipleItemGRN(@PathVariable(value = "orderid") String orderid,@PathVariable(value = "itemcode") String itemcode)
+			{
+				return pur_OrderService.getPurOrdItemDtlsMultipleItemGRN(orderid,itemcode);
+			}
+			
+			@GetMapping("/getUnloadWeightmentWtmultipopupmultipleItem/{wgment_id}")
+			public List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(@PathVariable(value = "wgment_id") String wgment_id)
+			{
+				return wm_unload_wgmntService.getUnloadWeightmentWtmultipopupmultipleItem(wgment_id);
+			}
 			
 			/*@GetMapping("/getGroupItemLedgerForJob/{group}")
 			public List<Map<String,Object>> getGroupItemLedgerForJob(@PathVariable(value = "group") String group)

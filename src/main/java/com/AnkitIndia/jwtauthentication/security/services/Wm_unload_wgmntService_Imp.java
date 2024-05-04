@@ -1678,4 +1678,8 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 	{
 		return wm_unload_wgmntRepository.getOtherWgnmtList();
 	}
+	
+	public List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(String wgment_id){
+		return wm_unload_wgmntRepository.getUnloadWeightmentWtmultipopupmultipleItem(wgment_id);
+	}
 }

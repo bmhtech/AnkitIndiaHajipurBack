@@ -89,4 +89,5 @@ public interface Wm_unload_wgmntService {
 	
 	public List<Map<String,Object>> getOtherWgnmtList();
 
+	public List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(String wgment_id);
 }

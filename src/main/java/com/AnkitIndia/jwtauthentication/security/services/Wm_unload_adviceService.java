@@ -184,4 +184,6 @@ public interface Wm_unload_adviceService {
 	
 	public List<Map<String, Object>> unloadadvicejobworkRetriveList(String unadviceid);
 	
+	public List<Map<String,Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(String bunit,String supplier,String itype,String ptype,String psubtype,String orderdate);
+	
 }

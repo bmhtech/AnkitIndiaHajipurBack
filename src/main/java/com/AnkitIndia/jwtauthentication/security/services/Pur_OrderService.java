@@ -193,5 +193,9 @@ public interface Pur_OrderService {
 	 
 	 public Map<String,Object> getStoreChargesPo(String grnid,String referance_type);
 	 
+	 public List<Map<String,Object>> getPurOrdItemDtlsMultipleItemGRN(String orderid,String itemcode);
 	 
+	 public List<Map<String,Object>> getpssd_packing_item_qtymultiplepopup(String unloadadvice);
+	 
+	 public List<Map<String,Object>> getPurOrdreceipt_criteriaNew(String orderid);
 }
