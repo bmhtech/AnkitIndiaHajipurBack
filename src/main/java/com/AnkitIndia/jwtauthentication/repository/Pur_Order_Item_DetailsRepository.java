@@ -73,4 +73,9 @@ public interface Pur_Order_Item_DetailsRepository extends JpaRepository<Pur_Orde
 	
 	@Query(value="SELECT  d.item_code,d.item_name,d.classified_item_name,d.packing_item,d.packing_item_name,d.packing_item_code,d.packing_size,d.packing_weight,d.packing_type,d.packing_uom,IF(`d`.`price_based_on`='Packing',v.rest_wt, d.packing_qty) AS packing_qty,d.stock_uom,IF(`d`.`price_based_on`='Packing',d.stock_qty, v.rest_wt) AS stock_qty,d.price,d.mat_weight,d.con_factor,d.price_based_on,d.amount,d.discount,d.discount_basedon,d.discount_amount,d.net_amount,d.tax_code,d.tax_rate,d.tax_amount,d.total_amount,d.qc_norms,d.priority,d.delivery_date,d.purpose,d.to_be_used,d.remarks,v.rest_wt AS final_mat_wt,d.no_advice_cal,d.id FROM pur_order_item_details d,pur_order_packing_item_view v WHERE d.`modified_type`='INSERTED' AND d.`pur_orderid`=v.pur_orderid AND d.`item_code`=v.item_code AND d.`packing_item`=v.packing_item AND d.`packing_item_code`=v.packing_item_code AND d.`packing_size`=v.packing_size AND d.`packing_weight`=v.packing_weight AND d.`packing_type`=v.packing_type AND d.pur_orderid=:porderid",nativeQuery=true)
 	List<Map<String, Object>> getpurorderpacking(@Param("porderid") String porderid);
+	
+	@Query(value="select * from pur_order_item_details p where p.pur_orderid = :orderid and p.item_code =:itemcode and p.modified_type = 'INSERTED' ", nativeQuery = true)
+	List<Map<String,Object>> getPurOrdItemDtlsMultipleItemGRN (@Param("orderid") String orderid,@Param("itemcode") String itemcode);
+	
+	
 }

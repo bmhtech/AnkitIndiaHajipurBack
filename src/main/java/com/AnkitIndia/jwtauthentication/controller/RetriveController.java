@@ -1225,4 +1225,10 @@ public class RetriveController {
 			
 			//auth ends
 			//gatepass ends 
+			
+			@GetMapping("/getItemMasterPackMatMultipopupNew/{code}")
+			public List<Map<String,Object>> getItemMasterPackMatMultipopupNew(@PathVariable(value = "code") String code)
+			{
+				return item_masterService.getItemMasterPackMatNew(code);
+			}
 }

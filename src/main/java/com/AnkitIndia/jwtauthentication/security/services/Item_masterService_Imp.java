@@ -2298,5 +2298,13 @@ public List<Item_master_pack_mat_tagDTO> getItemMasterPackMat(String code){
 		return item_master_size_weightRepository.retrivePackingDtls(packingMasterCode, packingid);
 	}
 	
+	public List<Map<String,Object>> getItemMasterPackMatNew(String code)
+	{
+		return item_master_pack_mat_tagRepository.getItemMasterPackMatNew(code);
+	}
+	
+	public Map<String,Object> getItemPackUomNew(String code,String code1,String company){
+ 	return item_master_pack_mat_tagRepository.getItemPackUomNew(code,code1,company);
+	}
 	
 }	

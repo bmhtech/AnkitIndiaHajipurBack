@@ -1839,8 +1839,8 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 	{
 		System.out.println("unadviceid"+unadvice_id);
 		List<Wm_unload_advice_item_dtls> newitemdetailsrestructure= new ArrayList<Wm_unload_advice_item_dtls>();
-		newitemdetailsrestructure.addAll(wm_unload_advice_item_dtlsRepository.getmultiplegrnunloading(unadvice_id));
-		
+		//newitemdetailsrestructure.addAll(wm_unload_advice_item_dtlsRepository.getmultiplegrnunloading(unadvice_id));
+		newitemdetailsrestructure.addAll(wm_unload_advice_item_dtlsRepository.getmultiplegrnunloadingmultipleitem(unadvice_id));
 		Type listType=new TypeToken<List<Wm_unload_advice_item_dtlsDTO>>() {}.getType();
 		List<Wm_unload_advice_item_dtlsDTO> uAdviceItemList=new ModelMapper().map(newitemdetailsrestructure,listType);
 		
@@ -2619,6 +2619,14 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 		  }
 	 
 	
+	public List<Map<String,Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(String bunit,String supplier,String itype,String ptype,String psubtype,String orderdate)
+	 {
+		 List<Map<String, Object>> list=new ArrayList<Map<String, Object>>();
+		 
+		 list.addAll(wm_unload_adviceRepository.getUnloadAdvRefPOwt2ArgnewMultiItemGRN(bunit,supplier,itype,ptype,psubtype,orderdate));
+		 
+		 return list;
+	 }
 }
 
 

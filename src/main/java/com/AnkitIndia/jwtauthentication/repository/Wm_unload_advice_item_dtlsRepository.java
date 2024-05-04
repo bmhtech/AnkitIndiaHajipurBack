@@ -52,7 +52,9 @@ public interface Wm_unload_advice_item_dtlsRepository extends JpaRepository<Wm_u
 	@Query(value = "{call multiple_advice_grn_item(:unadvice_id)}", nativeQuery = true)
 	List<Wm_unload_advice_item_dtls> getmultiplegrnunloading(@Param("unadvice_id") String unadvice_id);
 	
-
+	@Query(value = "{call multiple_advice_grn_multiple_item(:unadvice_id)}", nativeQuery = true)
+	List<Wm_unload_advice_item_dtls> getmultiplegrnunloadingmultipleitem(@Param("unadvice_id") String unadvice_id);
+	
 	@Query("select SUM(w.mat_wt) from Wm_unload_advice_item_dtls w where w.unadviceid = :code and w.modified_type = 'INSERTED'")
 	double gettotalmat_weight(@Param("code") String code);
 	
