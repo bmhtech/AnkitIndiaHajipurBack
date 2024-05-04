@@ -4205,6 +4205,11 @@ public class ListController {
 				return ResponseEntity.ok().body(check);
 			}
 			
+			@GetMapping("/getMiscListFast")
+			public List<Map<String,Object>> getMiscListFast()
+			{
+				return miscMasterService.getMiscListFast();
+			}
 			
 			/*@GetMapping("/getGroupItemLedgerForJob/{group}")
 			public List<Map<String,Object>> getGroupItemLedgerForJob(@PathVariable(value = "group") String group)

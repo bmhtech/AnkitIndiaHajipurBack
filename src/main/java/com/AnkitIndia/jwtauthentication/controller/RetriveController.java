@@ -676,6 +676,11 @@ public class RetriveController {
 				return pur_good_receiptService.getPurGoodRcptItemDtlsList(grnid);
 			}
 			
+			@GetMapping("/grnItemDtlsRetriveListFast/{grnid}")
+			public List<Map<String, Object>> grnItemDtlsRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnItemDtlsRetriveListFast(grnid);
+			}
 			
 			@GetMapping("/getPurGoodRcptItemDtlsListfastapi/{grnid}")
 			public List<Map<String, Object>> getPurGoodRcptItemDtlsListfastapi(@PathVariable(value = "grnid") String grnid)
@@ -683,7 +688,47 @@ public class RetriveController {
 				return pur_good_receiptService.getPurGoodRcptItemDtlsListfastapi(grnid);
 			}
 			
+			@GetMapping("/grnOtherInfoRetriveListFast/{grnid}")
+			public Map<String, Object> grnOtherInfoRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnOtherInfoRetriveListFast(grnid);
+			}
 			
+			@GetMapping("/grnBrokerRetriveListFast/{grnid}")
+			public List<Map<String, Object>> grnBrokerRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnBrokerRetriveListFast(grnid);
+			}
+			
+			@GetMapping("/grnTransInfoRetriveListFast/{grnid}")
+			public Map<String, Object> grnTransInfoRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnTransInfoRetriveListFast(grnid);
+			}
+			
+			@GetMapping("/grnBPDtlsRetriveListFast/{grnid}")
+			public Map<String, Object> grnBPDtlsRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnBPDtlsRetriveListFast(grnid);
+			}
+			
+			@GetMapping("/grnResourceCostRetriveListFast/{grnid}")
+			public List<Map<String, Object>> grnResourceCostRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnResourceCostRetriveListFast(grnid);
+			}
+			
+			@GetMapping("/grnDocRetriveListFast/{grnid}")
+			public List<Map<String, Object>> grnDocRetriveListFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grnDocRetriveListFast(grnid);
+			}
+			
+			@GetMapping("/grndriverdetailsFast/{grnid}")
+			public Map<String, Object> grndriverdetailsFast(@PathVariable(value = "grnid") String grnid)
+			{
+				return pur_good_receiptService.grndriverdetailsFast(grnid);
+			}
 			
 			@GetMapping("/grnResourceCostRetriveList/{code}")
 			public List<Pur_good_receipt_resource_costDTO> grnResourceCostRetriveList(@PathVariable(value = "code") String code)
@@ -810,6 +855,60 @@ public class RetriveController {
 			{
 			
 				return wm_unload_adviceService.wmUnAdviceBrokerRetriveList(code);
+			}
+			
+			@GetMapping("/wmUnAdviceBrokerRetriveFastList/{unloadid}")
+			public List<Map<String,Object>> wmUnAdviceBrokerRetriveFastList(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceBrokerRetriveFastList(unloadid);
+			}
+			
+			@GetMapping("/wmUnAdviceBpDtlsRetriveFastList/{unloadid}")
+			public Map<String,Object> wmUnAdviceBpDtlsRetriveFastList(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceBpDtlsRetriveFastList(unloadid);
+			}
+			
+			@GetMapping("/wmUnAdviceDriverDtlsRetriveFastList/{unloadid}")
+			public Map<String,Object> wmUnAdviceDriverDtlsRetriveFastList(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceDriverDtlsRetriveFastList(unloadid);
+			}
+			
+			@GetMapping("/wmUnAdvicePartyWmRetriveFastList/{unloadid}")
+			public Map<String,Object> wmUnAdvicePartyWmRetriveFastList(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdvicePartyWmRetriveFastList(unloadid);
+			}
+			
+			
+		  @GetMapping("/getUnloadItemFastList/{unloadid}") public
+		  List<Map<String,Object>> getUnloadItemFastList(@PathVariable(value = "unloadid") String unloadid) { 
+			  return wm_unload_adviceService.getUnloadItemFastList(unloadid); 
+			  }
+		  
+		  @GetMapping("/wmUnAdviceTransInfoRetriveFastList/{unloadid}")
+			public Map<String,Object> wmUnAdviceTransInfoRetriveFastList(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceTransInfoRetriveFastList(unloadid);
+			}
+			
+			@GetMapping("/wmUnAdviceAppChgsRetriveListFast/{unloadid}")
+			public List<Map<String,Object>> wmUnAdviceAppChgsRetriveListFast(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceAppChgsRetriveListFast(unloadid);
+			}
+			
+			@GetMapping("/wmUnAdviceTransConRetriveFastList/{unloadid}")
+			public Map<String,Object> wmUnAdviceTransConRetriveFastList(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceTransConRetriveFastList(unloadid);
+			}
+			
+			@GetMapping("/wmUnAdviceDocRetriveListFast/{unloadid}")
+			public List<Map<String,Object>> wmUnAdviceDocRetriveListFast(@PathVariable(value = "unloadid") String unloadid)
+			{
+				return wm_unload_adviceService.wmUnAdviceDocRetriveListFast(unloadid);
 			}
 			
 			@GetMapping("/wmUnAdviceTransConRetriveList/{code}")

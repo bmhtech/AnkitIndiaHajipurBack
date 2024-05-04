@@ -1,5 +1,8 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +15,8 @@ public interface Pur_goods_receipt_other_informationRepository extends JpaReposi
 	@Query( "select p from Pur_goods_receipt_other_information p where p.grn_id = :code and p.modified_type ='INSERTED'" )
 	Pur_goods_receipt_other_information grnOtherInfoRetriveList(@Param("code") String code);
 	
+	@Query(value= "SELECT p.* FROM pur_goods_receipt_other_information p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	Map<String, Object> grnOtherInfoRetriveListFast(@Param("grnid") String grnid);
 	
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Pur_goods_receipt_other_information w SET w.modified_type ='UPDATED' WHERE w.grn_id = :grn_id")
