@@ -154,4 +154,7 @@ public interface Wm_unload_wgmntRepository extends JpaRepository<Wm_unload_wgmnt
 	@Query(value="SELECT wgment_no_alt FROM wm_unload_wgmnt WHERE modified_type = 'INSERTED' AND advice=:advice_id", nativeQuery = true)
 	String getAltWgtNo(@Param("advice_id") String advice_id);
 	
+	@Query(value = "{call own_weighment_calculation_multiple_item_grn(:wgment_id)}", nativeQuery = true)
+	List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(@Param("wgment_id") String wgment_id);
+	
 }

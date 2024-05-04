@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,4 +28,9 @@ public interface Item_master_pack_mat_tagRepository extends JpaRepository<Item_m
 	@Query( "select i from Item_master_pack_mat_tag i where i.modified_type = 'INSERTED' and i.item_id =:code ORDER BY i.sl_no")
 	List<Item_master_pack_mat_tag> getItemMasterPackMat(@Param("code") String code);
 	
+	@Query( value="select * from item_master_pack_mat_tag i where i.modified_type = 'INSERTED' and i.item_id =:code ORDER BY i.sl_no",nativeQuery = true)
+	List<Map<String,Object>> getItemMasterPackMatNew(@Param("code") String code);
+	
+	@Query( value="select * from item_master_pack_mat_tag i where i.item_id = :code and i.item_code= :code1 and i.company_id=:company and i.modified_type = 'INSERTED'",nativeQuery = true)
+	Map<String,Object> getItemPackUomNew(@Param("code") String code,@Param("code1") String code1,@Param("company") String company);
 }

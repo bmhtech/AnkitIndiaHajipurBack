@@ -1238,5 +1238,17 @@ public class PurchaseController {
     }
     
     /**************************End Purchase Debit Note***************************/
-
+    
+    @GetMapping("/getpssd_packing_item_qtymultiplepopup/{unloadadvice}")
+	public List<Map<String,Object>> getpssd_packing_item_qtymultiplepopup(@PathVariable(value = "unloadadvice") String unloadadvice)
+	{
+		return pur_OrderService.getpssd_packing_item_qtymultiplepopup(unloadadvice);	
+	}
+    
+    @GetMapping("/getPurOrdreceipt_criteriaNew/{orderid}")
+	public List<Map<String,Object>> getPurOrdreceipt_criteriaNew(@PathVariable(value = "orderid") String orderid)
+	{
+		return pur_OrderService.getPurOrdreceipt_criteriaNew(orderid);
+	}
+    
 }
