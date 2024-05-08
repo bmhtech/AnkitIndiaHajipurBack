@@ -134,6 +134,24 @@ public interface Wm_unload_adviceService {
 	
 	public List<Map<String, Object>> getVehiclenoallNew();
 	
+	public List<Map<String, Object>> wmUnAdviceBrokerRetriveFastList(String unloadid);
+	
+	public Map<String, Object> wmUnAdviceBpDtlsRetriveFastList(String unloadid);
+	
+	public Map<String, Object> wmUnAdviceDriverDtlsRetriveFastList(String unloadid);
+	
+	public Map<String, Object> wmUnAdvicePartyWmRetriveFastList(String unloadid);
+	
+	public List<Map<String, Object>> getUnloadItemFastList(String unloadid);
+	
+	public Map<String, Object> wmUnAdviceTransConRetriveFastList(String unloadid);
+	
+	public Map<String, Object> wmUnAdviceTransInfoRetriveFastList(String unloadid);
+	
+	public List<Map<String, Object>> wmUnAdviceAppChgsRetriveListFast(String unloadid);
+	
+	public List<Map<String, Object>> wmUnAdviceDocRetriveListFast(String unloadid);
+	
 	 public Status_tableDTO checkweightunloadadvice(String pur_orderid,String item_code,Double mat_wt);
 	/*public List<Unload_Adv_Supp_DateDTO> getUnloadAdvSuppDate(String vno);*/
 	 

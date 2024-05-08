@@ -1066,11 +1066,49 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 			return grnItem;
 		}
 	 
+	 public List<Map<String, Object>> grnItemDtlsRetriveListFast(String grnid){
+		
+		return pur_good_receipt_item_detailsRepository.grnItemDtlsRetriveListFast(grnid);
+	}
+	 
 	 public List<Map<String, Object>> getPurGoodRcptItemDtlsListfastapi(String grnid)
 	 {
-			
-			
 			return pur_good_receipt_item_detailsRepository.getPurGoodRcptItemDtlsListfastapi(grnid);
+		}
+	 
+	 public Map<String, Object> grnOtherInfoRetriveListFast(String grnid)
+	 {
+			return pur_goods_receipt_other_informationRepository.grnOtherInfoRetriveListFast(grnid);
+		}
+	  
+	 public List<Map<String, Object>> grnBrokerRetriveListFast(String grnid){
+			
+			return pur_good_receipt_brokerRepository.grnBrokerRetriveListFast(grnid);
+		}
+	 
+	 public Map<String, Object> grnTransInfoRetriveListFast(String grnid)
+	 {
+			return pur_good_reciept_trans_infoRepository.grnTransInfoRetriveListFast(grnid);
+		}
+	 
+	 public Map<String, Object> grnBPDtlsRetriveListFast(String grnid)
+	 {
+			return pur_good_receipt_Business_Partner_detailsRepository.grnBPDtlsRetriveListFast(grnid);
+		}
+	 
+	 public List<Map<String, Object>> grnResourceCostRetriveListFast(String grnid){
+			
+			return pur_good_receipt_resource_costRepository.grnResourceCostRetriveListFast(grnid);
+		}
+	 
+	 public List<Map<String, Object>> grnDocRetriveListFast(String grnid){
+			
+			return pur_good_receipt_docRepository.grnDocRetriveListFast(grnid);
+		}
+	 
+	 public Map<String, Object> grndriverdetailsFast(String grnid)
+	 {
+			return pur_good_receipt_driver_dtlsRepository.grndriverdetailsFast(grnid);
 		}
 	 
 	 public List<Pur_good_receipt_resource_costDTO> grnResourceCostRetriveList(String code)

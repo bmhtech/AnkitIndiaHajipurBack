@@ -74,7 +74,23 @@ public interface Pur_good_receiptService {
 	
 	public List<Pur_good_receipt_item_detailsDTO> getPurGoodRcptItemDtlsList(String grnid);
 	
+	public List<Map<String, Object>> grnItemDtlsRetriveListFast(String grnid);
+	
 	public List<Map<String, Object>> getPurGoodRcptItemDtlsListfastapi(String grnid);
+	
+	public Map<String, Object> grnOtherInfoRetriveListFast(String grnid);
+	
+	public List<Map<String, Object>> grnBrokerRetriveListFast(String grnid);
+	
+	public Map<String, Object> grnTransInfoRetriveListFast(String grnid);
+	
+	public Map<String, Object> grnBPDtlsRetriveListFast(String grnid);
+	
+	public List<Map<String, Object>> grnResourceCostRetriveListFast(String grnid);
+	
+	public List<Map<String, Object>> grnDocRetriveListFast(String grnid);
+	
+	public Map<String, Object> grndriverdetailsFast(String grnid);
 	
 	public List<Pur_good_receipt_resource_costDTO> grnResourceCostRetriveList(String code);
 	 

@@ -4217,6 +4217,12 @@ public class ListController {
 				return ResponseEntity.ok().body(check);
 			}
 			
+			@GetMapping("/getMiscListFast")
+			public List<Map<String,Object>> getMiscListFast()
+			{
+				return miscMasterService.getMiscListFast();
+			}
+			
 			@GetMapping("/getUnloadAdvRefPOwt2ArgnewMultiItemGRN/{bunit}/{supplier}/{itype}/{ptype}/{psubtype}/{orderdate}")
 			public List<Map<String,Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(@PathVariable(value = "bunit") String bunit,@PathVariable(value = "supplier") String supplier,
 					@PathVariable(value = "itype") String itype,@PathVariable(value = "ptype") String ptype,@PathVariable(value = "psubtype") String psubtype,

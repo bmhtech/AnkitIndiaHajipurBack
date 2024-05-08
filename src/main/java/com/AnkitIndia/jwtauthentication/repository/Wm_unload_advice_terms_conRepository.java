@@ -1,5 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +14,9 @@ public interface Wm_unload_advice_terms_conRepository extends JpaRepository<Wm_u
 
 	@Query( "select w from Wm_unload_advice_terms_con w where w.unadviceid = :code and w.modified_type ='INSERTED'" )
 	Wm_unload_advice_terms_con wmUnAdviceTransConRetriveList(@Param("code") String code);
+	
+	@Query(value="select * from wm_unload_advice_terms_con w where w.modified_type = 'INSERTED' and w.unadviceid=:code",nativeQuery=true)
+	 Map<String,Object> wmUnAdviceTransConRetriveFastList(@Param("code") String code);
 	
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Wm_unload_advice_terms_con w SET w.modified_type ='UPDATED' WHERE w.unadviceid = :unadviceid")

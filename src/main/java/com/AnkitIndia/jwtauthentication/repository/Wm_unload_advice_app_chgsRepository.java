@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,6 +19,9 @@ public interface Wm_unload_advice_app_chgsRepository extends JpaRepository<Wm_un
 	
 	@Query("select w from Wm_unload_advice_app_chgs w where w.unadviceid = :code and w.modified_type = 'INSERTED'")
 	List<Wm_unload_advice_app_chgs> wmUnAdviceAppChgsRetriveList(@Param("code") String code);
+	
+	@Query(value="select * from wm_unload_advice_app_chgs w where w.modified_type = 'INSERTED' and w.unadviceid=:code",nativeQuery=true)
+	 List<Map<String,Object>> wmUnAdviceAppChgsRetriveListFast(@Param("code") String code);
 	
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Wm_unload_advice_app_chgs w SET w.modified_type ='DELETED' WHERE w.unadviceid = :unadviceid")

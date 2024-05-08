@@ -19,6 +19,8 @@ public interface Pur_good_receipt_item_detailsRepository extends JpaRepository<P
 	@Query( "select p from Pur_good_receipt_item_details p where p.grn_id =:grnid and p.modified_type ='INSERTED' order by p.slno")
 	List<Pur_good_receipt_item_details> getPurGoodRcptItemDtlsList(@Param("grnid") String grnid);
 	
+	@Query(value= "SELECT p.* FROM pur_good_receipt_item_details p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED' ORDER BY p.slno",nativeQuery = true)
+	List<Map<String, Object>> grnItemDtlsRetriveListFast(@Param("grnid") String grnid);
 	
 	//@Query(value= "select * from pur_good_receipt_item_details p where p.grn_id =:grnid and p.modified_type ='INSERTED' order by p.slno",nativeQuery = true)
 	@Query(value= "SELECT p.*,(SELECT t.tax_id FROM tax_code_details t WHERE t.tax_name =p.tax_code AND t.modified_type ='INSERTED') AS tax_id FROM pur_good_receipt_item_details p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED' ORDER BY p.slno",nativeQuery = true)

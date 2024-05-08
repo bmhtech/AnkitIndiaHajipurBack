@@ -1,5 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,8 +22,10 @@ public interface Pur_good_receipt_driver_dtlsRepository extends JpaRepository<Pu
     @Query("UPDATE Pur_good_receipt_driver_dtls w SET w.modified_type ='DELETED' WHERE w.grn_id = :grn_id")
     int deletedriverdetails(@Param("grn_id") String grn_id);
 	
-	
 	@Query( "select p from Pur_good_receipt_driver_dtls p where p.grn_id = :code and p.modified_type ='INSERTED'" )
 	Pur_good_receipt_driver_dtls grndriverdetails(@Param("code") String code);
+	
+	@Query(value= "SELECT p.* FROM pur_good_receipt_driver_dtls p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	Map<String, Object> grndriverdetailsFast(@Param("grnid") String grnid);
 	
 }

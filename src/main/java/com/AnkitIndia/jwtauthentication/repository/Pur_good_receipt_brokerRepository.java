@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,6 +15,9 @@ public interface Pur_good_receipt_brokerRepository extends JpaRepository<Pur_goo
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Pur_good_receipt_broker w SET w.modified_type ='UPDATED' WHERE w.grn_id = :grn_id")
     int updatePur_good_receipt_broker(@Param("grn_id") String grn_id);
+	
+	@Query(value= "SELECT p.* FROM pur_good_receipt_broker p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	List<Map<String, Object>> grnBrokerRetriveListFast(@Param("grnid") String grnid);
 	
 	@Query( "select p from Pur_good_receipt_broker p where p.grn_id =:grnid and p.modified_type ='INSERTED'")
 	List<Pur_good_receipt_broker> getPurGoodRcptBrokerList(@Param("grnid") String grnid);
