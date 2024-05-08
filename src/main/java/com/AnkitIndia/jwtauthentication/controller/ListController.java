@@ -1899,10 +1899,22 @@ public class ListController {
 		return cust_bussiness_partnerService.getCustomerByChannel(channelid);
 	}
 	
+	@GetMapping("/getCustomerByChannelFastApi/{channelid}")
+	public List<Map<String,Object>> getCustomerByChannelFastApi(@PathVariable(value = "channelid") String channelid)
+	{
+		return cust_bussiness_partnerService.getCustomerByChannelFastApi(channelid);
+	}
+	
 	@GetMapping("/getSupplierByChannel/{channelid}")
 	public List<Supp_bussiness_partnerDTO> getSupplierByChannel(@PathVariable(value = "channelid") String channelid)
 	{
 		return supp_bussiness_partnerService.getSupplierByChannel(channelid);
+	}
+	
+	@GetMapping("/getSupplierByChannelFastApi/{channelid}")
+	public List<Map<String,Object>> getSupplierByChannelFastApi(@PathVariable(value = "channelid") String channelid)
+	{
+		return supp_bussiness_partnerService.getSupplierByChannelFastApi(channelid);
 	}
 	
 	@GetMapping(value = "/getCustGroupByChannel/{channelid}")

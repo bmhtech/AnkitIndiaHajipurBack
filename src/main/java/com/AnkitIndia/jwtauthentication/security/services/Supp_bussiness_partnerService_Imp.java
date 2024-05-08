@@ -1690,6 +1690,23 @@ public List<Map<String, Object>> getSupplierMasterListWithTotalAmt(String compan
 		return custchannel;
  	}
  	
+ 	public List<Map<String,Object>> getSupplierByChannelFastApi(String channelid)
+ 	{
+ 		Channel_customer_master custChannelId=channel_customer_masterRepository.getChannelCustId(channelid);
+		String[] arrOfStr=custChannelId.getCustid().split(",");
+		List<Map<String,Object>> modelList=new ArrayList<Map<String,Object>>();
+		
+		for(int i=0;i<arrOfStr.length;i++)
+		{
+			modelList.add(supp_bussiness_partnerRepository.getSupplierNameFast(arrOfStr[i]));
+		}
+		
+		Type listType = new TypeToken<List<Map<String,Object>>>() {}.getType();
+		List<Map<String,Object>> custchannel = new ModelMapper().map(modelList,listType);
+		
+		return custchannel;
+ 	}
+ 	
  	public Map<String, Object> getSuppBPStat(String code){
  		System.out.println("bpid::"+code);
  		Map<String, Object> val=supp_bussiness_partnerRepository.getSuppBPStat(code);

@@ -63,6 +63,8 @@ public interface Cust_bussiness_partnerService {
 	
 	public List<Cust_bussiness_partnerDTO> getCustomerByChannel(String channelid);
 	
+	public List<Map<String,Object>> getCustomerByChannelFastApi(String channelid);
+	
 	public List<Cust_bussiness_partnerGroupDTO> getCustGroupByChannel(String channelid);
 	
 	public List<Cust_bussiness_partnerDTO> getCustomerByGroup(String group);
