@@ -1069,6 +1069,23 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 		
 		return custchannel;
 	}
+	
+	public List<Map<String,Object>> getCustomerByChannelFastApi(String channelid){
+		
+		Channel_customer_master custChannelId=channel_customer_masterRepository.getChannelCustId(channelid);
+		String[] arrOfStr=custChannelId.getCustid().split(",");
+		List<Map<String,Object>> modelList=new ArrayList<Map<String,Object>>();
+		
+		for(int i=0;i<arrOfStr.length;i++)
+		{
+			modelList.addAll(cust_bussiness_partnerRepository.getCustomerDetailsFast(arrOfStr[i]));
+		}
+		
+		Type listType = new TypeToken<List<Map<String,Object>>>() {}.getType();
+		List<Map<String,Object>> custchannel = new ModelMapper().map(modelList,listType);
+		
+		return custchannel;
+	}
 
 	public List<Cust_bussiness_partnerGroupDTO> getCustGroupByChannel(String channelid){
 	

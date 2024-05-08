@@ -23,6 +23,9 @@ public interface Channel_customer_masterRepository extends JpaRepository<Channel
 	@Query( "select c from Channel_customer_master c where c.modified_type != 'DELETED' and c.channel_custid =:channelid ")
 	Channel_customer_master getChannelCustId(@Param("channelid") String channelid);
 	
+	@Query( value="select * from channel_customer_master c where c.modified_type != 'DELETED' and c.channel_custid =:channelid ", nativeQuery = true)
+	List<Map<String,Object>> getChannelCustIdFast(@Param("channelid") String channelid);
+	
 	@Query( "select c from Channel_customer_master c where c.modified_type != 'DELETED' ")
 	List<Channel_customer_master> getChannelCustDesc();
 	

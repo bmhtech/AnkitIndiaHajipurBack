@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.AnkitIndia.jwtauthentication.model.Item_master;
@@ -123,6 +124,8 @@ public interface Supp_bussiness_partnerService {
 	
 	
 	public List<Supp_bussiness_partnerDTO> getSupplierByChannel(String channelid);
+	
+	public List<Map<String,Object>> getSupplierByChannelFastApi(String channelid);
 			
 	public StatusDTO chkSuppBpCodeStatus(String code);
 	
