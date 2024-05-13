@@ -40,7 +40,7 @@ public class Tallyrequest_SalesInvoice {
 	                + "<REQUESTDESC><REPORTNAME>All Masters</REPORTNAME><STATICVARIABLES><SVCURRENTCOMPANY>ANKIT INDIA LIMITED</SVCURRENTCOMPANY></STATICVARIABLES></REQUESTDESC>\n"
 	                + "<REQUESTDATA>\n"
 	                + "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n"
-	                + "<VOUCHER REMOTEID=\""+guid+"\" VCHTYPE=\"Sales\" ACTION=\"Create\" OBJVIEW=\"Accounting Voucher View\">\n"      
+	                + "<VOUCHER REMOTEID=\""+guid+"\" VCHTYPE=\"New Sales\" ACTION=\"Create\" OBJVIEW=\"Accounting Voucher View\">\n"      
 	               
 	                  
 	                + "<ADDRESS.LIST TYPE=\"String\">\n"    
@@ -102,7 +102,7 @@ public class Tallyrequest_SalesInvoice {
 	                };*/
 	                //here ends  einvoicenarration 
 	                
-	                TXML+= "<VOUCHERTYPENAME>Sales</VOUCHERTYPENAME>\n"
+	                TXML+= "<VOUCHERTYPENAME>New Sales</VOUCHERTYPENAME>\n"
 	                + "<COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\n"
 					+ "<PARTYGSTIN>"+gstinno+"</PARTYGSTIN>\n"
 	                + "<PLACEOFSUPPLY>"+statename+"</PLACEOFSUPPLY>\n"

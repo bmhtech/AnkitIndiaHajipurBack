@@ -319,4 +319,8 @@ public interface Wm_unload_adviceRepository extends JpaRepository<Wm_unload_advi
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Wm_unload_advice r SET r.qc_status ='No' WHERE r.unadviceid = :unadviceid AND r.modified_type='INSERTED'")
     int updateUnloadAdviceQCStatus(@Param("unadviceid") String unadviceid);
+	
+	@Query(value = "{call GetMultiUnloadStatusSingleGRN(:#{#bunit},:#{#supplier},:#{#itype},:#{#ptype},:#{#psubtype},:#{#orderdate})}", nativeQuery = true)
+	List<Map<String, Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(@Param("bunit") String bunit,@Param("supplier") String supplier,@Param("itype") String itype,@Param("ptype") String ptype,@Param("psubtype") String psubtype,@Param("orderdate") String orderdate);	 
+
 }

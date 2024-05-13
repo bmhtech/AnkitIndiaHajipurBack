@@ -1839,8 +1839,8 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 	{
 		System.out.println("unadviceid"+unadvice_id);
 		List<Wm_unload_advice_item_dtls> newitemdetailsrestructure= new ArrayList<Wm_unload_advice_item_dtls>();
-		newitemdetailsrestructure.addAll(wm_unload_advice_item_dtlsRepository.getmultiplegrnunloading(unadvice_id));
-		
+		//newitemdetailsrestructure.addAll(wm_unload_advice_item_dtlsRepository.getmultiplegrnunloading(unadvice_id));
+		newitemdetailsrestructure.addAll(wm_unload_advice_item_dtlsRepository.getmultiplegrnunloadingmultipleitem(unadvice_id));
 		Type listType=new TypeToken<List<Wm_unload_advice_item_dtlsDTO>>() {}.getType();
 		List<Wm_unload_advice_item_dtlsDTO> uAdviceItemList=new ModelMapper().map(newitemdetailsrestructure,listType);
 		
@@ -2573,6 +2573,60 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 	{
 		return wm_unload_adviceRepository.unloadadvicejobworkRetriveList(unadviceid);
 	}
+	
+	public List<Map<String, Object>> wmUnAdviceBrokerRetriveFastList(String unadviceid)
+	{
+		return wm_unload_advice_broker_dtlsRepository.wmUnAdviceBrokerRetriveFastList(unadviceid);
+	}
+	
+	public Map<String, Object> wmUnAdviceBpDtlsRetriveFastList(String unadviceid)
+	{
+		return wm_unload_advice_bp_dtlsRepository.wmUnAdviceBpDtlsRetriveFastList(unadviceid);
+	}
+	
+	public Map<String, Object> wmUnAdviceDriverDtlsRetriveFastList(String unadviceid)
+	{
+		return wm_unload_advice_driver_dtlsRepository.wmUnAdviceDriverDtlsRetriveFastList(unadviceid);
+	}
+	
+	public Map<String, Object> wmUnAdvicePartyWmRetriveFastList(String unadviceid)
+	{
+		return wm_unload_advice_party_wmRepository.wmUnAdvicePartyWmRetriveFastList(unadviceid);
+	}
+	
+	
+	  public List<Map<String, Object>> getUnloadItemFastList(String unadviceid) {
+	  return wm_unload_advice_item_dtlsRepository.getUnloadItemFastList(unadviceid); 
+	  }
+	 
+	
+	public Map<String, Object> wmUnAdviceTransConRetriveFastList(String unadviceid)
+	{
+		return wm_unload_advice_terms_conRepository.wmUnAdviceTransConRetriveFastList(unadviceid);
+	}
+	
+	public Map<String, Object> wmUnAdviceTransInfoRetriveFastList(String unadviceid)
+	{
+		return wm_unload_advice_trans_infoRepository.wmUnAdviceTransInfoRetriveFastList(unadviceid);
+	}
+	
+	 public List<Map<String, Object>> wmUnAdviceAppChgsRetriveListFast(String unadviceid) {
+		  return wm_unload_advice_app_chgsRepository.wmUnAdviceAppChgsRetriveListFast(unadviceid); 
+		  }
+	 
+	 public List<Map<String, Object>> wmUnAdviceDocRetriveListFast(String unadviceid) {
+		  return wm_unload_advice_docRepository.wmUnAdviceDocRetriveListFast(unadviceid); 
+		  }
+	 
+	
+	public List<Map<String,Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(String bunit,String supplier,String itype,String ptype,String psubtype,String orderdate)
+	 {
+		 List<Map<String, Object>> list=new ArrayList<Map<String, Object>>();
+		 
+		 list.addAll(wm_unload_adviceRepository.getUnloadAdvRefPOwt2ArgnewMultiItemGRN(bunit,supplier,itype,ptype,psubtype,orderdate));
+		 
+		 return list;
+	 }
 }
 
 

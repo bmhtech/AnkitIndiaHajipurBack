@@ -2331,5 +2331,22 @@ public class Pur_OrderService_Imp implements Pur_OrderService {
  		 
  		 return storedata; 
  	 }
-	
+ 	public List<Map<String,Object>> getPurOrdItemDtlsMultipleItemGRN(String orderid,String itemcode)
+	{
+		return pur_Order_Item_DetailsRepository.getPurOrdItemDtlsMultipleItemGRN(orderid,itemcode);
+	}
+ 	
+ 	public List<Map<String,Object>> getpssd_packing_item_qtymultiplepopup(String unloadadvice)
+	{
+		System.out.println("Check unloadid: "+unloadadvice);
+		return pur_OrderRepository.getpssd_packing_item_qtymultiplepopup(unloadadvice);
+	}
+ 	
+ 	public List<Map<String,Object>> getPurOrdreceipt_criteriaNew(String orderid)
+	{
+		System.out.println("orderid :: "+ orderid);
+		List<Map<String,Object>> modelList=new ArrayList<Map<String,Object>>();
+		modelList.addAll(pur_OrderRepository.findPurOrdersFast(orderid));
+		return modelList;
+	}
 }

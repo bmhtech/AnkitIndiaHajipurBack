@@ -35,7 +35,7 @@ public class Tallyrequest_PurchaseBill {
 	                + "<REQUESTDESC><REPORTNAME>All Masters</REPORTNAME><STATICVARIABLES><SVCURRENTCOMPANY>ANKIT INDIA LIMITED</SVCURRENTCOMPANY></STATICVARIABLES></REQUESTDESC>\n"
 	                + "<REQUESTDATA>\n"
 	                + "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n"
-	                + "<VOUCHER REMOTEID=\""+guid+"\" VCHTYPE=\"Purchase\" ACTION=\"Create\" OBJVIEW=\"Accounting Voucher View\">\n"   
+	                + "<VOUCHER REMOTEID=\""+guid+"\" VCHTYPE=\"New Purchase\" ACTION=\"Create\" OBJVIEW=\"Accounting Voucher View\">\n"   
 	                
 	                + "<ADDRESS.LIST>\n"   
 	                + "<ADDRESS>"+supplieraddress+"</ADDRESS>\n"   
@@ -50,7 +50,8 @@ public class Tallyrequest_PurchaseBill {
 		             
 		           +"<STATENAME>"+supplierstate+"</STATENAME>\n"
 		             
-		             +"<VOUCHERTYPENAME>Purchase</VOUCHERTYPENAME>\n"
+		             //+"<VOUCHERTYPENAME>Purchase</VOUCHERTYPENAME>\n"
+		             +"<VOUCHERTYPENAME>New Purchase</VOUCHERTYPENAME>\n"
 		             +"<COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\n"
 		             +" <PARTYGSTIN>"+gstinno+"</PARTYGSTIN>\n"
 	                 +" <PARTYNAME>"+supplier+"</PARTYNAME>\n"

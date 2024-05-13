@@ -336,5 +336,10 @@ public interface Pur_OrderRepository extends JpaRepository<Pur_Order, Long> {
 	@Query(value=" SELECT p.pur_order_no AS pur_order_no FROM pur_order p,`pur_good_receipt` g WHERE p.modified_type='INSERTED' AND  g.referance_id=p.pur_orderid AND g.grn_id=:grnid AND g.modified_type='INSERTED' ", nativeQuery=true)
 	String getStoreChargesdirectPoid(@Param("grnid") String grnid);
 	
+	@Query(value="SELECT net_weight,tarebags FROM `wm_unload_wgmnt` WHERE wgment_id IN (SELECT weighment_id FROM `wm_unload_advice` WHERE unadviceid=:unloadadvice)",nativeQuery=true)
+	List<Map<String,Object>>  getpssd_packing_item_qtymultiplepopup(@Param("unloadadvice") String unloadadvice);
 
+	@Query(value="select * from pur_order p where p.modified_type = 'INSERTED' and p.pur_orderid =:pur_order_id ",nativeQuery = true)
+	List<Map<String,Object>> findPurOrdersFast(@Param("pur_order_id") String pur_order_id);
+	
 }

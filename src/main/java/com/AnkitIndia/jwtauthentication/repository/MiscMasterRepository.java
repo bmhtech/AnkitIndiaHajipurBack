@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,5 +24,7 @@ public interface MiscMasterRepository extends JpaRepository<Misc_master, Long>{
 	
 	@Query( "select m from Misc_master m where m.mastertype_active = :sts and m.modified_type != 'DELETED' and m.mastertype_name ='Supplier Webridge'")
 	List<Misc_master> getMiscList(@Param("sts") boolean sts);
-
+	
+	@Query(value= "select * from misc_master where modified_type='INSERTED' ", nativeQuery=true)
+	List<Map<String,Object>> getMiscListFast();
 }

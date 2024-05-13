@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,4 +18,8 @@ public interface Pur_good_receipt_docRepository extends JpaRepository<Pur_good_r
 	
 	@Query( "select p from Pur_good_receipt_doc p where p.grn_id =:grnid and p.modified_type ='INSERTED'")
 	List<Pur_good_receipt_doc> getPurGoodRcptDocList(@Param("grnid") String grnid);
+	
+	@Query(value= "SELECT p.* FROM pur_good_receipt_doc p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	List<Map<String, Object>> grnDocRetriveListFast(@Param("grnid") String grnid);
+	
 }

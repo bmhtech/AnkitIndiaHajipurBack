@@ -67,6 +67,8 @@ public interface Supp_bussiness_partnerRepository extends JpaRepository<Supp_bus
 	@Query( "select s from Supp_bussiness_partner s where s.modified_type = 'INSERTED' and s.bp_Id =:Code")
 	Supp_bussiness_partner getSupplierName(@Param("Code") String Code);
 	
+	@Query( value="select *, s.bp_id as bp_Id from supp_bussiness_partner s where s.modified_type = 'INSERTED' and s.bp_Id =:Code", nativeQuery = true)
+	Map<String,Object> getSupplierNameFast(@Param("Code") String Code);
 	/*
 	
 	
