@@ -41,6 +41,10 @@ public interface Sales_QuotationRepository extends JpaRepository< Sales_Quotatio
     int updatequationstationorder(@Param("referenceid") String referenceid);
 	
 	@Modifying(clearAutomatically = true)
+    @Query("UPDATE Sales_Quotation s SET s.so_terminate =1 WHERE  s.quotation_id =:referenceid")
+    int sOrderTerminate(@Param("referenceid") String referenceid);
+	
+	@Modifying(clearAutomatically = true)
     @Query("UPDATE Sales_Quotation s SET s.sale_orderused =0 WHERE  s.quotation_id =:referenceid")
     int revertupdatequationstationorder(@Param("referenceid") String referenceid);
 	
