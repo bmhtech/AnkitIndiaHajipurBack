@@ -562,11 +562,11 @@ public class SalesController {
 		return ResponseEntity.ok().body(op);
 	}
 	
-	@GetMapping("/SalesOrderTerminate/{id}/{username}")
+	@GetMapping("/SalesOrderTerminate/{id}/{username}/{quotationid}")
 	public StatusDTO SalesOrderTerminate(@PathVariable(value= "id") long id,
-											 @PathVariable(value= "username") String username)
+											 @PathVariable(value= "username") String username,@PathVariable(value= "quotationid") String quotationid)
 	{
-		return sales_OrderService.SalesOrderTerminate(id,username);
+		return sales_OrderService.SalesOrderTerminate(id,username,quotationid);
 	}
 	
 	@GetMapping(value = "/salesOrderByParty/{custid}")

@@ -124,6 +124,9 @@ public class Sales_Quotation extends CommonProperties {
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean terminate;
 	
+	@Column(columnDefinition="tinyint(1) default 0")
+	private boolean so_terminate;
+	
 	//Dynamic
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="sQuotation",cascade = CascadeType.ALL)
 	private Set<Sales_Quotation_Item_Dtls> sales_Quotation_Item_Dtls;

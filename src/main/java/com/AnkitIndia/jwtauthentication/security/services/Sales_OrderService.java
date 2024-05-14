@@ -49,7 +49,7 @@ public interface Sales_OrderService {
 	
 	public Sales_Order deleteSalesOrder(Sales_Order sOrder,Long id);
 	
-	public StatusDTO SalesOrderTerminate(long id,String username);
+	public StatusDTO SalesOrderTerminate(long id,String username,String quotaionid);
 	
 	public Sales_Order deleteEffectiveSalesOrder(Sales_Order sOrder,Long id);
 	
