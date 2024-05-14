@@ -91,7 +91,15 @@ public class Sales_QuotationDTO {
 	
 	private boolean terminate;
 
-	
+	private boolean so_terminate;
+
+	public boolean isSo_terminate() {
+		return so_terminate;
+	}
+
+	public void setSo_terminate(boolean so_terminate) {
+		this.so_terminate = so_terminate;
+	}
 
 	public boolean isTerminate() {
 		return terminate;
