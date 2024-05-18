@@ -2539,11 +2539,11 @@ public class Sales_OrderService_Imp implements Sales_OrderService {
 	}
 	
 	@Transactional
-	public StatusDTO SalesOrderTerminate(long id,String username,String quotationid)
+	public StatusDTO SalesOrderTerminate(long id,String username)
 	{
 		StatusDTO res =new StatusDTO();
-		sales_QuotationRepository.sOrderTerminate(quotationid);
 		sales_OrderRepository.SalesOrderTerminate(id,username);
+		
 		Optional<Sales_Order> op=this.sales_OrderRepository.findById(id);
 		
 		if(op.get().isTerminate())
@@ -4217,6 +4217,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 	public List<Map<String, Object>> getSalesOrderReport(String fromdate, String todate)
 	{
 		return sales_OrderRepository.getSalesOrderReport(fromdate, todate);
+	}
+	
+	public List<Map<String, Object>> getSalesOrderReportOrderWise(String orderno)
+	{
+		return sales_OrderRepository.getSalesOrderReportOrderWise(orderno);
 	}
 	
 	public List<Map<String, Object>> findJobSalesOrders(String bunit,String party,String advdate)
