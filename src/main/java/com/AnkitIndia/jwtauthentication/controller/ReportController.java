@@ -1623,6 +1623,12 @@ public class ReportController {
 			return sales_orderService.getSalesOrderReport(fromdate,todate);
 		}
 		
+		@GetMapping("/getSalesOrderReportOrderWise/{salesordernumber}")
+		public List<Map<String, Object>> getSalesOrderReportOrderWise(@PathVariable(value = "salesordernumber") String salesordernumber)
+		{
+			return sales_orderService.getSalesOrderReportOrderWise(salesordernumber);
+		}
+		
 		/************** End Pending Souda **************/
 		
 		
