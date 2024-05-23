@@ -2192,4 +2192,9 @@ public List<Delivery_challanDTO> getMultipleDelvChallansApp(String party,String 
 			return dChallanRepository.getRestwt(delvid);
 		}
 	 
+	 public List<Map<String, Object>> searchpendingDelvChallan(String fromdate,String todate)
+		{
+			return dChallanRepository.searchpendingDelvChallan(fromdate,todate);
+		}
+	 
 }

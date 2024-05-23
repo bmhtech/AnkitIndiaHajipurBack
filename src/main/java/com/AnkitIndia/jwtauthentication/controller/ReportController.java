@@ -2180,4 +2180,26 @@ public class ReportController {
 			{
 				return pur_good_receiptService.getJobWorkAllocationReport(fromdate,todate);
 			}
+			
+			@GetMapping("/searchpendingUnAdviceReport/{fromdate}/{todate}")
+			public List<Map<String, Object>> searchpendingUnAdviceReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return wm_unload_adviceService.searchpendingUnAdviceReport(fromdate,todate);
+			}
+			
+			@GetMapping("/searchpendingGRNReport/{fromdate}/{todate}")
+			public List<Map<String, Object>> searchpendingGRNReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return pur_good_receiptService.searchpendingGRNReport(fromdate,todate);
+			}
+			
+			@GetMapping("/searchpendingDelvChallan/{fromdate}/{todate}")
+			public List<Map<String, Object>> searchpendingDelvChallan(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return delivery_challanService.searchpendingDelvChallan(fromdate,todate);
+			}
+			
 }

@@ -2627,6 +2627,11 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 		 
 		 return list;
 	 }
+	
+	public List<Map<String,Object>> searchpendingUnAdviceReport(String fromdate,String todate)
+	{
+		return wm_unload_adviceRepository.searchpendingUnAdviceReport(fromdate,todate);
+	}
 }
 
 
