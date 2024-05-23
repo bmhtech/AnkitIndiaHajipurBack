@@ -322,5 +322,10 @@ public interface Wm_unload_adviceRepository extends JpaRepository<Wm_unload_advi
 	
 	@Query(value = "{call GetMultiUnloadStatusSingleGRN(:#{#bunit},:#{#supplier},:#{#itype},:#{#ptype},:#{#psubtype},:#{#orderdate})}", nativeQuery = true)
 	List<Map<String, Object>> getUnloadAdvRefPOwt2ArgnewMultiItemGRN(@Param("bunit") String bunit,@Param("supplier") String supplier,@Param("itype") String itype,@Param("ptype") String ptype,@Param("psubtype") String psubtype,@Param("orderdate") String orderdate);	 
-
+	
+	@Query(value="SELECT x1.pur_orderid,x1.pur_order_no,x1.supplier,u.unadviceno,u.supp_name,u.ula_date,u.weighment_status,u.grn_status \r\n"
+			+ "FROM (SELECT p.pur_orderid,p.pur_order_no,p.supplier,p1.term_pur_ord,p.ord_date FROM pur_order_termination p1 LEFT JOIN pur_order p ON p1.pur_orderid= p.pur_orderid WHERE p1.modified_type='INSERTED' AND p.modified_type='INSERTED') x1\r\n"
+			+ "LEFT JOIN wm_unload_advice u ON x1.pur_orderid=u.`referance_id` WHERE u.modified_type='INSERTED' AND u.terminate='0' AND x1.term_pur_ord='0' AND u.grn_status='0' AND x1.ord_date>=:fromdate AND x1.ord_date<=:todate", nativeQuery=true)
+	List<Map<String,Object>> searchpendingUnAdviceReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
+	
 }

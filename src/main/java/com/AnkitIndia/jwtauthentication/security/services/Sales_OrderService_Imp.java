@@ -2539,9 +2539,10 @@ public class Sales_OrderService_Imp implements Sales_OrderService {
 	}
 	
 	@Transactional
-	public StatusDTO SalesOrderTerminate(long id,String username)
+	public StatusDTO SalesOrderTerminate(long id,String username,String quotationid)
 	{
 		StatusDTO res =new StatusDTO();
+		sales_QuotationRepository.sOrderTerminate(quotationid);
 		sales_OrderRepository.SalesOrderTerminate(id,username);
 		
 		Optional<Sales_Order> op=this.sales_OrderRepository.findById(id);

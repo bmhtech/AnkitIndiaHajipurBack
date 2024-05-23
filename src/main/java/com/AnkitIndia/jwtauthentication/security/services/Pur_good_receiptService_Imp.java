@@ -1333,4 +1333,9 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		 return pur_good_receiptRepository.getJobWorkAllocationReport(fromdate,todate);
 	 }
 	 
+	 public List<Map<String, Object>> searchpendingGRNReport(String fromdate,String todate)
+	 {
+		 return pur_good_receiptRepository.searchpendingGRNReport(fromdate,todate);
+	 }
+	 
 }

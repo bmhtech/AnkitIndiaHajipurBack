@@ -148,4 +148,8 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 	
 	@Query(value="SELECT * FROM item_allocation_potaggingwith_loading WHERE ord_date>=:fromdate AND ord_date<=:todate", nativeQuery=true)
 	List<Map<String,Object>> getJobWorkAllocationReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
+	
+	@Query(value="SELECT grn_id,grn_no,grn_date,purchase_typename,referance_id,supplier,vehicle_no FROM pur_good_receipt WHERE `modified_type`='INSERTED' AND bill_status=0 AND grn_date>=:fromdate AND grn_date<=:todate", nativeQuery=true)
+	List<Map<String,Object>> searchpendingGRNReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
+	
 }

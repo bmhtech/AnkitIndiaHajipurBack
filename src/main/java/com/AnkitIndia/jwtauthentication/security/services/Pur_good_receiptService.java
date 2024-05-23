@@ -125,4 +125,7 @@ public interface Pur_good_receiptService {
 	public StatusDTO purchasechecktotaltranslimitupdate(double totalamount,String supplier_name,String finyear,long id);
 	
 	public List<Map<String, Object>> getJobWorkAllocationReport(String fromdate,String todate);
+	
+	public List<Map<String, Object>> searchpendingGRNReport(String fromdate,String todate);
+	
 }

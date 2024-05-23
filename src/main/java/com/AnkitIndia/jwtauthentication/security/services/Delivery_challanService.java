@@ -144,4 +144,7 @@ public interface Delivery_challanService {
 	public Map<String,Object> getLoadingAdviceTransDtls(String delv_id);
 	
 	public List<Map<String, Object>> getSalesFreightReport(String fromdate,String todate,String invoicetype);
+	
+	public List<Map<String, Object>> searchpendingDelvChallan(String fromdate,String todate);
+	
 }
