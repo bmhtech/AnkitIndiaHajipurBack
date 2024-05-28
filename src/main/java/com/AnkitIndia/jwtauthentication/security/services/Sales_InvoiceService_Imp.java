@@ -3427,6 +3427,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					//System.out.println(splitoutput[0] +" / " + splitoutput[1]+"/"+id);
 					
 					sales_InvoiceRepository.exportuomtally(id,splitoutput[0],Integer.parseInt(splitoutput[1]));
+					//sales_InvoiceRepository.exportuomtally(id,"OK",1);
 					
 				}
 				catch(Exception e)
@@ -3463,6 +3464,11 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			
 			return advList;
 		}
+	 
+	 public List<Map<String,Object>> getSalesInvoiceDataListFast(String currDate,String finyear)
+	 {
+		 return sales_InvoiceRepository.getSalesInvoiceDataListFast(currDate,finyear);
+	 }
 	 
 	 public List<Map<String, Object>> getSalesInvoiceSummaryCatagorywiseList(String catagory,String catagoryname,String fromdate,String todate,String bunit)
 	 	{

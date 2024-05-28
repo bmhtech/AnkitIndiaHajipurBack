@@ -140,13 +140,21 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
 			@Param("order_no") String order_no,@Param("order_date") String order_date, 
 			@Param("orderno") String orderno,@Param("fromdate") String fromdate,@Param("todate") String todate,@Param("customername") String customername,@Param("finyear") String finyear);
 
-	@Query(value = "{call getSearchsaleorderData(:#{#tablename},:#{#party_name},:#{#order_no},:#{#order_date},:#{#customername},:#{#orderno},:#{#fromdate},:#{#todate},:#{#finyear})}", nativeQuery = true)
+	//@Query(value = "{call getSearchsaleorderData(:#{#tablename},:#{#party_name},:#{#order_no},:#{#order_date},:#{#customername},:#{#orderno},:#{#fromdate},:#{#todate},:#{#finyear})}", nativeQuery = true)
+	@Query(value = "{call getSearchsaleinvoiceData(:#{#tablename},:#{#party_name},:#{#order_no},:#{#order_date},:#{#customername},:#{#orderno},:#{#fromdate},:#{#todate},:#{#finyear})}", nativeQuery = true)
 	List<Map<String,Object>> getsearchdataFast(@Param("tablename") String tablename,@Param("party_name") String party_name,
 			@Param("order_no") String order_no,@Param("order_date") String order_date, 
 			@Param("orderno") String orderno,@Param("fromdate") String fromdate,@Param("todate") String todate,@Param("customername") String customername,@Param("finyear") String finyear);
 
 	@Query("select s from Sales_Invoice s where s.modified_type = 'INSERTED' and s.invoice_date=:currDate ")
 	List<Sales_Invoice> getSalesInvoiceDataList(@Param("currDate") String currDate);
+	
+	@Query(value="SELECT s.*,CASE WHEN (s.invoice_type='INV00002' AND s.grand_total>=50000 AND LENGTH(waybill)>0 AND s.e_invoice_no='' AND s.create_ewaybill_wo_invoice=0) \r\n"
+			+ "OR (s.invoice_type='INV00004' AND s.grand_total>=50000 AND LENGTH(waybill)>0 AND s.e_invoice_no='' AND s.create_ewaybill_wo_invoice=0 AND IF( (SELECT COUNT(DISTINCT item_name)  FROM sales_invoice_item_dtls WHERE invoice_id=s.invoice_id AND item_name NOT LIKE '%BRAN%')>0,'1','0')>0)\r\n"
+			+ "OR (s.invoice_type='INV00001' AND s.grand_total>=100000 AND s.create_ewaybill_wo_invoice=0 AND s.state='BIHAR' AND IF( (SELECT COUNT(DISTINCT item_name)  FROM sales_invoice_item_dtls WHERE invoice_id=s.invoice_id AND item_name NOT LIKE '%BRAN%')>0,'1','0')>0)\r\n"
+			+ "OR (s.invoice_type='INV00001' AND s.create_ewaybill_wo_invoice=0 AND s.state!='BIHAR' AND IF( (SELECT COUNT(DISTINCT item_name)  FROM sales_invoice_item_dtls WHERE invoice_id=s.invoice_id AND item_name NOT LIKE '%BRAN%')>0,'1','0')>0) THEN 1 ELSE 0 END AS avail_ewaybill_woeinv\r\n"
+			+ "FROM sales_invoice s WHERE s.modified_type='INSERTED' AND s.invoice_date=:currdate AND s.fin_year=:finyear", nativeQuery=true)
+	List<Map<String,Object>> getSalesInvoiceDataListFast(@Param("currdate") String currdate,@Param("finyear") String finyear);
 	
 	
 	//@Query(value="select s1.item_name AS item_name,s1.packing_name AS packing_name,SUM(s1.squantity) AS squantity,SUM(s1.quantity) AS quantity,s1.price AS price,SUM(s1.amount) AS amount FROM sales_invoice_item_dtls s1,sales_invoice s2 WHERE s1.invoice_id = s2.invoice_id AND s2.party=:customer AND S2.invoice_date>=:fromdate AND S2.invoice_date<=:todate AND S2.business_unit=:bunit AND s1.modified_type='INSERTED' AND s2.modified_type='INSERTED' GROUP BY s1.item_name,s1.packing_name,s1.price ORDER BY s1.item_name", nativeQuery=true)

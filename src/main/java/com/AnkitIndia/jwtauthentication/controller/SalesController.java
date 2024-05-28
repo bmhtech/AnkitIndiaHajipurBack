@@ -1312,6 +1312,12 @@ public class SalesController {
 		return sales_InvoiceService.getSalesInvoiceDataList(currDate,finyear);
 	}
 	
+	@GetMapping("/getSalesInvoiceDataListFast/{currDate}/{finyear}")
+	public List<Map<String,Object>> getSalesInvoiceDataListFast(@PathVariable(value = "currDate") String currDate,@PathVariable(value = "finyear") String finyear)
+	{
+		return sales_InvoiceService.getSalesInvoiceDataListFast(currDate,finyear);
+	}
+	
 	@GetMapping("/getSISequenceId/{fin_year}/{inv_type}")
 	public SalesSequenceIdDTO getSISequenceId(@PathVariable(value = "fin_year") String fin_year,@PathVariable(value = "inv_type") String inv_type)
 	{
