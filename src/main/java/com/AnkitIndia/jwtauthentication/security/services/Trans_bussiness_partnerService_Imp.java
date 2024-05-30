@@ -1289,7 +1289,7 @@ public class Trans_bussiness_partnerService_Imp implements Trans_bussiness_partn
 			{
 				openingbal=opening.SendToTally(suppliername);
 				output = tally.SendToTally(suppliername,alliasname,address,statename,pincode,panno,registered,type,
-						String.valueOf(addressDetails.get(0).getMobile()),ifsccode,accountno,openingbal);
+						String.valueOf(addressDetails.get(0).getMobile()),ifsccode,accountno,openingbal,gstn);
 		        
 				//String [] splitoutput = output.split("\\|\\|");
 			

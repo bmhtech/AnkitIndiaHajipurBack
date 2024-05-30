@@ -1487,16 +1487,19 @@ public List<Map<String, Object>> getSupplierMasterListWithTotalAmt(String compan
 			
 			if(gstnno.compareToIgnoreCase("null")==0 || gstnno.compareToIgnoreCase("")==0) 
 			{
-				registerstatus="UnRegistered";
+				//registerstatus="UnRegistered";
+				registerstatus="Unregistered/Consumer";
 			}
 			else {
 				gstno = sup_statutary.getGst_no();
-				registerstatus="Registered";
+				//registerstatus="Registered";
+				registerstatus=sup_statutary.getSupplier_type();
 			}
 		}
 		else 
 		{
-			registerstatus="UnRegistered";
+			//registerstatus="UnRegistered";
+			registerstatus="Unregistered/Consumer";
 		}
 		String altname;
 		if(Utility.isNullOrEmpty(op.get().getAlt_name())) 
@@ -1543,6 +1546,8 @@ public List<Map<String, Object>> getSupplierMasterListWithTotalAmt(String compan
 		String bankname=sup_accounts.getBankname();
 		System.out.println("state name "+sup_address.getState());
 		
+		String statename=toTitleCase(sup_address.getState());
+		System.out.println("State :: "+statename);
 		
 		String websitecheck=supp_bussiness_partner_addressRepository.getSupplierAddr(op.get().getBp_Id()).getWebsite();
 		String website="";
@@ -1594,7 +1599,7 @@ public List<Map<String, Object>> getSupplierMasterListWithTotalAmt(String compan
 		try  
 		{
 			String openingbal=opening.SendToTally(supplier_name);
-			output=tally.SendToTally(supplier_name, altname,address,sup_address.getState(),pinno,sup_statutary.getPan_no(),registerstatus,
+			output=tally.SendToTally(supplier_name, altname,address,statename,pinno,sup_statutary.getPan_no(),registerstatus,
 					op.get().getGroup_type_name(),String.valueOf(contactdetails.get(0).getMobile()),gstno,
 					sup_accounts.getIfsc(),sup_accounts.getAcc_no(),bankname,website,email,phone,fax,contactperson,openingbal);
 			
@@ -1632,6 +1637,24 @@ public List<Map<String, Object>> getSupplierMasterListWithTotalAmt(String compan
 		
 		return op1.get();
 	}
+ 	
+ 	public static String toTitleCase(String input) {
+
+        StringBuilder titleCase = new StringBuilder(input.length());
+        boolean nextTitleCase = true;
+
+        for (char c : input.toLowerCase().toCharArray()) {
+            if (!Character.isLetterOrDigit(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toTitleCase(c);
+                nextTitleCase = false;
+            }
+            titleCase.append(c);
+        }
+
+        return titleCase.toString();
+    }
  	
  	@Transactional
 	public Supp_bussiness_partner accountpostingUndoSupplierBPartner(long id) 

@@ -15,7 +15,7 @@ import java.net.URLConnection;
 import java.util.Properties;
 
 public class Tallyrequest_TransporterMaster {
-	public String CreateRequest(String suppliername, String alliasname,String address,String statename,String pincode,String panno,String registered,String type,String mobileno,String ifsccode,String accountno,String openingbal)
+	public String CreateRequest(String suppliername, String alliasname,String address,String statename,String pincode,String panno,String registered,String type,String mobileno,String ifsccode,String accountno,String openingbal,String gstno)
     {             
 		alliasname="";
 
@@ -42,9 +42,32 @@ String TXML = null;
 					"<NAME>"+suppliername+"</NAME>\n" +
 					"<NAME>"+alliasname+"</NAME>\n"+
 					"</NAME.LIST>\n" +
-					"<ADDRESS.LIST>\n"+
+					
+					"<LEDGSTREGDETAILS.LIST>\n" +
+					"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n" +
+					"<GSTREGISTRATIONTYPE>"+registered+"</GSTREGISTRATIONTYPE>\n" +
+					"<PLACEOFSUPPLY>"+statename+"</PLACEOFSUPPLY>\n" +
+					"<GSTIN>"+gstno+"</GSTIN>\n" +
+					"<ISOTHTERRITORYASSESSEE>No</ISOTHTERRITORYASSESSEE>\n" +
+					"<CONSIDERPURCHASEFOREXPORT>No</CONSIDERPURCHASEFOREXPORT>\n" +
+					"<ISTRANSPORTER>No</ISTRANSPORTER>\n" +
+					"<ISCOMMONPARTY>No</ISCOMMONPARTY>\n" +
+					"</LEDGSTREGDETAILS.LIST>\n" +
+					"<LEDMAILINGDETAILS.LIST>\n" +
+					"<ADDRESS.LIST TYPE=\"String\">\n" +
+					"<ADDRESS>"+address+"</ADDRESS>\n" +
+					"</ADDRESS.LIST>\n" +
+					"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n" +
+					"<PINCODE>"+pincode+"</PINCODE>\n" +
+					"<MAILINGNAME>"+suppliername+"</MAILINGNAME>\n" +
+					"<STATE>"+statename+"</STATE>\n" +
+					"<COUNTRY>India</COUNTRY>\n" +
+					"</LEDMAILINGDETAILS.LIST>\n" +
+
+					/*"<ADDRESS.LIST>\n"+
 					"<ADDRESS>"+address+"</ADDRESS>\n"+
-					"</ADDRESS.LIST>\n"+
+					"</ADDRESS.LIST>\n"+*/
+					
 					"<PRIORSTATENAME>"+statename+"</PRIORSTATENAME>\n"+
 					"<PINCODE>"+pincode+"</PINCODE>\n"+
 					"<INCOMETAXNUMBER>"+panno+"</INCOMETAXNUMBER>\n"+
@@ -76,7 +99,7 @@ String TXML = null;
 			 return TXML;
     }
    
-    public String SendToTally(String suppliername, String alliasname,String address,String statename,String pincode,String panno,String registered,String type,String mobileno,String ifsccode,String accountno,String openingbal) throws Exception{
+    public String SendToTally(String suppliername, String alliasname,String address,String statename,String pincode,String panno,String registered,String type,String mobileno,String ifsccode,String accountno,String openingbal,String gstno) throws Exception{
     	
     	//Properties prop = readPropertiesFile("src/main/resources/credentials.properties");
        
@@ -98,7 +121,7 @@ String TXML = null;
         //System.out.println("ifsccode: "+ifsccode);
         //System.out.println("accountno: "+accountno);
         
-        String Voucher = this.CreateRequest(suppliername,alliasname,address,statename,pincode,panno,registered,type,mobileno,ifsccode,accountno,openingbal);
+        String Voucher = this.CreateRequest(suppliername,alliasname,address,statename,pincode,panno,registered,type,mobileno,ifsccode,accountno,openingbal,gstno);
 
 // Create the connection where we're going to send the file.
         URL url = new URL(Url);

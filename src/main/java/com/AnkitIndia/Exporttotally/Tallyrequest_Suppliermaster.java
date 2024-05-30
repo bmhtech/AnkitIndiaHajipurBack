@@ -48,9 +48,32 @@ String TXML = null;
 					"<NAME>"+suppliername+"</NAME>\n" +
 				
 					"</NAME.LIST>\n" +
-					"<ADDRESS.LIST>\n"+
+					
+					"<LEDGSTREGDETAILS.LIST>\n" +
+					"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n" +
+					"<GSTREGISTRATIONTYPE>"+registered+"</GSTREGISTRATIONTYPE>\n" +
+					"<PLACEOFSUPPLY>"+statename+"</PLACEOFSUPPLY>\n" +
+					"<GSTIN>"+gstno+"</GSTIN>\n" +
+					"<ISOTHTERRITORYASSESSEE>No</ISOTHTERRITORYASSESSEE>\n" +
+					"<CONSIDERPURCHASEFOREXPORT>No</CONSIDERPURCHASEFOREXPORT>\n" +
+					"<ISTRANSPORTER>No</ISTRANSPORTER>\n" +
+					"<ISCOMMONPARTY>No</ISCOMMONPARTY>\n" +
+					"</LEDGSTREGDETAILS.LIST>\n" +
+					"<LEDMAILINGDETAILS.LIST>\n" +
+					"<ADDRESS.LIST TYPE=\"String\">\n" +
+						"<ADDRESS>"+address+"</ADDRESS>\n" +
+					"</ADDRESS.LIST>\n" +
+					"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n" +
+					"<PINCODE>"+pincode+"</PINCODE>\n" +
+					"<MAILINGNAME>"+suppliername+"</MAILINGNAME>\n" +
+					"<STATE>"+statename+"</STATE>\n" +
+					"<COUNTRY>India</COUNTRY>\n" +
+					"</LEDMAILINGDETAILS.LIST>\n" +
+
+					/*"<ADDRESS.LIST>\n"+
 					"<ADDRESS>"+address+"</ADDRESS>\n"+
-					"</ADDRESS.LIST>\n"+
+					"</ADDRESS.LIST>\n"+*/
+					
 					"<PRIORSTATENAME>"+statename+"</PRIORSTATENAME>\n"+
 					"<PINCODE>"+pincode+"</PINCODE>\n"+
 			        "<EMAIL>"+email+"</EMAIL>\n"+
