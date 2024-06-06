@@ -191,4 +191,7 @@ public interface Sales_OrderService {
 	public List<Map<String, Object>> getTrialdata(String fromdate,String todate);
 	
 	public List<Map<String, Object>> getSOjwRestQty(String order_id,String item_id,String item_code);
+	
+	public List<Map<String, Object>> getWeighmentReportForAnujSir(String fromdate,String todate);
+	
 }

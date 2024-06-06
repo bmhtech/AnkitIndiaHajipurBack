@@ -2202,4 +2202,11 @@ public class ReportController {
 				return delivery_challanService.searchpendingDelvChallan(fromdate,todate);
 			}
 			
+			@GetMapping("/getWeighmentReportForAnujSir/{fromdate}/{todate}")
+			public List<Map<String,Object>> getWeighmentReportForAnujSir(@PathVariable(value = "fromdate") String fromdate,@PathVariable(value = "todate") String todate)
+			{
+				//System.out.println("advice::"+advice);
+				return sales_orderService.getWeighmentReportForAnujSir(fromdate,todate);
+			}
+			
 }
