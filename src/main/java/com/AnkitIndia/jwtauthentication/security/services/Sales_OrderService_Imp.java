@@ -4234,4 +4234,10 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 	{
 		return sales_OrderRepository.getTrialdata(fromdate,todate);
 	}
+	
+	public List<Map<String, Object>> getWeighmentReportForAnujSir(String fromdate,String todate)
+	{
+		return sales_OrderRepository.getWeighmentReportForAnujSir(fromdate,todate);
+	}
+	
 }
