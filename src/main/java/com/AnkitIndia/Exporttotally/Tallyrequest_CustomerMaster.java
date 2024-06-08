@@ -39,15 +39,37 @@ String TXML = null;
 					"<REQUESTDATA>\n" +
 					"<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n" +
 		//			"<LEDGER ACTION=\"Create\">\n" +
-		"<LEDGER NAME=\""+customername+"\""+" Action = \"Alter\">\n"+
+					"<LEDGER NAME=\""+customername+"\""+" Action = \"Alter\">\n"+
 					"<NAME.LIST>\n" +
 					"<NAME>"+customername+"</NAME>\n" +
 					
 					"</NAME.LIST>\n" +
-					"<ADDRESS.LIST>\n"+
+					
+					"<LEDGSTREGDETAILS.LIST>\n" +
+					"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n" +
+					"<GSTREGISTRATIONTYPE>"+registered+"</GSTREGISTRATIONTYPE>\n" +
+					"<PLACEOFSUPPLY>"+statename+"</PLACEOFSUPPLY>\n" +
+					"<GSTIN>"+gstno+"</GSTIN>\n" +
+					"<ISOTHTERRITORYASSESSEE>No</ISOTHTERRITORYASSESSEE>\n" +
+					"<CONSIDERPURCHASEFOREXPORT>No</CONSIDERPURCHASEFOREXPORT>\n" +
+					"<ISTRANSPORTER>No</ISTRANSPORTER>\n" +
+					"<ISCOMMONPARTY>No</ISCOMMONPARTY>\n" +
+					"</LEDGSTREGDETAILS.LIST>\n" +
+					"<LEDMAILINGDETAILS.LIST>\n" +
+					"<ADDRESS.LIST TYPE=\"String\">\n" +
+					"<ADDRESS>"+address+"</ADDRESS>\n" +
+					"</ADDRESS.LIST>\n" +
+					"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n" +
+					"<PINCODE>"+pincode+"</PINCODE>\n" +
+					"<MAILINGNAME>"+customername+"</MAILINGNAME>\n" +
+					"<STATE>"+statename+"</STATE>\n" +
+					"<COUNTRY>India</COUNTRY>\n" +
+					"</LEDMAILINGDETAILS.LIST>\n" +
+
+					/*"<ADDRESS.LIST>\n"+
 					"<ADDRESS>"+address+"</ADDRESS>\n"+
 					"</ADDRESS.LIST>\n"+
-					
+					*/
 					
                      "<MAILINGNAME.LIST>\n"+
 				     "<MAILINGNAME>"+printtoname+"</MAILINGNAME>\n"+

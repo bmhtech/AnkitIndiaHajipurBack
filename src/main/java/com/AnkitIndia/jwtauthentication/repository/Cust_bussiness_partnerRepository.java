@@ -38,7 +38,7 @@ public interface Cust_bussiness_partnerRepository extends JpaRepository<Cust_bus
 	@Query( "select c from Cust_bussiness_partner c where c.cp_Id = :code and c.modified_type = 'INSERTED'")
 	List<Cust_bussiness_partner> getCustomerDetails(@Param("code") String code);
 	
-	@Query( value="select *,c.cp_id as cp_Id from Cust_bussiness_partner c where c.cp_Id = :code and c.modified_type = 'INSERTED'", nativeQuery = true)
+	@Query( value="select *,c.cp_id as cp_Id from cust_bussiness_partner c where c.cp_Id = :code and c.modified_type = 'INSERTED'", nativeQuery = true)
 	List<Map<String,Object>> getCustomerDetailsFast(@Param("code") String code);
 	
 	@Query( "select c from Cust_bussiness_partner c where c.group_type = :group and c.modified_type = 'INSERTED'")

@@ -1623,6 +1623,12 @@ public class ReportController {
 			return sales_orderService.getSalesOrderReport(fromdate,todate);
 		}
 		
+		@GetMapping("/getSalesOrderReportOrderWise/{salesordernumber}")
+		public List<Map<String, Object>> getSalesOrderReportOrderWise(@PathVariable(value = "salesordernumber") String salesordernumber)
+		{
+			return sales_orderService.getSalesOrderReportOrderWise(salesordernumber);
+		}
+		
 		/************** End Pending Souda **************/
 		
 		
@@ -2174,4 +2180,33 @@ public class ReportController {
 			{
 				return pur_good_receiptService.getJobWorkAllocationReport(fromdate,todate);
 			}
+			
+			@GetMapping("/searchpendingUnAdviceReport/{fromdate}/{todate}")
+			public List<Map<String, Object>> searchpendingUnAdviceReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return wm_unload_adviceService.searchpendingUnAdviceReport(fromdate,todate);
+			}
+			
+			@GetMapping("/searchpendingGRNReport/{fromdate}/{todate}")
+			public List<Map<String, Object>> searchpendingGRNReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return pur_good_receiptService.searchpendingGRNReport(fromdate,todate);
+			}
+			
+			@GetMapping("/searchpendingDelvChallan/{fromdate}/{todate}")
+			public List<Map<String, Object>> searchpendingDelvChallan(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return delivery_challanService.searchpendingDelvChallan(fromdate,todate);
+			}
+			
+			@GetMapping("/getWeighmentReportForAnujSir/{fromdate}/{todate}")
+			public List<Map<String,Object>> getWeighmentReportForAnujSir(@PathVariable(value = "fromdate") String fromdate,@PathVariable(value = "todate") String todate)
+			{
+				//System.out.println("advice::"+advice);
+				return sales_orderService.getWeighmentReportForAnujSir(fromdate,todate);
+			}
+			
 }

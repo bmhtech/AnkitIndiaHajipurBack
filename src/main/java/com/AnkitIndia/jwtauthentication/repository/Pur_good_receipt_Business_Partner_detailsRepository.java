@@ -14,7 +14,7 @@ public interface Pur_good_receipt_Business_Partner_detailsRepository extends Jpa
 	@Query( "select p from Pur_good_receipt_Business_Partner_details p where p.grn_id = :grnid and p.modified_type ='INSERTED'" )
 	Pur_good_receipt_Business_Partner_details getPurGoodRcptBPDtls(@Param("grnid") String grnid);
 	
-	@Query(value= "SELECT p.* FROM pur_good_receipt_Business_Partner_details p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	@Query(value= "SELECT p.* FROM pur_good_receipt_business_partner_details p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
 	Map<String, Object> grnBPDtlsRetriveListFast(@Param("grnid") String grnid);
 	
 	@Modifying(clearAutomatically = true)

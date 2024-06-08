@@ -1905,11 +1905,12 @@ public class Pur_BillService_Imp implements Pur_BillService{
 			 
 			 }	
 				
-				System.out.println(" output :: "+output);
+				//System.out.println(" output :: "+output);
 				String [] splitoutput = output.split("\\|\\|");
-				System.out.println(splitoutput[0] +" / " + splitoutput[1]+"/"+id);
+				//System.out.println(splitoutput[0] +" / " + splitoutput[1]+"/"+id);
 				
 				pur_BillRepository.exportuomtally(id,splitoutput[0],Integer.parseInt(splitoutput[1]));
+			 	//pur_BillRepository.exportuomtally(id,"OK",1);
 			}
 			catch(Exception e)
 			{

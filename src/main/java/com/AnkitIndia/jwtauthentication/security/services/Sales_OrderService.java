@@ -49,7 +49,7 @@ public interface Sales_OrderService {
 	
 	public Sales_Order deleteSalesOrder(Sales_Order sOrder,Long id);
 	
-	public StatusDTO SalesOrderTerminate(long id,String username,String quotaionid);
+	public StatusDTO SalesOrderTerminate(long id,String username,String quotationid);
 	
 	public Sales_Order deleteEffectiveSalesOrder(Sales_Order sOrder,Long id);
 	
@@ -184,9 +184,14 @@ public interface Sales_OrderService {
 	
 	public List<Map<String, Object>> getSalesOrderReport(String fromdate, String todate);
 	
+	public List<Map<String, Object>> getSalesOrderReportOrderWise(String orderno);
+	
 	public List<Map<String, Object>> findJobSalesOrders(String bunit,String party,String advdate);
 	
 	public List<Map<String, Object>> getTrialdata(String fromdate,String todate);
 	
 	public List<Map<String, Object>> getSOjwRestQty(String order_id,String item_id,String item_code);
+	
+	public List<Map<String, Object>> getWeighmentReportForAnujSir(String fromdate,String todate);
+	
 }

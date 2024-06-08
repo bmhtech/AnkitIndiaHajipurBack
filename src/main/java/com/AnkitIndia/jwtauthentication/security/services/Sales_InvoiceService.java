@@ -102,6 +102,8 @@ public interface Sales_InvoiceService {
 	
 	public List<Sales_InvoiceDTO> getSalesInvoiceDataList(String currDate,String finyear);
 
+	public List<Map<String,Object>> getSalesInvoiceDataListFast(String currDate,String finyear);
+	
 	public List<Map<String, Object>> getSalesInvoiceSummaryCatagorywiseList(String catagory,String catagoryname,String fromdate,String todate,String bunit);
 
 	public List<Map<String, Object>> getSalesInvoiceMiscList(String catagory,String fromdate,String todate,String bunit,String broker,String customer);

@@ -1504,6 +1504,22 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 			System.out.println("over here 12 ");
 			
 	//address.substring(0, address.length()-1)
+			String panno="";
+			if(Utility.isNullOrEmpty(cust_statutary.getPan_no()))
+			{
+				if(cust_statutary.getPan_no().compareToIgnoreCase("null")==0 || cust_statutary.getPan_no().compareToIgnoreCase("")==0 ||cust_statutary.getPan_no().compareToIgnoreCase("XXXXXXXXXX")==0) 
+				{
+					panno="";
+				}
+				else
+				{
+					panno=cust_statutary.getPan_no();
+				}
+			}
+			else
+			{
+				panno="";
+			}
 			String registerstatus="";
 	
 		if(Utility.isNullOrEmpty(cust_statutary.getGst_no())) 
@@ -1512,17 +1528,20 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 			
 			if(gstnno.compareToIgnoreCase("null")==0 || gstnno.compareToIgnoreCase("")==0) 
 			{
-				registerstatus="UnRegistered";
+				//registerstatus="UnRegistered";
+				registerstatus="Unregistered/Consumer";
 			}
 			else {
 				gstno = cust_statutary.getGst_no();
-				registerstatus="Registered";
+				//registerstatus="Registered";
+				registerstatus=cust_statutary.getCustomer_type();
 			}
 			
 		}
 		else 
 		{
-			registerstatus="UnRegistered";
+			//registerstatus="UnRegistered";
+			registerstatus="Unregistered/Consumer";
 		}
 		String altname;
 		if(Utility.isNullOrEmpty(op.get().getAlt_name())) 
@@ -1567,6 +1586,8 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 		{
 			pinno="";
 		}
+		String statename=toTitleCase(cust_address.getState());
+		System.out.println("State :: "+statename);
 		String bankname=cust_accounts.getBankname();
 		//System.out.println("over here 12 ");
 		//System.out.println(op.get().getCp_name()+"  // "+ altname + " // " + address);
@@ -1610,7 +1631,7 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 		   String openingbal=opening.SendToTally(customer_name);
 		   System.out.println(openingbal);
 		   
-		   output=tally.SendToTally(customer_name, altname,address,cust_address.getState(),pinno,cust_statutary.getPan_no(),registerstatus,type,
+		   output=tally.SendToTally(customer_name, altname,address,statename,pinno,panno,registerstatus,type,
 				   String.valueOf(contactdetails.get(0).getMobile()),gstno,cust_accounts.getIfsc(),
 				   cust_accounts.getAcc_no(),bankname,printtoname,openingbal);
 			// System.out.println("3rd :: ");
@@ -1651,6 +1672,24 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 		
 		return op1.get();
 	}
+ 	
+ 	public static String toTitleCase(String input) {
+
+        StringBuilder titleCase = new StringBuilder(input.length());
+        boolean nextTitleCase = true;
+
+        for (char c : input.toLowerCase().toCharArray()) {
+            if (!Character.isLetterOrDigit(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toTitleCase(c);
+                nextTitleCase = false;
+            }
+            titleCase.append(c);
+        }
+
+        return titleCase.toString();
+    }
  	
  	public static Properties readPropertiesFile(String fileName) throws IOException {
         FileInputStream fis = null;
