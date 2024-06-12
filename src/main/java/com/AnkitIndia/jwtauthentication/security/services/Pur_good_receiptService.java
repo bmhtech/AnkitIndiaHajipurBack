@@ -46,6 +46,8 @@ public interface Pur_good_receiptService {
 	
 	public Pur_good_receipt_item_details gettaxcodefromgrnnew(String itemcode,String grnid,String packingcode);
 	
+	public List<Pur_good_receipt_item_details> gettaxcodefromgrnnewMulti(String itemcode,String grnid,String packingcode);
+	
 	public Pur_good_receipt_item_details gettaxcodefromgrnnewForStore(String itemcode,String grnid,String packingcode,String classified);
 	
 	public List<Pur_good_receipt_Pagination_DTO> searchGRN(String orderno,String fromdate, String todate,String bus_partner1,String pur_type1,String finyear);
