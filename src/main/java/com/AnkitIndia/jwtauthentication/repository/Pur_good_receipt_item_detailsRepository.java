@@ -37,6 +37,9 @@ public interface Pur_good_receipt_item_detailsRepository extends JpaRepository<P
 	@Query( "select p from Pur_good_receipt_item_details p where p.grn_id =:grnid AND p.adv_item_code=:adv_item_code and p.adv_packing=:adv_packing and p.modified_type ='INSERTED'")
 	Pur_good_receipt_item_details getPurGoodRcptItemDtlsListTAXnew (@Param("grnid") String grnid ,@Param("adv_item_code") String adv_item_code,@Param("adv_packing") String adv_packing);
 	
+	@Query( "select p from Pur_good_receipt_item_details p where p.grn_id =:grnid AND p.adv_item_code=:adv_item_code and p.adv_packing=:adv_packing and p.modified_type ='INSERTED'")
+	List<Pur_good_receipt_item_details> gettaxcodefromgrnnewMulti (@Param("grnid") String grnid ,@Param("adv_item_code") String adv_item_code,@Param("adv_packing") String adv_packing);
+	
 	@Query( "select p from Pur_good_receipt_item_details p where p.grn_id =:grnid AND p.adv_item_code=:adv_item_code and p.adv_packing=:adv_packing and p.classified_item_name=:classified and p.modified_type ='INSERTED'")
 	Pur_good_receipt_item_details getPurGoodRcptItemDtlsListTAXnewForStore (@Param("grnid") String grnid ,@Param("adv_item_code") String adv_item_code,@Param("adv_packing") String adv_packing,@Param("classified") String classified);
 	

@@ -612,10 +612,17 @@ public class PurchaseController {
 	{
 		  return pur_good_receiptService.gettaxcodefromgrn(itemcode,grnid);
 	}
+	
 	@GetMapping("/gettaxcodefromgrnnew/{itemcode}/{grnid}/{packingcode}")
 	public Pur_good_receipt_item_details gettaxcodefromgrnnew(@PathVariable(value = "itemcode") String itemcode,@PathVariable(value = "grnid") String grnid,@PathVariable(value = "packingcode") String packingcode) 
 	{
 		  return pur_good_receiptService.gettaxcodefromgrnnew(itemcode,grnid,packingcode);
+	}
+	
+	@GetMapping("/gettaxcodefromgrnnewMulti/{itemcode}/{grnid}/{packingcode}")
+	public List<Pur_good_receipt_item_details> gettaxcodefromgrnnewMulti(@PathVariable(value = "itemcode") String itemcode,@PathVariable(value = "grnid") String grnid,@PathVariable(value = "packingcode") String packingcode) 
+	{
+		  return pur_good_receiptService.gettaxcodefromgrnnewMulti(itemcode,grnid,packingcode);
 	}
 	
 	@GetMapping("/gettaxcodefromgrnnewForStore/{itemcode}/{grnid}/{packingcode}/{classified}")

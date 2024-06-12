@@ -594,6 +594,16 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		return itemdetails;
 	}
 	
+	public List<Pur_good_receipt_item_details> gettaxcodefromgrnnewMulti(String itemcode,String grnid,String packingcode)
+	{
+		List<Pur_good_receipt_item_details> itemdetailsList = pur_good_receipt_item_detailsRepository.gettaxcodefromgrnnewMulti(itemcode,grnid,packingcode);
+		for(Pur_good_receipt_item_details itemdetails: itemdetailsList)
+		{
+			itemdetails.setTax_code(tax_code_detailsRepository.getTaxCodeDetailstax_name(itemdetails.getTax_code()).getTax_id());
+		}
+		return itemdetailsList;
+	}
+	
 	public Pur_good_receipt_item_details gettaxcodefromgrnnewForStore(String itemcode,String grnid,String packingcode,String classifird) 
 	{
 		Pur_good_receipt_item_details itemdetails=pur_good_receipt_item_detailsRepository.getPurGoodRcptItemDtlsListTAXnewForStore(grnid,itemcode,packingcode,classifird);
