@@ -268,6 +268,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	public SalesSequenceIdDTO getSISequenceId(String fin_year,String inv_type)
 	{
 		String prefix="";
+		String prefix1="";
 		//String prefix=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
 		int slno=0;
 		String gen_sno="";
@@ -287,7 +288,16 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			
 			//prefix=prefix+"-"+fin_year+"-";
 			//prefix=prefix+"-"+final_fyear+"-";
-			prefix="AILP"+"/"+final_fyear+"/TW";
+			prefix1=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
+			//prefix=prefix+"-"+fin_year+"-";
+			if(inv_type.compareToIgnoreCase("INV00001") == 0)
+			{
+				prefix="AILP"+"/"+final_fyear+"/TW";
+			}
+			else
+			{
+				prefix="AILP"+"/"+final_fyear+"/"+prefix1;
+			}
 			//System.err.println(prefix);
 			
 			gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);
@@ -313,11 +323,8 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			//String gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);
 			 //String gen_sno=UniqueIDTransaction.uniqueId6(prefix,slno);
 			gen_sno=UniqueIDTransaction.uniqueId6(prefix,slno);
-			
 		}
 		
-		
-		 
 		Type listType = new TypeToken<SalesSequenceIdDTO>() {}.getType();
 		SalesSequenceIdDTO genCode = new ModelMapper().map(gen_sno,listType);
 		genCode.setSequenceid(gen_sno);
@@ -377,7 +384,18 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
 			
 			//tprefix=tprefix+"-"+sinvoice.getFin_year()+"-";
-			String tprefix="AILP"+"/"+final_fyear+"/TW";
+			//String tprefix="AILP"+"/"+final_fyear+"/TW";
+			String tprefix="";
+			String prefix1=invoice_typeRepository.getSalesInvTypesDtls(sinvoice.getInvoice_type()).getInvtype_prefix();
+			//prefix=prefix+"-"+fin_year+"-";
+			if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00001") == 0)
+			{
+				tprefix="AILP"+"/"+final_fyear+"/TW";
+			}
+			else
+			{
+				tprefix="AILP"+"/"+final_fyear+"/"+prefix1;
+			}
 		
 			gen_tslno=UniqueIDTransaction.uniqueId4(tprefix,nslno);
 		}

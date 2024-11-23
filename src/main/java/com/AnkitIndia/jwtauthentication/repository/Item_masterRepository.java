@@ -111,6 +111,8 @@ public interface Item_masterRepository extends JpaRepository<Item_master, Long> 
 	@Query( "select i from Item_master i where i.modified_type = 'INSERTED' and i.item_active =:status and i.item_type ='JOB WORK' and i.sales_item =:status and i.item_unit like %:bunit% ")
 	List<Item_master> getItemThroughJobWork(@Param("status") boolean status,@Param("bunit") String bunit);
 	
+	@Query( "select i from Item_master i where i.modified_type = 'INSERTED' and i.item_active =:status and i.item_type ='TRADING GOODS' and i.sales_item =:status and i.item_unit like %:bunit% and item_name LIKE '%TAX%'")
+	List<Item_master> getItemThroughTradingTax(@Param("status") boolean status,@Param("bunit") String bunit);
 	
 	@Query( "select i from Item_master i where i.modified_type = 'INSERTED' and i.item_active =:status and i.processed_item =:status ")
 	List<Item_master> getItemThruProcessed(@Param("status") boolean status);
