@@ -1230,6 +1230,28 @@ public class Item_masterService_Imp implements Item_masterService {
 				
 				return itemsalesList;
 			}
+		 else if(inv_type.compareToIgnoreCase("INV00005") == 0) 
+			{
+				List<Item_master> modelList=item_masterRepository.getItemThroughTradingTax(true,bunit);
+				modelList.forEach((e->{
+					e.setItem_name(e.getItem_name().toUpperCase());
+				}));
+				
+				//System.out.println("getItemThruSalesThruBU");
+				List<Item_master> allData = modelList
+						  .stream()
+						  .filter(c -> c.getCompany_id().equals(company))
+						  .sorted(Comparator.comparing(Item_master::getItem_name))
+						  .collect(Collectors.toList());
+				
+				// Create Conversion Type
+				Type listType = new TypeToken<List<Item_masterDTO>>() {}.getType();
+				
+				// Convert List of Entity objects to a List of DTOs objects 
+				List<Item_masterDTO> itemsalesList = new ModelMapper().map(allData,listType);
+				
+				return itemsalesList;
+			}
 		else 
 		{
 			List<Item_master> modelList_new=item_masterRepository.getItemThruSalesThruBU_withoutPMS(true,"Packing Items",true,bunit);

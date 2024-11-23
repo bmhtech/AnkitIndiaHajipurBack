@@ -182,11 +182,11 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 	{
 		// auto gen code starts
 		String prefix="";
+		String prefix1="";
 		int slno=0;
 		String gen_sno="";
 		if(companyMasterRepository.getCompanyName().compareToIgnoreCase("ANKIT INDIA LIMITED")==0)
 		{
-			
 			String sno=dChallanRepository.countDlvChln(fin_year,inv_type);
 			
 			if(sno != null ) {
@@ -196,9 +196,17 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			String fin_yearspit[]=fin_year.split("-");
 			String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
 			
-			
+			prefix1=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
 			//prefix=prefix+"-"+fin_year+"-";
-			prefix="AILP"+"/"+final_fyear+"/TW";
+			if(inv_type.compareToIgnoreCase("INV00001") == 0)
+			{
+				prefix="AILP"+"/"+final_fyear+"/TW";
+			}
+			else
+			{
+				prefix="AILP"+"/"+final_fyear+"/"+prefix1;
+			}
+			
 			//System.err.println(prefix);
 			gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);
 		}
@@ -272,8 +280,18 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			
 			
 			//tprefix=tprefix+"-"+dChallan.getFin_year()+"-";
-			String tprefix="AILP"+"/"+final_fyear+"/TW";
-			
+			//String tprefix="AILP"+"/"+final_fyear+"/TW";
+			String tprefix="";
+			String prefix1=invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_prefix();
+			//prefix=prefix+"-"+fin_year+"-";
+			if(dChallan.getInv_type().compareToIgnoreCase("INV00001") == 0)
+			{
+				tprefix="AILP"+"/"+final_fyear+"/TW";
+			}
+			else
+			{
+				tprefix="AILP"+"/"+final_fyear+"/"+prefix1;
+			}
 			 gen_tslno=UniqueIDTransaction.uniqueId4(tprefix,nslno);
 		}
 		else 
