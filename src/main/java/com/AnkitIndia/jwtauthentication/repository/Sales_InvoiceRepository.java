@@ -330,4 +330,7 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
 	int updateAsnNo(@Param("id") long id,@Param("invoiceno") String invoiceno,@Param("asnno") String asnno);
 	
     
+    @Query(value="select s.payable_amt from sales_invoice s where s.modified_type = 'INSERTED' and s.invoice_id =:invoice_id ORDER BY s.invoice_id DESC",nativeQuery=true)
+	double getSalesInvDetailsNew(@Param("invoice_id") String invoice_id);
+    
 }
