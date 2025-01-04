@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -3646,11 +3647,13 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		
 		public StatusDTO getnumtowordsaleinvoice(String invoice_id) 
 		{
-			double totalamount=sales_InvoiceRepository.getSalesInvDetails(invoice_id).getPayable_amt();
-			System.out.println(totalamount);
-			String amountsplit[]=String.valueOf(totalamount).split("[.]");
+			//String totalamount="0.00";
+			// totalamount=""+sales_InvoiceRepository.getSalesInvDetails(invoice_id).getPayable_amt();
+			BigDecimal totalamount=new BigDecimal(sales_InvoiceRepository.getSalesInvDetailsNew(invoice_id));
+			System.out.println("totalamount::"+totalamount.longValue());
+			String amountsplit[]=String.valueOf(totalamount.longValue()+".00").split("[.]");
 			
-			System.out.println(String.valueOf(totalamount) +" / " + amountsplit[0] + " // " + amountsplit[1]);
+			//System.out.println(String.valueOf(totalamount) +" / " + amountsplit[0] + " // " + amountsplit[1]);
 			String ruppes=NumToWord.numberConvert(Integer.parseInt(amountsplit[0]));//wordConvert
 			String amountword="Rupees ";
 			/*if(amountsplit[1].compareToIgnoreCase("0") == 0) 
@@ -3671,6 +3674,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 				}
 			}
 			*/
+			
 			if(amountsplit[1].compareToIgnoreCase("0") == 0) 
 			{
 				 amountword+= ruppes +" Only" ;
@@ -3684,10 +3688,11 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 				}
 				else 
 				{
+					System.out.println("amt::"+amountsplit[1]);
 					String paisa=NumToWord.numberConvert(Integer.parseInt(amountsplit[1]));	//wordConvert
 					amountword+= ruppes +" and " + paisa + " Paisa Only";
 				}
-			}
+			} 
 		   // System.out.println("amountword :: "+amountword);
 		    StatusDTO res =new StatusDTO();
 		    res.setStatus(amountword);

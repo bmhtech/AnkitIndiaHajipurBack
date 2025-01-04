@@ -31,7 +31,7 @@ public class Sales_Quotation_Summary extends CommonProperties{
 	@Column(columnDefinition="varchar(50) default 0")
 	private String quotation_no;
 	
-	@Column(columnDefinition = "Double(10,2)")
+	@Column(columnDefinition = "Double(15,2)")
 	private double item_total;
 	
 	@Column(columnDefinition = "Double(10,2)")
@@ -40,13 +40,13 @@ public class Sales_Quotation_Summary extends CommonProperties{
 	@Column(columnDefinition = "Double(10,2)")
 	private double tax_total;
 	
-	@Column(columnDefinition = "Double(10,2)")
+	@Column(columnDefinition = "Double(15,2)")
 	private double net_amount;
 	
 	@Column(columnDefinition = "Double(10,2)")
 	private double app_brokerage;
     
-	@Column(columnDefinition = "Double(10,2)")
+	@Column(columnDefinition = "Double(15,2)")
 	private double net_r_value;
 	
 	@OneToOne(cascade= CascadeType.ALL)
