@@ -3090,11 +3090,18 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			}
 			else 
 			{
+		        // Create a DecimalFormat instance to format the number with 2 decimal places
+		        DecimalFormat df = new DecimalFormat("0.00");
+		        
 				String partyname=op.get().getPartyname();
 				String print_to_name=cust_bussiness_partnerRepository.getCustomerThruBUstringnew(op.get().getParty()).getPrint_to_name();
 				String creditnotedate=op.get().getSalesorderdate();
-				double partyamount=op.get().getPayable_amt();
 				
+				//double partyamount=op.get().getPayable_amt();
+				String partyamount=df.format(op.get().getPayable_amt());
+				// Output the formatted Payableamount
+		        System.out.println("Payableamount:: "+partyamount);
+		        
 				String trucknumber="";
 				
 				// e-invoice starts
@@ -3192,6 +3199,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			        String discountledger[]=new String[itemDetails.size()];
 			        String price_based_on[]=new String[itemDetails.size()];
 			        double item_total=0.00;
+			        
 			        for(int i=0;i<itemDetails.size();i++) 
 			        {
 			        	
@@ -3199,12 +3207,18 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 						Item_group_master_sales_acc itemgroup= item_group_master_sales_accRepository.getItem_group_master_sales_acc(subgroup_items_code);
 			        	item_name_ledger[i]=ledgermasterRepository.getLedgers(itemgroup.getItem_total()).getLedgername();
 			        	item_name[i]=itemDetails.get(i).getItem_name();
-			        	item_amount[i]=String.valueOf(itemDetails.get(i).getAmount());
+			        	
+			        	// Format the amount
+			        	item_amount[i]=String.valueOf(df.format(itemDetails.get(i).getAmount()));
+			        	
 			        	item_rate[i]=String.valueOf(itemDetails.get(i).getPrice());
 			        	price_based_on[i]=itemDetails.get(i).getPrice_based_on();
 			        	item_passeditemqty[i]=String.valueOf(itemDetails.get(i).getQuantity());
 			        	//item_passeditemqty[i]=String.valueOf(itemDetails.get(i).getSquantity());
 			        	packing_qty[i]=String.valueOf((int)(itemDetails.get(i).getSquantity()));
+
+				        // Output the formatted amount
+				        System.out.println("ItemAmt:: "+item_amount[i]);
 			        	
 			        	packing_uom[i]=item_masterRepository.getItemDetailsbyname(itemDetails.get(i).getPacking_name()).getMstock_unit_name(); 
 			        	item_qty[i]=itemDetails.get(i).getUom();
@@ -3216,9 +3230,11 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			        		discountledger[i]=ledgermasterRepository.getLedgers(itemgroup.getDiscount()).getLedgername();
 			        	}
 			        	
-			        	
+			        	System.out.println("item Rate: "+itemDetails.get(i).getPrice()+" /Amt/ "+itemDetails.get(i).getAmount()+" /NumAmt/ "+df.format(itemDetails.get(i).getAmount()));
 			        	
 			        }
+			        
+			        System.out.println("item Amt: "+item_amount+" /String Amt/ "+String.valueOf(item_amount));
 			      //item details ends here  
 			        
 			      //round off starts here  

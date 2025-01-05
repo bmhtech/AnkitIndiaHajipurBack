@@ -17,7 +17,8 @@ import java.util.UUID;
 
 public class Tallyrequest_SalesInvoice {
 	
-	  public String CreateRequest(String partyname,String trucknumber,String creditnotedate,String statename,double partyamount,String item_name_ledger[],
+	  //public String CreateRequest(String partyname,String trucknumber,String creditnotedate,String statename,double partyamount,String item_name_ledger[],
+	  public String CreateRequest(String partyname,String trucknumber,String creditnotedate,String statename,String partyamount,String item_name_ledger[],
 			  String item_name[],String item_amount[],String item_rate[],String item_passeditemqty[],String item_qty[],
 			  Double item_total,double roundoff_amt,String roundoff_gl_ac,int rounfoffdrcr,boolean gst_valid,boolean gststatus,
 			  String cgstledger,String sgstledger,String igstledger,double cgstamount,double sgstamount,double igstamount,String date,
@@ -380,7 +381,8 @@ public class Tallyrequest_SalesInvoice {
 	    }
 	  
 	   
-	    public String SendToTally(String partyname,String trucknumber,String creditnotedate,String statename,double partyamount,String item_name_ledger[],String item_name[],
+	    //public String SendToTally(String partyname,String trucknumber,String creditnotedate,String statename,double partyamount,String item_name_ledger[],String item_name[],
+	  	public String SendToTally(String partyname,String trucknumber,String creditnotedate,String statename,String partyamount,String item_name_ledger[],String item_name[],
 	    		String item_amount[],String item_rate[],String item_passeditemqty[],String item_qty[], Double item_total,double roundoff_amt,String roundoff_gl_ac,int rounfoffdrcr,
 	    		boolean gst_valid,boolean gststatus,String cgstledger,String sgstledger,String igstledger,double cgstamount,double sgstamount,double igstamount,String date,String invoicenumber,
 	    		String discountamount[],String discountledger[],boolean discountstat,String broker,String address,String deliverynotedate,String deliverynoteno,String packing_qty[],
