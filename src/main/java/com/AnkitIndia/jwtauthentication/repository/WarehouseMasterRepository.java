@@ -26,7 +26,7 @@ public interface WarehouseMasterRepository extends JpaRepository<Warehouse_maste
 	@Query( "select w from Warehouse_master w where w.businessunit_code =:bunit and w.modified_type != 'DELETED'")
 	List<Warehouse_master> getWHListbyBUnit(@Param("bunit") String bunit);
 	
-	@Query(value= "select * from warehouse_master w where w.modified_type = 'INSERTED' and w.businessunit_code =:bunit", nativeQuery=true)
+	@Query(value= "select * from warehouse_master w where w.modified_type = 'INSERTED' and w.businessunit_code =:bunit and w.warehouse_active = '1' ORDER BY w.warehouse_name ASC", nativeQuery=true)
 	List<Map<String, Object>> getWarehouseFastList(@Param("bunit") String bunit);
 	
 	@Query("select max(substring(warehouse_code , 8, length(warehouse_code))) from Warehouse_master where warehouse_code like %:code% and company_id =:company ")

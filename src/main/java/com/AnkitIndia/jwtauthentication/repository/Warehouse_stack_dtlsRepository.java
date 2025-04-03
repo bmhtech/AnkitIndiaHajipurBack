@@ -23,7 +23,7 @@ public interface Warehouse_stack_dtlsRepository extends JpaRepository<Warehouse_
 	@Query(value="select * from warehouse_stack_dtls where warehouse_id = :warehouse_id and modified_type = 'INSERTED' ORDER BY sl_no ASC", nativeQuery = true)
 	List<Map<String, Object>> getStackDtlsList(@Param("warehouse_id") String warehouse_id);
 
-	@Query(value= "select * from warehouse_stack_dtls w where w.modified_type = 'INSERTED' and w.warehouse_code =:wh_code", nativeQuery=true)
+	@Query(value= "select * from warehouse_stack_dtls w where w.modified_type = 'INSERTED' and w.warehouse_code =:wh_code ORDER BY w.sl_no ASC", nativeQuery=true)
 	List<Map<String, Object>> getStackNoByWarehouseList(@Param("wh_code") String wh_code);
 
 	@Query(value= "select CASE WHEN (SELECT description FROM custom_uom_master WHERE customuom_id=w.packing_uom) IS NULL THEN '' ELSE (SELECT description FROM custom_uom_master WHERE customuom_id=w.packing_uom) END AS packing_uom from warehouse_stack_dtls w where w.modified_type = 'INSERTED' and w.stack_no =:rack", nativeQuery=true)

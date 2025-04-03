@@ -85,6 +85,12 @@ public class Pur_good_receipt extends CommonProperties{
 	private String referance_type;
 	
 	@Column(columnDefinition="varchar(50) default 'NA'")
+	private String sales_process;
+	
+	@Column(columnDefinition="varchar(50) default 'NA'")
+	private String sales_order;
+	
+	@Column(columnDefinition="varchar(50) default 'NA'")
 	private String vehicle_id;
 	
 	@Column(columnDefinition="varchar(50) default 'NA'")

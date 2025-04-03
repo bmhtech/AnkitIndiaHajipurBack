@@ -341,4 +341,10 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 	
 	@Query(value= "SELECT * FROM loading_sales_order_jobworks_w_tolerance l WHERE l.`order_id`=:order_id AND l.`job_item`=:item_id AND l.`job_packing`=:item_code", nativeQuery=true)
 	List<Map<String, Object>> getSOjwRestQty(@Param("order_id") String order_id,@Param("item_id") String item_id,@Param("item_code") String item_code);
+	
+	@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
+	List<Map<String, Object>> getSalesOrderJWList(@Param("fin_year") String fin_year);
+	
+	@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type!='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
+	List<Map<String, Object>> getSalesOrderList(@Param("fin_year") String fin_year);
 }
