@@ -4240,4 +4240,12 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return sales_OrderRepository.getWeighmentReportForAnujSir(fromdate,todate);
 	}
 	
+	public List<Map<String,Object>> getSalesOrderList(String salesprocess, String fin_year){
+		if(salesprocess.compareToIgnoreCase("Job Work")==0) {
+			return sales_OrderRepository.getSalesOrderJWList(fin_year);
+		}
+		else {
+			return sales_OrderRepository.getSalesOrderList(fin_year);
+		}
+	}
 }

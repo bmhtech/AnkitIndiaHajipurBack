@@ -84,6 +84,7 @@ public interface Sales_OrderService {
 	
 	public List<Sales_Order_Item_Dtls> getSalesOrdItemDtlsRefraction(String order_id);
 	
+	public List<Map<String,Object>> getSalesOrderList(String salesprocess, String fin_year);
 	
 	public  List<Map<String,Object>> getSalesOrdItemDtlsJobwork(String order_id);
 	

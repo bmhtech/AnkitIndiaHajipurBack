@@ -1257,5 +1257,4 @@ public class PurchaseController {
 	{
 		return pur_OrderService.getPurOrdreceipt_criteriaNew(orderid);
 	}
-    
 }

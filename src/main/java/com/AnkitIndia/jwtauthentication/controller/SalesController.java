@@ -4124,7 +4124,12 @@ public class SalesController {
 	
 	/************** Rate Chart Ends **************/
 	
-	
+
+    @GetMapping("/getSalesOrderList/{salesprocess}/{fin_year}")
+	public List<Map<String,Object>> getSalesOrderList(@PathVariable(value = "salesprocess") String salesprocess,@PathVariable(value = "fin_year") String fin_year)
+	{
+		return sales_OrderService.getSalesOrderList(salesprocess, fin_year);
+	}
 	
 	
 }
