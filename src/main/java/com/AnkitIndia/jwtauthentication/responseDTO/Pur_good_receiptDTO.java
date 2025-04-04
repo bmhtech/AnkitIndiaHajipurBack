@@ -33,6 +33,10 @@ public class Pur_good_receiptDTO {
 	
 	private String referance_type;
 	
+	private String sales_process;
+	
+	private String sales_order;
+	
 	private String vehicle_id;
 	
 	private String vehicle_no;
@@ -72,6 +76,22 @@ public class Pur_good_receiptDTO {
 	
 	private String party_name;
 	
+	public String getSales_process() {
+		return sales_process;
+	}
+
+	public void setSales_process(String sales_process) {
+		this.sales_process = sales_process;
+	}
+
+	public String getSales_order() {
+		return sales_order;
+	}
+
+	public void setSales_order(String sales_order) {
+		this.sales_order = sales_order;
+	}
+
 	public String getParty_name() {
 		return party_name;
 	}
