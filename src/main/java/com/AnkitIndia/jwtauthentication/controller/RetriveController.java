@@ -1231,4 +1231,10 @@ public class RetriveController {
 			{
 				return item_masterService.getItemMasterPackMatNew(code);
 			}
+			
+			@GetMapping("/getItemMasterPackMatNew/{code}")
+			public List<Map<String,Object>> getItemMasterPackMatNew(@PathVariable(value = "code") String code)
+			{
+				return item_masterService.getItemMasterPackMatNew(code);
+			}
 }
