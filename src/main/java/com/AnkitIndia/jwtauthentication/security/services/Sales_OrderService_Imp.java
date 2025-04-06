@@ -27,6 +27,7 @@ import com.AnkitIndia.generators.UniqueIDTransaction;
 import com.AnkitIndia.jwtauthentication.model.Delivery_challan;
 import com.AnkitIndia.jwtauthentication.model.Item_master_pack_mat_tag;
 import com.AnkitIndia.jwtauthentication.model.Item_rate_dtls;
+import com.AnkitIndia.jwtauthentication.model.Pur_good_receipt;
 import com.AnkitIndia.jwtauthentication.model.Return_approval_note;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order_Broker_Dtls;
@@ -55,6 +56,7 @@ import com.AnkitIndia.jwtauthentication.repository.Item_masterRepository;
 import com.AnkitIndia.jwtauthentication.repository.Item_master_pack_mat_tagRepository;
 import com.AnkitIndia.jwtauthentication.repository.Item_rate_dtlsRepository;
 import com.AnkitIndia.jwtauthentication.repository.JobWorkItemAllocationRepository;
+import com.AnkitIndia.jwtauthentication.repository.Pur_good_receiptRepository;
 import com.AnkitIndia.jwtauthentication.repository.Return_approval_noteRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sales_OrderRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sales_Order_Broker_DtlsRepository;
@@ -182,6 +184,8 @@ public class Sales_OrderService_Imp implements Sales_OrderService {
 	@Autowired
 	Wm_unload_adviceRepository wm_unload_adviceRepository;
 	
+	@Autowired
+	Pur_good_receiptRepository pur_good_receiptRepository;
 	
 	public SalesSequenceIdDTO getSalesOrdSequenceId(String prefix,String orderdate,String type)
 	{
@@ -3948,16 +3952,20 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 	public Sales_Order getSalesOrderDetailsthdeliverchallan(String deliveryid) 
 	{
 		Delivery_challan getchallandetails=delivery_challanRepository.getDeliveryChallanDtls(deliveryid);
-		
-		
-		Wm_loading_advice loadingdetails=wm_loading_adviceRepository.getLoadingDetails(getchallandetails.getReferance_id());
-		
-		Sales_Order salesdetails= sales_OrderRepository.getSalesOrderDetails(loadingdetails.getReferance_id());
-		
+		String refid="";
+		//Wm_loading_advice loadingdetails=wm_loading_adviceRepository.getLoadingDetails(getchallandetails.getReferance_id());
+		 if(getchallandetails.getRef_type().compareToIgnoreCase("GRN")==0)		 {
+			 Pur_good_receipt grnData=pur_good_receiptRepository.getPurGoodRcptDtls(getchallandetails.getReferance_id());
+			 refid=grnData.getSales_order();
+		 }
+		 else
+		 {
+			 Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(getchallandetails.getReferance_id());
+			 refid=loadingData.getReferance_id();
+		 }
+		Sales_Order salesdetails= sales_OrderRepository.getSalesOrderDetails(refid);
 		
 		return salesdetails;
-		
-		
 	}
 	
 	public List<Map<String, Object>> getsaleorderjobworkprice(String deliveryid)
@@ -4248,4 +4256,21 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 			return sales_OrderRepository.getSalesOrderList(fin_year);
 		}
 	}
+	
+	public List<Map<String, Object>> getDelvChallanByOrder(String salesid,String fyear)
+	{
+		return sales_OrderRepository.getDelvChallanByOrder(salesid,fyear);
+	}
+	
+	public List<Map<String, Object>> getSaleOrderItemThroughGrn(String salesid,String grnid)
+	{
+		String weighment_id=wm_unload_adviceRepository.getWeimentId(grnid);
+		return sales_OrderRepository.getSaleOrderItemThroughGrn(salesid,weighment_id);
+	}
+	
+	public Map<String, Object> getGrnWeighment(String grnid)
+	{
+		return wm_unload_adviceRepository.getGrnWeighment(grnid);
+	}
+	
 }

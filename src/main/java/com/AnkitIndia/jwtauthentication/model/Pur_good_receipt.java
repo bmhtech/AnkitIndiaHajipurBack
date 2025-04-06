@@ -117,7 +117,6 @@ public class Pur_good_receipt extends CommonProperties{
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean multiunloadadvice;
 	
-	
 	@Column(columnDefinition="varchar(50) default '0'")
 	private String bill_status;
 	
@@ -126,6 +125,9 @@ public class Pur_good_receipt extends CommonProperties{
 	
 	@Column(columnDefinition="varchar(20) default 'NA'")
 	private String purreturnid;
+	
+	@Column(columnDefinition="varchar(20) default 'NA'")
+	private String challan_status;
 	
 	//@Column(columnDefinition="int(1) default '0'")
 	//private int grnpartytag;

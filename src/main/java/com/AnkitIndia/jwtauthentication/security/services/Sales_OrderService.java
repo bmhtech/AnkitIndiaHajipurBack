@@ -195,4 +195,10 @@ public interface Sales_OrderService {
 	
 	public List<Map<String, Object>> getWeighmentReportForAnujSir(String fromdate,String todate);
 	
+	public List<Map<String, Object>> getDelvChallanByOrder(String salesid,String fyear);
+	
+	public List<Map<String, Object>> getSaleOrderItemThroughGrn(String salesid,String grnid);
+	
+	public Map<String, Object> getGrnWeighment(String grnid);
+	
 }
