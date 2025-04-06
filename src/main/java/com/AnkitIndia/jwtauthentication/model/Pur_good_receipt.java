@@ -130,6 +130,9 @@ public class Pur_good_receipt extends CommonProperties{
 	//@Column(columnDefinition="int(1) default '0'")
 	//private int grnpartytag;
 	
+	@Column(columnDefinition="varchar(10) default 'No'")
+	private String stack_maintain;
+	
 	@OneToOne(fetch=FetchType.EAGER,mappedBy="pur_good_receipt",cascade=CascadeType.ALL)
 	private Pur_good_receipt_Business_Partner_details pur_good_receipt_Business_Partner_details;
 	

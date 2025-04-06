@@ -711,7 +711,7 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		pur_good_receipt.setDeleted_by("NA");
 		pur_good_receipt.setDeleted_on(ldt);
 		pur_good_receipt.setBill_status(PGR.get().getBill_status());
-		
+		pur_good_receipt.setStack_maintain(PGR.get().getStack_maintain()); // Stack Maintain yes or no 
 		pur_good_receipt.setGrndate(pur_good_receipt.getGrn_date());
 		pur_good_receipt.setGrnno(pur_good_receipt.getGrn_no());
 		
@@ -1348,4 +1348,8 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		 return pur_good_receiptRepository.searchpendingGRNReport(fromdate,todate);
 	 }
 	 
+	 public Map<String,Object> getGrnDetailsById(String grnid)
+	 {
+		return pur_good_receiptRepository.getGrnDetailsById(grnid);
+	 }
 }
