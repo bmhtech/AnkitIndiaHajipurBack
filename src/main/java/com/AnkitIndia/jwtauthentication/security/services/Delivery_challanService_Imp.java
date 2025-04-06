@@ -63,6 +63,7 @@ import com.AnkitIndia.jwtauthentication.repository.Invoice_typeRepository;
 import com.AnkitIndia.jwtauthentication.repository.Item_masterRepository;
 import com.AnkitIndia.jwtauthentication.repository.Item_opening_stk_dtlsRepository;
 import com.AnkitIndia.jwtauthentication.repository.Item_opening_stk_pack_dtlsRepository;
+import com.AnkitIndia.jwtauthentication.repository.Pur_good_receiptRepository;
 import com.AnkitIndia.jwtauthentication.repository.Return_approval_noteRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sales_InvoiceRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sales_OrderRepository;
@@ -177,6 +178,8 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 	@Autowired
 	CompanyMasterRepository companyMasterRepository;
 	
+	@Autowired
+	Pur_good_receiptRepository pur_good_receiptRepository;
 	
 	public SalesSequenceIdDTO getDCSequenceId(String fin_year,String inv_type)
 	{
@@ -342,19 +345,25 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setChallanno(dChallan.getChallan_no());
 		
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
-		dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
-		
+		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
+			dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
+		}else {dChallan.setAdviceno("NA");}
 		
 		
 		if(Utility.isNullOrEmpty(dChallan.getParty())) {
 			dChallan.setPartyname(cust_bussiness_partnerRepository.getCustomer(dChallan.getParty()).getCp_name());
 		}else {dChallan.setPartyname("None");}
 		
-		if(dChallan.getRef_type().compareTo("Open Delivery Challan")!=0) {
+		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
 			if(dChallan.getReferance_id().substring(0,3).compareTo("WLA")==0) {
 				wm_loading_adviceRepository.updateDelvStatus(dChallan.getReferance_id(),true);
 			}	
-		}else {dChallan.setReferance_id(dChallan.getDelivery_cid());}
+		}
+		else if(dChallan.getRef_type().compareTo("GRN")==0)
+		{
+			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id());
+		}		
+		else {dChallan.setReferance_id(dChallan.getDelivery_cid());}
 		
 		if(dChallan.isJobwork()) 
 		{
@@ -637,12 +646,18 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
 		
 		System.out.println(" ref :: "+dChallan.getReferance_id());
-		dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
 		
+		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
+			dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
+		}else {dChallan.setAdviceno("NA");}
 		
 		if(dChallan.getRef_type().compareToIgnoreCase("Loading Advice")==0 && dChallan.getReferance_id().compareToIgnoreCase("0")==0)
 		{
 			dChallan.setReferance_id(op.get().getReferance_id());
+		}
+		else if(dChallan.getRef_type().compareTo("GRN")==0)
+		{
+			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id());
 		}
 		else
 		{
@@ -1375,7 +1390,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		Type listType = new TypeToken<Delivery_challanDTO>() {}.getType();
 		
 		Delivery_challanDTO dcDtls = new ModelMapper().map(modelList,listType);
-		
+		System.out.println("dc ref id:"+dcDtls.getReferance_id());
 			if(dcDtls.getReferance_id()!=null && dcDtls.getReferance_id().compareTo("0")!=0 && dcDtls.getReferance_id().substring(0, 2).compareTo("SO")==0) {
 				dcDtls.setSalesorderno(sales_OrderRepository.getSalesOrderDetails(dcDtls.getReferance_id()).getOrder_no());
 				dcDtls.setSalesorderdate(sales_OrderRepository.getSalesOrderDetails(dcDtls.getReferance_id()).getOrder_date());
@@ -1383,6 +1398,14 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			else if(dcDtls.getReferance_id()!=null && dcDtls.getReferance_id().compareTo("0")!=0 && dcDtls.getReferance_id().substring(0, 3).compareTo("WLA")==0) {
 				String ordId=wm_loading_adviceRepository.getLoadingDetails(dcDtls.getReferance_id()).getReferance_id();
 				
+				if(ordId.substring(0, 2).compareTo("SO")==0) {
+					dcDtls.setSalesorderno(sales_OrderRepository.getSalesOrderDetails(ordId).getOrder_no());
+					dcDtls.setSalesorderdate(sales_OrderRepository.getSalesOrderDetails(ordId).getOrder_date());
+				}
+			}
+			else if(dcDtls.getReferance_id()!=null && dcDtls.getReferance_id().compareTo("0")!=0 && dcDtls.getReferance_id().substring(0, 3).compareTo("GRN")==0) {
+				String ordId=pur_good_receiptRepository.getPurGoodRcptDtls(dcDtls.getReferance_id()).getSales_order();
+				System.out.println("dc sales id:"+ordId+"//"+ordId.substring(0, 2));
 				if(ordId.substring(0, 2).compareTo("SO")==0) {
 					dcDtls.setSalesorderno(sales_OrderRepository.getSalesOrderDetails(ordId).getOrder_no());
 					dcDtls.setSalesorderdate(sales_OrderRepository.getSalesOrderDetails(ordId).getOrder_date());
@@ -1441,12 +1464,24 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
     public List<Map<String, Object>> getDelvChallansnew(String invtype,String party,String invdate,String comp,String parentmodel) 
     {
     	List<Map<String, Object>> modelList =new ArrayList<>();
-		//System.out.println("parentmodel::"+parentmodel+"//"+invtype+"//"+party+""+invdate);
+    	List<Delivery_challan> ctypeList =new ArrayList<>();
+		System.out.println("parentmodel::"+parentmodel+"//"+invtype+"//"+party+""+invdate);
     	if(parentmodel.compareToIgnoreCase("Sales Invoice")==0)
 		{
-			 modelList.addAll(dChallanRepository.deliveryChallanListnew(invtype,party,invdate,comp));
+    		ctypeList=dChallanRepository.challanTypeList(invtype,party,invdate);
+    		for(int p=0;p<ctypeList.size();p++)
+    		{
+    			if(ctypeList.get(p).getRef_type().compareToIgnoreCase("GRN")==0) 
+    			{
+    				modelList.addAll(dChallanRepository.deliveryChallanThroughGrnList(invtype,party,invdate,comp));
+    			}
+    			else {
+    				modelList.addAll(dChallanRepository.deliveryChallanListnew(invtype,party,invdate,comp));
+    			}
+    			
+    		}
 		}
-		
+    	
     	if(parentmodel.compareToIgnoreCase("Return Aproval")==0)
 		{
     		

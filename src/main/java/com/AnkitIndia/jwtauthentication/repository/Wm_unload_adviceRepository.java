@@ -328,4 +328,10 @@ public interface Wm_unload_adviceRepository extends JpaRepository<Wm_unload_advi
 			+ "LEFT JOIN wm_unload_advice u ON x1.pur_orderid=u.`referance_id` WHERE u.modified_type='INSERTED' AND u.terminate='0' AND x1.term_pur_ord='0' AND u.grn_status='0' AND x1.ord_date>=:fromdate AND x1.ord_date<=:todate", nativeQuery=true)
 	List<Map<String,Object>> searchpendingUnAdviceReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
 	
+	@Query(value = "SELECT w.weighment_id FROM wm_unload_advice w,pur_good_receipt p WHERE w.`unadviceid`=p.`referance_id` AND p.`modified_type`='INSERTED' AND w.`modified_type`='INSERTED' AND p.`grn_id`=:grnid", nativeQuery=true)
+	String getWeimentId(@Param("grnid") String grnid);
+	
+	@Query(value = "SELECT w.weighment_id,w.vehicle_id,w.vehicle_no FROM wm_unload_advice w,pur_good_receipt p WHERE w.`unadviceid`=p.`referance_id` AND p.`modified_type`='INSERTED' AND w.`modified_type`='INSERTED' AND p.`grn_id`=:grnid", nativeQuery=true)
+	Map<String,Object> getGrnWeighment(@Param("grnid") String grnid);
+	
 }

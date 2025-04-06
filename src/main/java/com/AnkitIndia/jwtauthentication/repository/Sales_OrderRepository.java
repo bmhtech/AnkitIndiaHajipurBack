@@ -347,4 +347,15 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 	
 	@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type!='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
 	List<Map<String, Object>> getSalesOrderList(@Param("fin_year") String fin_year);
+	
+	@Query(value= "SELECT s.order_id,s.order_no,s.order_date,s.business_unit,s.inv_type,CASE WHEN (SELECT cp_name FROM cust_bussiness_partner WHERE cp_id=s.customer) IS NULL THEN '' ELSE (SELECT cp_name FROM cust_bussiness_partner WHERE cp_id=s.customer) END  AS customer_name,s.q_status,s.ref_type FROM sales_order s WHERE s.modified_type='INSERTED' AND s.order_id=:salesid AND s.terminate=0 AND s.fin_year=:fyear", nativeQuery=true)
+	List<Map<String, Object>> getDelvChallanByOrder(@Param("salesid") String salesid,@Param("fyear") String fyear);
+	
+	@Query(value= "SELECT s.order_id,s.slno,s.item_code,s.item_name,s.packing,s.packing_name,s.uom,s.suom,w.tarebags AS squantity,w.net_weight AS quantity,\r\n"
+			+ "s.con_factor,w.net_weight AS mat_wt,price,s.price_based_on,s.discount_type,s.discount_rate,s.tolerance,s.tax_code,s.tax_rate,s.tax_amt,s.acc_norms\r\n"
+			+ " FROM sales_Order_Item_Dtls s,wm_unload_wgmnt w,pur_good_receipt p,wm_unload_advice a \r\n"
+			+ " WHERE s.order_id=p.sales_order AND a.unadviceid=p.referance_id AND w.advice=a.unadviceid AND p.modified_type = 'INSERTED' AND a.modified_type = 'INSERTED'\r\n"
+			+ " AND w.modified_type = 'INSERTED' AND s.modified_type = 'INSERTED' AND s.order_id =:salesid AND w.wgment_id=:weighment_id ORDER BY s.slno", nativeQuery=true)
+	List<Map<String, Object>> getSaleOrderItemThroughGrn(@Param("salesid") String salesid,@Param("weighment_id") String weighment_id);
+	
 }

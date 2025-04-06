@@ -52,6 +52,7 @@ import com.AnkitIndia.jwtauthentication.model.Ledgermaster;
 import com.AnkitIndia.jwtauthentication.model.Process_master_doc;
 import com.AnkitIndia.jwtauthentication.model.Pur_Bill;
 import com.AnkitIndia.jwtauthentication.model.Pur_Bill_Item_Details;
+import com.AnkitIndia.jwtauthentication.model.Pur_good_receipt;
 import com.AnkitIndia.jwtauthentication.model.Return_approval_note;
 import com.AnkitIndia.jwtauthentication.model.Sale_invoice_einvoice_gen;
 import com.AnkitIndia.jwtauthentication.model.Sales_Invoice;
@@ -93,6 +94,7 @@ import com.AnkitIndia.jwtauthentication.repository.Item_masterRepository;
 import com.AnkitIndia.jwtauthentication.repository.Journal_accounttransactionRepository;
 import com.AnkitIndia.jwtauthentication.repository.LedgermasterRepository;
 import com.AnkitIndia.jwtauthentication.repository.OutstandingledgerRepository;
+import com.AnkitIndia.jwtauthentication.repository.Pur_good_receiptRepository;
 import com.AnkitIndia.jwtauthentication.repository.Receipt_accounttransactionRepository;
 import com.AnkitIndia.jwtauthentication.repository.Return_approval_noteRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sale_invoice_einvoice_genRepository;
@@ -263,6 +265,9 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	
 	@Autowired
 	CompanyMasterRepository companyMasterRepository;
+	
+	@Autowired
+	Pur_good_receiptRepository pur_good_receiptRepository;
 	
 	static String transtype="Sales Invoice";
 	
@@ -479,8 +484,11 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	//here advice no added in sales invoice through delivery challan 
 		if(sinvoice.getChallan().compareToIgnoreCase("Single")==0) 
 		{
-			String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
-			sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+			String reftype=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getRef_type(); //Bypass for GRN to direct Delivery Challan
+			if(reftype.compareTo("Loading Advice")==0) {
+				String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
+				sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+			}else {sinvoice.setAdviceno("NA");}
 			
 		}
 		else 
@@ -1226,8 +1234,14 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			//here advice no added in sales invoice through delivery challan 
 			if(sinvoice.getChallan().compareToIgnoreCase("Single")==0) 
 			{
-				String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
-				sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+				//String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
+				//sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+				
+				String reftype=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getRef_type(); //Bypass for GRN to direct Delivery Challan
+				if(reftype.compareTo("Loading Advice")==0) {
+					String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
+					sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+				}else {sinvoice.setAdviceno("NA");}
 				
 			}
 			else 
@@ -2710,9 +2724,19 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	 {
 		
 		 Delivery_challan delivarydata=delivery_challanRepository.getDeliveryChallanDtls(delivery_cid);
-		 
-		 Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(delivarydata.getReferance_id());
-		 List<Sales_Order_Summary_dyn> appcharges=sales_InvoiceRepository.getappcharges(loadingData.getReferance_id());
+		 String refid="";
+		//Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(delivarydata.getReferance_id());
+		 if(delivarydata.getRef_type().compareToIgnoreCase("GRN")==0)		 {
+			 Pur_good_receipt grnData=pur_good_receiptRepository.getPurGoodRcptDtls(delivarydata.getReferance_id());
+			 refid=grnData.getSales_order();
+		 }
+		 else
+		 {
+			 Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(delivarydata.getReferance_id());
+			 refid=loadingData.getReferance_id();
+		 }
+		
+		 List<Sales_Order_Summary_dyn> appcharges=sales_InvoiceRepository.getappcharges(refid);
 		
 		 
 		 return appcharges;
@@ -2723,9 +2747,18 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	 {
 		
 		 Delivery_challan delivarydata=delivery_challanRepository.getDeliveryChallanDtls(delivery_cid);
-		 
-		 Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(delivarydata.getReferance_id());
-		 Sales_Order appcharges=sales_OrderRepository.getSalesOrderDetails(loadingData.getReferance_id());
+		 String refid="";
+		 //Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(delivarydata.getReferance_id());
+		 if(delivarydata.getRef_type().compareToIgnoreCase("GRN")==0)		 {
+			 Pur_good_receipt grnData=pur_good_receiptRepository.getPurGoodRcptDtls(delivarydata.getReferance_id());
+			 refid=grnData.getSales_order();
+		 }
+		 else
+		 {
+			 Wm_loading_advice loadingData=wm_loading_adviceRepository.getLoadingDetails(delivarydata.getReferance_id());
+			 refid=loadingData.getReferance_id();
+		 }
+		 Sales_Order appcharges=sales_OrderRepository.getSalesOrderDetails(refid);
 		
 		 
 		 return appcharges;

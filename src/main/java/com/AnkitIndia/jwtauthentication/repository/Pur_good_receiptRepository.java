@@ -118,7 +118,7 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 	@Query(value= "select g.grn_id,g.grn_no,g.grn_date from pur_good_receipt g where g.modified_type = 'INSERTED' and g.referance_id=:referance_id",nativeQuery=true)
 	List<Map<String, Object>> getlistbyunload(@Param("referance_id") String referance_id);
 	
-	@Query(value= "select id,grn_id,grn_no,grn_date,b_unitname,supplier,purchase_typename,referance_type,vehicle_no,sales_process,sales_order from pur_good_receipt where modified_type ='INSERTED' and fin_year =:finyear and grn_date =:currDate", nativeQuery=true)
+	@Query(value= "select id,grn_id,grn_no,grn_date,b_unitname,supplier,purchase_typename,referance_type,vehicle_no,sales_process,sales_order,challan_status from pur_good_receipt where modified_type ='INSERTED' and fin_year =:finyear and grn_date =:currDate", nativeQuery=true)
 	List<Map<String, Object>> grnListData(@Param("currDate") String currDate,@Param("finyear") String finyear);
 	
 	//SELECT m.`grn_no` AS grnno,m.`grndate` AS grndate,m.purchase_subtype AS purchase_subtype,m.referance_type AS referance_type, m.receipt_criteria AS receipt_criteria,m.supplier AS supplier ,m.vehicle_no AS vehicleno,p.`supp_ref_docno`,p.`supp_ref_doc_date`,p.`purbillno`,p.`billdate` AS billdate ,p.`remarks`,d.adv_item_name,d.adv_packing_name,d.adv_item_qty AS adviceitemqty,d.`adv_pack_qty` AS adv_pack_qty,d.`adv_mat_wt`,d.rcv_item_qty AS rcv_item_qty,d.`rcv_pack_qty` AS rcv_pack_qty,d.`rcv_mat_wt`,d.`pssd_item_qty` AS pssd_item_qty,d.`pssd_pack_qty` AS pssd_pack_qty,d.`pssd_mat_wt`,d.unit_rate AS unit_rate FROM `pur_good_receipt_item_details` d,`pur_good_receipt` m ,`pur_bill` p WHERE d.`modified_type`='INSERTED'  AND m.`modified_type` = d.`modified_type` AND  d.`grn_id`=m.`grn_id` AND p.`modified_type`= d.`modified_type` AND p.`referance_id`=m.`grn_id` AND m.grndate>=:fromdate AND m.grndate<=:todate
@@ -151,5 +151,9 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 	
 	@Query(value="SELECT grn_id,grn_no,grn_date,purchase_typename,referance_id,supplier,vehicle_no FROM pur_good_receipt WHERE `modified_type`='INSERTED' AND bill_status=0 AND grn_date>=:fromdate AND grn_date<=:todate", nativeQuery=true)
 	List<Map<String,Object>> searchpendingGRNReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
+	
+	@Modifying(clearAutomatically = true)
+    @Query("UPDATE Pur_good_receipt l SET l.challan_status ='Yes' WHERE l.grn_id =:referenceid")
+    int updateGrnStatus(@Param("referenceid") String referenceid);
 	
 }
