@@ -130,4 +130,6 @@ public interface Pur_good_receiptService {
 	
 	public List<Map<String, Object>> searchpendingGRNReport(String fromdate,String todate);
 	
+	public Map<String, Object> getGrnDetailsById(String grnid);
+
 }

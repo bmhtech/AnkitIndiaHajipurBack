@@ -152,8 +152,28 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 	@Query(value="SELECT grn_id,grn_no,grn_date,purchase_typename,referance_id,supplier,vehicle_no FROM pur_good_receipt WHERE `modified_type`='INSERTED' AND bill_status=0 AND grn_date>=:fromdate AND grn_date<=:todate", nativeQuery=true)
 	List<Map<String,Object>> searchpendingGRNReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
 	
+	@Query(value= "SELECT p.supplier_name,p.vehicle_id,SUM(i.pssd_pack_qty) AS total_grn_pkt,SUM(i.pssd_item_qty) AS total_grn_item FROM pur_good_receipt p LEFT JOIN pur_good_receipt_item_details i ON i.grn_id=p.grn_id AND i.modified_type=p.modified_type WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	Map<String, Object> getGrnDetailsById(@Param("grnid") String grnid);
+	
+	@Query(value= "SELECT DISTINCT p.* FROM pur_good_receipt p,pur_good_receipt_item_details i WHERE p.grn_id=i.grn_id AND i.modified_type = 'INSERTED' and p.modified_type ='INSERTED' AND i.modified_type = p.modified_type AND p.stack_maintain='No' AND (i.warehouse_name ='MULTIPLE' OR i.rack='MULTIPLE')",nativeQuery = true)
+	List<Map<String, Object>> getGrnList();
+	
+	@Query(value= "SELECT DISTINCT p.* FROM pur_good_receipt p,pur_good_receipt_item_details i WHERE p.grn_id=i.grn_id AND i.modified_type = 'INSERTED' and p.modified_type ='INSERTED' AND i.modified_type = p.modified_type AND (i.warehouse_name ='MULTIPLE' OR i.rack='MULTIPLE')",nativeQuery = true)
+	List<Map<String, Object>> getGrnAllList();
+	
+	@Query(value= "SELECT adv_item_code AS item_id,adv_item_name AS item_name FROM pur_good_receipt_item_details WHERE modified_type='INSERTED' AND grn_id=:grnid",nativeQuery = true)
+	List<Map<String, Object>> getItemListByGrnId(@Param("grnid") String grnid);
+	
+	@Query(value= "SELECT adv_packing AS item_code,adv_packing_name AS item_name FROM pur_good_receipt_item_details WHERE modified_type='INSERTED' AND adv_item_code=:item AND grn_id=:grnid",nativeQuery = true)
+	List<Map<String, Object>> getPackingItemByGrn(@Param("item") String item,@Param("grnid") String grnid);
+	
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Pur_good_receipt p SET p.stack_maintain =:stat WHERE p.grn_id = :grn_id AND p.modified_type='INSERTED'" )
+    int updateStackMaintain(@Param("grn_id") String grn_id,@Param("stat") String stat);
+
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Pur_good_receipt l SET l.challan_status ='Yes' WHERE l.grn_id =:referenceid")
     int updateGrnStatus(@Param("referenceid") String referenceid);
+
 	
 }

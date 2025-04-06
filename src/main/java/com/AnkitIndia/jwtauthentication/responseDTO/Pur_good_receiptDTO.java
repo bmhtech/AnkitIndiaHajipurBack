@@ -76,6 +76,16 @@ public class Pur_good_receiptDTO {
 	
 	private String party_name;
 	
+	private String stack_maintain;
+	
+	public String getStack_maintain() {
+		return stack_maintain;
+	}
+
+	public void setStack_maintain(String stack_maintain) {
+		this.stack_maintain = stack_maintain;
+	}
+
 	private String challan_status;
 	
 	

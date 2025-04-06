@@ -44,6 +44,7 @@ import com.AnkitIndia.jwtauthentication.model.Pur_return_approval_note;
 import com.AnkitIndia.jwtauthentication.model.Pur_return_note;
 import com.AnkitIndia.jwtauthentication.model.Purchase_item_groupwise_taxsumm;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order_Trans_Chgs_dyn;
+import com.AnkitIndia.jwtauthentication.model.Stack_maintain;
 import com.AnkitIndia.jwtauthentication.model.Wm_unload_advice;
 import com.AnkitIndia.jwtauthentication.model.Wm_unload_advice_item_dtls;
 import com.AnkitIndia.jwtauthentication.responseDTO.Pur_BillDTO;
@@ -90,6 +91,7 @@ import com.AnkitIndia.jwtauthentication.security.services.Pur_debit_noteService;
 import com.AnkitIndia.jwtauthentication.security.services.Pur_good_receiptService;
 import com.AnkitIndia.jwtauthentication.security.services.Pur_return_approval_noteService;
 import com.AnkitIndia.jwtauthentication.security.services.Pur_return_noteService;
+import com.AnkitIndia.jwtauthentication.security.services.Stack_maintainService;
 import com.AnkitIndia.jwtauthentication.security.services.Wm_unload_adviceService;
 import com.AnkitIndia.jwtauthentication.transResponseDTO.Pur_OrderDTO;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -1257,4 +1259,93 @@ public class PurchaseController {
 	{
 		return pur_OrderService.getPurOrdreceipt_criteriaNew(orderid);
 	}
+    
+    /**************************Stack Maintain Starts***************************/
+    
+    @GetMapping("/getGrnDetailsById/{grn_id}")
+	public Map<String,Object> getGrnDetailsById(@PathVariable(value = "grn_id") String grn_id) 
+	{
+		return pur_good_receiptService.getGrnDetailsById(grn_id);
+	}
+    
+	@Autowired
+	Stack_maintainService stack_maintainService;
+	
+	@GetMapping("/stackMaintainList/{currdate}")
+	 public List<Map<String,Object>> stackMaintainList(@PathVariable(value = "currdate") String currdate) 
+	 {
+	 	return stack_maintainService.stackMaintainList(currdate);
+	 }
+	
+	@GetMapping("/getGrnList")
+	 public List<Map<String,Object>> getGrnList() 
+	 {
+	 	return stack_maintainService.getGrnList();
+	 }
+	
+	@GetMapping("/getItemListByGrnId/{grnid}")
+	 public List<Map<String,Object>> getItemListByGrnId(@PathVariable(value = "grnid") String grnid) 
+	 {
+	 	return stack_maintainService.getItemListByGrnId(grnid);
+	 }
+	
+	 @GetMapping("/getPackingItemByGrn/{item}/{grnid}")
+	 public List<Map<String,Object>> getPackingItemByGrn(@PathVariable(value = "item") String item,@PathVariable(value = "grnid") String grnid) 
+	 {
+	 	return stack_maintainService.getPackingItemByGrn(item,grnid);
+	 }
+	 
+	@PostMapping("/createStackMaintain")
+	 public Stack_maintain save(@Valid @RequestBody Stack_maintain stack) {
+	 	return stack_maintainService.save(stack);
+	 }
+
+
+	 @GetMapping("/retriveStackMaintain/{id}")
+	 public ResponseEntity<Stack_maintain> retriveStackMaintainretriveStackMaintain(@PathVariable(value = "id") Long id) {
+		 Stack_maintain op = stack_maintainService.findOne(id);
+	 	if (op == null) {
+	 		return ResponseEntity.notFound().build();
+	 	} else {
+	 		return ResponseEntity.ok().body(op);
+	 	}
+	 }
+
+	 @PutMapping("/updateStackMaintain/{id}")
+	 public ResponseEntity<Stack_maintain> updateStackMaintain(@PathVariable(value = "id") Long id,@Valid @RequestBody Stack_maintain stack) {
+		 Stack_maintain op = stack_maintainService.update(stack, id);
+	 	return ResponseEntity.ok().body(op);
+	 }
+	 
+	 @PutMapping("/deleteStackMaintain/{id}")
+	 public ResponseEntity<Stack_maintain> deleteStackMaintain(@PathVariable(value = "id") Long id,
+	 		@Valid @RequestBody Stack_maintain stack) {
+		 Stack_maintain op = stack_maintainService.delete(stack, id);
+	 	return ResponseEntity.ok().body(op);
+	 }
+
+	 @GetMapping("/stackItemRetriveList/{stackid}")
+	 public List<Map<String,Object>> stackItemRetriveList(@PathVariable(value = "stackid") String stackid) 
+	 {
+	 	return stack_maintainService.stackItemRetriveList(stackid);
+	 }
+	 
+	 @GetMapping("/getGrnAllList")
+	 public List<Map<String,Object>> getGrnAllList() 
+	 {
+	 	return stack_maintainService.getGrnAllList();
+	 }
+	 
+	 @GetMapping("/findStackMaintain/{searchtext}")
+	 public ResponseEntity<List<Stack_maintain>> findStackMaintain(@PathVariable(value = "searchtext") String searchtext) {
+	 	List<Stack_maintain> translist= stack_maintainService.findStackMaintain(searchtext);
+	 	if (translist == null) {
+	 		return ResponseEntity.notFound().build();
+	 	} else {
+	 		return ResponseEntity.ok().body(translist);
+	 	}
+	 }
+	 
+	/**************************Stack Maintain Ends***************************/
+	
 }
