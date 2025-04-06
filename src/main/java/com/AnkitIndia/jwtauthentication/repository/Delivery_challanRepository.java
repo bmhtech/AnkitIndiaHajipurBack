@@ -42,6 +42,10 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	@Query( value="select * from channeldeliverycustomer d where d.modified_type ='INSERTED' and d.invoicestatus ='No' and d.inv_type =:invtype and d.sales_returnstatus ='NO' and d.party LIKE %:party% and d.company_id =:comp and d.challan_date <=:invdate",nativeQuery=true)
 	List<Map<String,Object>>  deliveryChallanListnew(@Param("invtype") String invtype,@Param("party") String party,@Param("invdate") String invdate,@Param("comp") String comp);
 	
+	@Query( value="select * from channel_grn_delivery_customer d where d.modified_type ='INSERTED' and d.invoicestatus ='No' and d.inv_type =:invtype and d.sales_returnstatus ='NO' and d.party LIKE %:party% and d.company_id =:comp and d.challan_date <=:invdate",nativeQuery=true)
+	List<Map<String,Object>>  deliveryChallanThroughGrnList(@Param("invtype") String invtype,@Param("party") String party,@Param("invdate") String invdate,@Param("comp") String comp);
+	
+	
 	@Query( value="select * from channeldeliverycustomerjobwork d where d.modified_type ='INSERTED' and d.invoicestatus ='No' and d.inv_type =:invtype and d.sales_returnstatus ='NO' and d.party LIKE %:party% and d.company_id =:comp and d.challan_date <=:invdate",nativeQuery=true)
 	List<Map<String,Object>>  deliveryChallanListnewjobwork(@Param("invtype") String invtype,@Param("party") String party,@Param("invdate") String invdate,@Param("comp") String comp);
 	
@@ -255,5 +259,11 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	
 	@Query(value="SELECT delivery_cid,challan_no,challan_date,referance_id,partyname FROM delivery_challan WHERE `modified_type`='INSERTED' AND invoicestatus='No' AND challan_date>=:fromdate AND challan_date<=:todate", nativeQuery=true)
 	List<Map<String,Object>> searchpendingDelvChallan(@Param("fromdate") String fromdate, @Param("todate") String todate);
+	
+	//@Query(value="SELECT ref_type FROM delivery_challan WHERE invoicestatus='No' AND inv_type=:inv_type AND party=:party AND challan_date<=:challan_date AND modified_type='INSERTED'", nativeQuery=true)
+	//List<Map<String,Object>> challanTypeList(@Param("inv_type") String inv_type, @Param("party") String party, @Param("challan_date") String challan_date);
+	
+	@Query("select s from Delivery_challan s where s.modified_type = 'INSERTED' AND invoicestatus='No' AND inv_type=:inv_type AND party=:party AND challan_date<=:challan_date")
+	List<Delivery_challan> challanTypeList(@Param("inv_type") String inv_type, @Param("party") String party, @Param("challan_date") String challan_date);
 	
 }

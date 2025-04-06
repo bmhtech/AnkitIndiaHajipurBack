@@ -85,7 +85,19 @@ public class Pur_good_receiptDTO {
 	public void setStack_maintain(String stack_maintain) {
 		this.stack_maintain = stack_maintain;
 	}
+
+	private String challan_status;
 	
+	
+
+	public String getChallan_status() {
+		return challan_status;
+	}
+
+	public void setChallan_status(String challan_status) {
+		this.challan_status = challan_status;
+	}
+
 	public String getSales_process() {
 		return sales_process;
 	}

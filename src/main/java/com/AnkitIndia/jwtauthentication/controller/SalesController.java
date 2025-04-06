@@ -787,6 +787,25 @@ public class SalesController {
 		{
 			return sales_OrderService.findJobSalesOrders(bunit,party,advdate);
 		}
+		
+		@GetMapping("/getDelvChallanByOrder/{salesid}/{fyear}")
+		public List<Map<String, Object>> getDelvChallanByOrder(@PathVariable(value = "salesid") String salesid,@PathVariable(value = "fyear") String fyear)
+		{
+			return sales_OrderService.getDelvChallanByOrder(salesid,fyear);
+		}
+		
+		@GetMapping("/getSaleOrderItemThroughGrn/{salesid}/{grnid}")
+		public List<Map<String, Object>> getSaleOrderItemThroughGrn(@PathVariable(value = "salesid") String salesid,@PathVariable(value = "grnid") String grnid)
+		{
+			return sales_OrderService.getSaleOrderItemThroughGrn(salesid,grnid);
+		}
+		
+		@GetMapping("/getGrnWeighment/{grnid}")
+		public Map<String, Object> getGrnWeighment(@PathVariable(value = "grnid") String grnid)
+		{
+			return sales_OrderService.getGrnWeighment(grnid);
+		}
+		
 	/************** End Sales Order **************/
 	
 	/************** Sales Quotation **************/
