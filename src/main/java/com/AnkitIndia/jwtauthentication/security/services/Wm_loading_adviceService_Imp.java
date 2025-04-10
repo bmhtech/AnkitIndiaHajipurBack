@@ -362,6 +362,7 @@ public class Wm_loading_adviceService_Imp implements Wm_loading_adviceService{
 			vehicleMasterRepository.updateStatus(wm_loading_advice.getVehicle_id(),false);
 		}else {
 			vehicleMasterRepository.updateStatus(wm_loading_advice.getVehicle_id(),true);//AFTER LOAD ADVICE THE VEHICLE IS NOT SHOWN IN LODING ADVICE VEHICLE LIST UNTILL 2ND WEIGHMENT COMPLETE
+			vehicleMasterRepository.updateVehicleWeighmentLocation(wm_loading_advice.getVehicle_id(),wm_loading_advice.getWeight_bridge_location());
 		}
 		Vehicle_weighment_load_unload  vehicle_weighment_load_unload = new Vehicle_weighment_load_unload();
 		
@@ -381,6 +382,7 @@ public class Wm_loading_adviceService_Imp implements Wm_loading_adviceService{
 		vehicle_weighment_load_unload.setDeleted_on(ldt);
 		vehicle_weighment_load_unload.setRef_name_type(wm_loading_advice.getRef_doc_type());
 		vehicle_weighment_load_unload.setGatepass_status("NA");
+		vehicle_weighment_load_unload.setWeight_bridge_location(wm_loading_advice.getWeight_bridge_location());
 		/*if(wm_loading_advice.getWeighment_status() == 0) 
 		{
 			vehicle_weighment_load_unload.setWe_req(false);
@@ -816,7 +818,9 @@ public class Wm_loading_adviceService_Imp implements Wm_loading_adviceService{
 			else 
 			{
 				vehicleMasterRepository.updateStatus(op.get().getVehicle_id(),false);//revert vehicle
+				vehicleMasterRepository.updateVehicleWeighmentLocation(op.get().getVehicle_id(),"NA"); //Revert Kata location
 				vehicleMasterRepository.updateStatus(wm_loading_advice.getVehicle_id(),true);//AFTER LOAD ADVICE THE VEHICLE IS NOT SHOWN IN LODING ADVICE VEHICLE LIST UNTILL 2ND WEIGHMENT COMPLETE
+				vehicleMasterRepository.updateVehicleWeighmentLocation(wm_loading_advice.getVehicle_id(),wm_loading_advice.getWeight_bridge_location());//Set Weight bridge Location
 			}
 			
 			Vehicle_weighment_load_unload  vehicle_weighment_load_unload_get =wm_loading_adviceRepository.getvehiclegstat(wm_loading_advice.getAdvice_id());
@@ -848,7 +852,7 @@ public class Wm_loading_adviceService_Imp implements Wm_loading_adviceService{
 			vehicle_weighment_load_unload.setWeighment_status(vehicle_weighment_load_unload_get.getWeighment_status());
 			vehicle_weighment_load_unload.setWeighment_id(vehicle_weighment_load_unload_get.getWeighment_id());
 			vehicle_weighment_load_unload.setStock_grn_status(vehicle_weighment_load_unload_get.getStock_grn_status());
-			
+			vehicle_weighment_load_unload.setWeight_bridge_location(wm_loading_advice.getWeight_bridge_location());
 		/*	if(wm_loading_advice.getWeighment_status() == 0) 
 			{
 				vehicle_weighment_load_unload.setWe_req(false);

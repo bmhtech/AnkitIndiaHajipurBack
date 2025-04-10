@@ -180,6 +180,9 @@ public class Wm_unload_wgmnt extends CommonProperties{
 	@Column(columnDefinition="varchar(100) default 'NA'")
 	private String wgment_no_alt;
 	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String weight_bridge_location;
+	
 	//Dynamic
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="wm_unload_wgmnt",cascade = CascadeType.ALL)
 	private Set<Wm_unload_wgmnt_dtls> wm_unload_wgmnt_dtls;

@@ -361,7 +361,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		}
 		else if(dChallan.getRef_type().compareTo("GRN")==0)
 		{
-			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id());
+			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id(),"Yes");
 		}		
 		else {dChallan.setReferance_id(dChallan.getDelivery_cid());}
 		
@@ -657,7 +657,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		}
 		else if(dChallan.getRef_type().compareTo("GRN")==0)
 		{
-			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id());
+			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id(),"Yes");
 		}
 		else
 		{
@@ -996,8 +996,9 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
 		
 		System.out.println(" ref :: "+dChallan.getReferance_id());
-		dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
-		
+		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
+			dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
+		}else {dChallan.setAdviceno("NA");}
 		
 		if(dChallan.getRef_type().compareToIgnoreCase("Loading Advice")==0 && dChallan.getReferance_id().compareToIgnoreCase("0")==0)
 		{
@@ -1430,11 +1431,20 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 	{
 		Delivery_challan wla=dChallanRepository.getDeliveryChallanDtls(delvid); //reference_id //loading advice id
 		//System.out.println("delivery_cid11::"+dChallanRepository.getDeliveryChallanDtls(delvid).getReferance_id());
-			Wm_loading_advice ordid =new Wm_loading_advice();
+			//Wm_loading_advice ordid =new Wm_loading_advice();
+			String refid="";
+			 Delivery_challan delivarydata=dChallanRepository.getDeliveryChallanDtls(delvid);
 			
-			ordid =wm_loading_adviceRepository.getLoadingDetails(wla.getReferance_id());
+			 if(delivarydata.getRef_type().compareToIgnoreCase("GRN")==0)		 {
+				 refid=pur_good_receiptRepository.getPurGoodRcptDtls(delivarydata.getReferance_id()).getSales_order();
+			 }
+			 else
+			 {
+				 refid =wm_loading_adviceRepository.getLoadingDetails(wla.getReferance_id()).getReferance_id(); 
+			 }
 			//System.out.println("delivery_cid2121::"+ordid.getReferance_id());
-			Sales_Order ord_id = sales_OrderRepository.getSalesOrderDetails(ordid.getReferance_id());
+			//Sales_Order ord_id = sales_OrderRepository.getSalesOrderDetails(ordid.getReferance_id());
+			 Sales_Order ord_id = sales_OrderRepository.getSalesOrderDetails(refid);
 			//System.out.println("delivery_cid4344::"+ord_id.getOrder_no());
 		return ord_id;
 	}
@@ -1864,9 +1874,13 @@ public List<Delivery_challanDTO> getMultipleDelvChallansApp(String party,String 
 			
 			delivery_challan_Chgs_dynRepository.delivery_challan_Chgs_dynupdate(op.get().getDelivery_cid(),"DELETED");
 			
-			wm_loading_adviceRepository.revertgrnstatus(op.get().getReferance_id());
-			
-			
+			 if(op.get().getRef_type().compareTo("GRN")==0)
+			{
+				pur_good_receiptRepository.updateGrnStatus(op.get().getReferance_id(),"No");
+			}	
+			 else {
+				 wm_loading_adviceRepository.revertgrnstatus(op.get().getReferance_id());
+			 }
 			
 			return dChallanRepository.save(delvchallan);	
 	 	}
@@ -2230,24 +2244,34 @@ public List<Delivery_challanDTO> getMultipleDelvChallansApp(String party,String 
 	 }
 	 
 	 public Map<String, Object> getLoadingAdviceTransDtls(String deliveryid)   
-		{
-			String refid=dChallanRepository.getDeliveryChallanDtls(deliveryid).getReferance_id();
-			return wm_loading_advice_trans_infoRepository.getloadingTransDetails(refid);
-		}
+	 {
+		String refid=dChallanRepository.getDeliveryChallanDtls(deliveryid).getReferance_id();
+		return wm_loading_advice_trans_infoRepository.getloadingTransDetails(refid);
+	 }
 	 
 	 public List<Map<String, Object>> getSalesFreightReport(String fromdate,String todate,String invoicetype)
-		{
-			return dChallanRepository.getSalesFreightReport(fromdate,todate,invoicetype);
-		}
+	 {
+		return dChallanRepository.getSalesFreightReport(fromdate,todate,invoicetype);
+	 }
 	 
 	 public List<Map<String, Object>> getRestDlvChallanItemDtls(String delvid)
-		{
-			return dChallanRepository.getRestwt(delvid);
-		}
+	 {
+		return dChallanRepository.getRestwt(delvid);
+	 }
 	 
 	 public List<Map<String, Object>> searchpendingDelvChallan(String fromdate,String todate)
-		{
-			return dChallanRepository.searchpendingDelvChallan(fromdate,todate);
-		}
+	 {
+		return dChallanRepository.searchpendingDelvChallan(fromdate,todate);
+	 }
+	 
+	 public Map<String, Object> getGrnDetails(String grnid)
+	 {
+		return pur_good_receiptRepository.getGrnDetails(grnid);
+	 }
+	 
+	 public Map<String,Object> getGrndetailsforWeighment(String grnid,String company)
+	 {
+		return pur_good_receiptRepository.getGrndetailsforWeighment(grnid,company);
+	 }
 	 
 }

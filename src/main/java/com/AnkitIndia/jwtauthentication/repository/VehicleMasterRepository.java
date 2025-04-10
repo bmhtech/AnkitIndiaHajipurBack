@@ -93,5 +93,10 @@ public interface VehicleMasterRepository extends JpaRepository<VehicleMaster, Lo
 	int updateVehicleOtherLoadUnload(@Param("vid") String vid,@Param("stat") int stat);
 	
 	@Query(value="select * from vehicle_master where modified_type='INSERTED'",nativeQuery=true)
-	 List<Map<String,Object>> allVechileList();
+	List<Map<String,Object>> allVechileList();
+	
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE VehicleMaster v SET v.weight_bridge_location =:weight_bridge_location WHERE v.vehicle_id =:vid AND v.modified_type='INSERTED'")
+	int updateVehicleWeighmentLocation(@Param("vid") String vid,@Param("weight_bridge_location") String weight_bridge_location);
+	
 }

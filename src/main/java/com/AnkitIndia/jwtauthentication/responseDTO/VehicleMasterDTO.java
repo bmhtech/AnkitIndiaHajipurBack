@@ -32,6 +32,16 @@ public class VehicleMasterDTO {
 	
 	private Long onwer_phoneno;
 
+	private String weight_bridge_location;
+	
+	public String getWeight_bridge_location() {
+		return weight_bridge_location;
+	}
+
+	public void setWeight_bridge_location(String weight_bridge_location) {
+		this.weight_bridge_location = weight_bridge_location;
+	}
+
 	public String getVehicle_id() {
 		return vehicle_id;
 	}

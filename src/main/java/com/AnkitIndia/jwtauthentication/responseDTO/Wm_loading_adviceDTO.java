@@ -103,8 +103,25 @@ public class Wm_loading_adviceDTO {
 	
 	private String pur_cust_refdocnoqty;
 	
+	private String weight_bridge_location;
 	
 	
+	public String getPur_cust_refdocnoqty() {
+		return pur_cust_refdocnoqty;
+	}
+
+	public void setPur_cust_refdocnoqty(String pur_cust_refdocnoqty) {
+		this.pur_cust_refdocnoqty = pur_cust_refdocnoqty;
+	}
+
+	public String getWeight_bridge_location() {
+		return weight_bridge_location;
+	}
+
+	public void setWeight_bridge_location(String weight_bridge_location) {
+		this.weight_bridge_location = weight_bridge_location;
+	}
+
 	public String getPur_cust_refdocno() {
 		return pur_cust_refdocno;
 	}

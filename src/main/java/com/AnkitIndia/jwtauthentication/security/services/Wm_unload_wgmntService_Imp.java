@@ -566,6 +566,7 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 						
 						wm_unload_adviceRepository.updateUnloadStatus(wgmnt_dtls.getAdvice(),gen_sno);//Unload_status 1 and  Weighment_status 2 
 						vehicleMasterRepository.updateStatus(wgmnt.getVehicle_id(),false);
+						vehicleMasterRepository.updateVehicleWeighmentLocation(wgmnt.getVehicle_id(),"NA");
 						wm_unload_adviceRepository.updateAfterLoadUnloadStatus(wgmnt_dtls.getAdvice(),gen_sno);
 					}
 					else
@@ -608,6 +609,7 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 						//System.out.println("HELLO HERE2 ");
 						wm_loading_adviceRepository.updateLoadingStatus(wgmnt_dtls.getAdvice(),gen_sno);
 						vehicleMasterRepository.updateStatus(wgmnt.getVehicle_id(),false);
+						vehicleMasterRepository.updateVehicleWeighmentLocation(wgmnt.getVehicle_id(),"NA");
 						wm_loading_adviceRepository.updateAfterLoadUnloadStatus(wgmnt_dtls.getAdvice(),gen_sno);
 					}
 					else {
@@ -1025,11 +1027,13 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 			vehicle_other_weighment_load_unload.setDeleted_by("NA");
 			vehicle_other_weighment_load_unload.setDeleted_on(ldt);
 			vehicle_other_weighment_load_unload.setGatepass_status("NA");
+			vehicle_other_weighment_load_unload.setWeight_bridge_location(wgmnt.getWeight_bridge_location());
 			
 			if(wgmnt.getWgment_no().substring(7,10).compareToIgnoreCase("1ST")==0)
 			{
 				stat=1;
 				vehicleMasterRepository.updateVehicleForWeighment(wgmnt.getVehicle_id(),stat);
+				vehicleMasterRepository.updateVehicleWeighmentLocation(wgmnt.getVehicle_id(),wgmnt.getWeight_bridge_location());
 				vehicle_other_weighment_load_unload.setWeighment_status(1);
 			}
 			else
@@ -1037,6 +1041,7 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 				stat=0;
 				vehicleMasterRepository.updateVehicleForWeighment(wgmnt.getVehicle_id(),stat);
 				vehicleMasterRepository.updateVehicleOtherLoadUnload(wgmnt.getVehicle_id(),2);
+				vehicleMasterRepository.updateVehicleWeighmentLocation(wgmnt.getVehicle_id(),"NA");
 				vehicle_other_weighment_load_unload.setWeighment_status(2);
 			}
 				
@@ -1574,6 +1579,11 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 		 return modelList;
 	}
 	
+	public Map<String, Object> getOtherWgFirstDataWtWgtFor(String vehicleid) {
+		Map<String, Object> modelList = wm_unload_wgmntRepository.getOtherWgFirstDataWtWgtFor(vehicleid);
+		return modelList;
+	}
+	
 	public List<Wm_unload_wgmnt> getdailygatewheatOUTwardreport(String fromdate,String todate)
 	{
 		String tablename="wm_unload_wgmnt",order_date="wgment_date";
@@ -1682,4 +1692,25 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 	public List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(String wgment_id){
 		return wm_unload_wgmntRepository.getUnloadWeightmentWtmultipopupmultipleItem(wgment_id);
 	}
+	
+	public List<Vehicle_weighment_load_unload> getVehicleListWeighmentLocation(String location)
+	{
+		Vehicle_weighment_load_unload vehidefualt = new Vehicle_weighment_load_unload();
+		vehidefualt.setVehicle_id("0");
+		vehidefualt.setVehicle_no("Choose an Option");
+		List<Vehicle_weighment_load_unload> modelList = new ArrayList<Vehicle_weighment_load_unload>();
+		modelList.add(vehidefualt);
+		modelList.addAll(wm_unload_wgmntRepository.findVehicleLocationwiseList(location));
+
+		return modelList;
+	}
+	
+	public List<Vehicle_weighment_load_unload> getVehicleLocationwiseWeighmentList(String location){
+		List<Vehicle_weighment_load_unload> modelList = new ArrayList<Vehicle_weighment_load_unload>();
+
+		modelList.addAll(wm_unload_wgmntRepository.getVehicleLocationwiseWeighmentList(location));
+
+		return modelList;
+	}
+	
 }

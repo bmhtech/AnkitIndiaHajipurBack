@@ -174,6 +174,9 @@ public class Wm_loading_advice extends CommonProperties{
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean refraction;
 	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String weight_bridge_location;
+	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="wm_loading_advice",cascade = CascadeType.ALL)
 	private Set<Wm_loading_advice_itm_dtls> wm_loading_advice_itm_dtls;
 	
