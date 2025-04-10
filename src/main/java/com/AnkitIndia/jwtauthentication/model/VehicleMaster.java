@@ -87,6 +87,9 @@ public class VehicleMaster extends CommonProperties{
 	
 	@Column(columnDefinition="int(10) default '0'")
 	private int weighment_vehicle;
+	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String weight_bridge_location;
 
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="vehicle_master",cascade = CascadeType.ALL)
 	private Set<Vehicle_master_doc_details> vehicle_master_doc_details;

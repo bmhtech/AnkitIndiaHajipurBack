@@ -1623,10 +1623,22 @@ public class ReportController {
 			return sales_orderService.getSalesOrderReport(fromdate,todate);
 		}
 		
+		@GetMapping("/getSalesOrderProcessWiseReport/{fromdate}/{todate}/{salesprocess}")
+		public List<Map<String, Object>> getSalesOrderProcessWiseReport(@PathVariable(value = "fromdate") String fromdate,@PathVariable(value = "todate") String todate,@PathVariable(value = "salesprocess") String salesprocess)
+		{
+			return sales_orderService.getSalesOrderProcessWiseReport(fromdate,todate,salesprocess);
+		}
+		
 		@GetMapping("/getSalesOrderReportOrderWise/{salesordernumber}")
 		public List<Map<String, Object>> getSalesOrderReportOrderWise(@PathVariable(value = "salesordernumber") String salesordernumber)
 		{
 			return sales_orderService.getSalesOrderReportOrderWise(salesordernumber);
+		}
+		
+		@GetMapping("/getSalesOrderReportOrderProcessWise/{salesordernumber}/{salesprocess}")
+		public List<Map<String, Object>> getSalesOrderReportOrderProcessWise(@PathVariable(value = "salesordernumber") String salesordernumber,@PathVariable(value = "salesprocess") String salesprocess)
+		{
+			return sales_orderService.getSalesOrderReportOrderProcessWise(salesordernumber,salesprocess);
 		}
 		
 		/************** End Pending Souda **************/

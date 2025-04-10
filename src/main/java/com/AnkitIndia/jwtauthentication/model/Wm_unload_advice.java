@@ -190,6 +190,9 @@ public class Wm_unload_advice extends CommonProperties{
 	@Column(columnDefinition="varchar(50) default 'NA'")
 	private String terminated_by;
 	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String weight_bridge_location;
+	
 	//Dynamic
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="wm_unload_advice",cascade = CascadeType.ALL)
 	private Set<Wm_unload_advice_item_dtls> wm_unload_advice_item_dtls;

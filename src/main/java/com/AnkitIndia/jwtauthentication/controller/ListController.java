@@ -3342,12 +3342,24 @@ public class ListController {
 			{
 				return wm_unload_adviceService.getUnloadAdviceThruVehicle(vcode,weighment);
 			}
+			
+			@GetMapping("/getVehicleListWeighmentLocation/{location}")
+			public List<Vehicle_weighment_load_unload> getVehicleListWeighmentLocation(@PathVariable(value = "location") String location)
+			{
+				return wm_unload_wgmntService.getVehicleListWeighmentLocation(location);
+			}
+			
 			@GetMapping("/getUnloadAdviceThruVehiclefast/{vcode}/{weighment}")
 			public List<Map<String, Object>> getUnloadAdviceThruVehiclefast(@PathVariable(value = "vcode") String vcode,@PathVariable(value = "weighment") String weighment)
 			{
 				return wm_unload_adviceService.getUnloadAdviceThruVehiclefast(vcode,weighment);
 			}
 			
+			@GetMapping("/getVehicleLocationwiseWeighmentList/{location}")
+			public List<Vehicle_weighment_load_unload> getVehicleLocationwiseWeighmentList(@PathVariable(value = "location") String location)
+			{
+				return wm_unload_wgmntService.getVehicleLocationwiseWeighmentList(location);
+			}
 			
 			@GetMapping("/getGetDocuments/{unadv_id}")
 			public List<Weighment_doc> getGetDocuments(@PathVariable(value = "unadv_id") String unadv_id)

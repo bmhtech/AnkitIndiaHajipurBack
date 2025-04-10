@@ -147,4 +147,8 @@ public interface Delivery_challanService {
 	
 	public List<Map<String, Object>> searchpendingDelvChallan(String fromdate,String todate);
 	
+	public Map<String,Object> getGrnDetails(String grnid);
+	
+	public Map<String,Object> getGrndetailsforWeighment(String grnid,String company);
+	
 }

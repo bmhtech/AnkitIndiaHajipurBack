@@ -185,7 +185,11 @@ public interface Sales_OrderService {
 	
 	public List<Map<String, Object>> getSalesOrderReport(String fromdate, String todate);
 	
+	public List<Map<String, Object>> getSalesOrderProcessWiseReport(String fromdate, String todate, String salesprocess);
+	
 	public List<Map<String, Object>> getSalesOrderReportOrderWise(String orderno);
+	
+	public List<Map<String, Object>> getSalesOrderReportOrderProcessWise(String orderno, String salesprocess);
 	
 	public List<Map<String, Object>> findJobSalesOrders(String bunit,String party,String advdate);
 	

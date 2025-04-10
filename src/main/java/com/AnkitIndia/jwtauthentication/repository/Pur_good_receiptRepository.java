@@ -172,8 +172,21 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
     int updateStackMaintain(@Param("grn_id") String grn_id,@Param("stat") String stat);
 
 	@Modifying(clearAutomatically = true)
-    @Query("UPDATE Pur_good_receipt l SET l.challan_status ='Yes' WHERE l.grn_id =:referenceid")
-    int updateGrnStatus(@Param("referenceid") String referenceid);
+    @Query("UPDATE Pur_good_receipt l SET l.challan_status =:dstatus WHERE l.grn_id =:referenceid")
+    int updateGrnStatus(@Param("referenceid") String referenceid,@Param("dstatus") String dstatus);
 
+	@Query(value= "SELECT p.* FROM pur_good_receipt p WHERE p.grn_id =:grnid AND p.modified_type ='INSERTED'",nativeQuery = true)
+	Map<String, Object> getGrnDetails(@Param("grnid") String grnid);
+	
+	@Query(value= "SELECT w.id AS id,w.wgment_id AS weighment_id FROM wm_unload_wgmnt w,pur_good_receipt p,wm_unload_advice a WHERE a.`unadviceid`=p.`referance_id`\r\n"
+			+ "AND a.`weighment_id`=w.`wgment_id` AND p.`modified_type`=a.`modified_type` AND a.`modified_type`=w.`modified_type` AND p.modified_type ='INSERTED'\r\n"
+			+ "AND a.modified_type ='INSERTED' AND w.modified_type ='INSERTED' AND p.`grn_id`=:grnid AND p.`company_id`=:company",nativeQuery = true)
+	Map<String, Object> getGrndetailsforWeighment(@Param("grnid") String grnid,@Param("company") String company);
+	
+	@Query(value = "SELECT CASE  WHEN count(pl)> 0 THEN true ELSE false END FROM Pur_Bill pl where pl.modified_type = 'INSERTED' and pl.referance_id=:grnid")
+	Boolean checkPurBillGrnUsage(@Param("grnid") String grnid);
+	
+	@Query(value = "SELECT CASE  WHEN count(pl)> 0 THEN true ELSE false END FROM Delivery_challan pl where pl.modified_type = 'INSERTED' and pl.referance_id=:grnid")
+	Boolean checkDelChallanGrnUsage(@Param("grnid") String grnid);
 	
 }

@@ -66,6 +66,9 @@ public class Vehicle_other_weighment_load_unload extends CommonProperties{
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean we_req;
 	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String weight_bridge_location;
+	
 	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "wmulwo_id")
     private Wm_unload_wgmnt wm_unload_wgmnt;
