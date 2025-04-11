@@ -345,7 +345,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setChallanno(dChallan.getChallan_no());
 		
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
-		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
+		if(dChallan.getRef_type().compareToIgnoreCase("Loading Advice")==0) {
 			dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
 		}else {dChallan.setAdviceno("NA");}
 		
@@ -354,12 +354,12 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			dChallan.setPartyname(cust_bussiness_partnerRepository.getCustomer(dChallan.getParty()).getCp_name());
 		}else {dChallan.setPartyname("None");}
 		
-		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
-			if(dChallan.getReferance_id().substring(0,3).compareTo("WLA")==0) {
+		if(dChallan.getRef_type().compareToIgnoreCase("Loading Advice")==0) {
+			if(dChallan.getReferance_id().substring(0,3).compareToIgnoreCase("WLA")==0) {
 				wm_loading_adviceRepository.updateDelvStatus(dChallan.getReferance_id(),true);
 			}	
 		}
-		else if(dChallan.getRef_type().compareTo("GRN")==0)
+		else if(dChallan.getRef_type().compareToIgnoreCase("GRN")==0)
 		{
 			pur_good_receiptRepository.updateGrnStatus(dChallan.getReferance_id(),"Yes");
 		}		
@@ -669,9 +669,9 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		}else {dChallan.setPartyname("None");}
 		//System.err.println("ref:>>>> "+dChallan.getReferance_id());
 		
-		if(dChallan.getRef_type().compareTo("Open Delivery Challan")!=0) 
+		if(dChallan.getRef_type().compareToIgnoreCase("Open Delivery Challan")!=0) 
 		{
-			if(op.get().getReferance_id().substring(0,3).compareTo("WLA")==0)
+			if(op.get().getReferance_id().substring(0,3).compareToIgnoreCase("WLA")==0)
 			{
 				wm_loading_adviceRepository.updateDelvStatus(dChallan.getReferance_id(),true);
 			}
@@ -996,7 +996,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
 		
 		System.out.println(" ref :: "+dChallan.getReferance_id());
-		if(dChallan.getRef_type().compareTo("Loading Advice")==0) {
+		if(dChallan.getRef_type().compareToIgnoreCase("Loading Advice")==0) {
 			dChallan.setAdviceno(wm_loading_adviceRepository.getLoadingDetails(dChallan.getReferance_id()).getAdvice_no());
 		}else {dChallan.setAdviceno("NA");}
 		
@@ -1014,9 +1014,9 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		}else {dChallan.setPartyname("None");}
 		//System.err.println("ref:>>>> "+dChallan.getReferance_id());
 		
-		if(dChallan.getRef_type().compareTo("Open Delivery Challan")!=0) 
+		if(dChallan.getRef_type().compareToIgnoreCase("Open Delivery Challan")!=0) 
 		{
-			if(op.get().getReferance_id().substring(0,3).compareTo("WLA")==0)
+			if(op.get().getReferance_id().substring(0,3).compareToIgnoreCase("WLA")==0)
 			{
 				wm_loading_adviceRepository.updateDelvStatus(dChallan.getReferance_id(),true);
 			}
