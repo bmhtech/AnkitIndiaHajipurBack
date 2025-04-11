@@ -36,6 +36,8 @@ public interface Sales_InvoiceService {
 	
 	public SalesSequenceIdDTO getSISequenceId(String fin_year,String inv_type);
 	
+	public SalesSequenceIdDTO getSISequenceIdforDefence(String fin_year,String inv_type,String custid);
+	
 	//public Sales_Invoice save(Sales_Invoice sales_Invoice);
 	public Sales_Invoice save(Sales_Invoice sales_Invoice,MultipartFile files[]) throws IOException;
 	
