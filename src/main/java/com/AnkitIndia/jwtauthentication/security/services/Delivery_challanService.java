@@ -32,6 +32,7 @@ public interface Delivery_challanService {
 	
 	public Delivery_challan save(Delivery_challan dChallan);
 	
+	public SalesSequenceIdDTO getDCSequenceIdforDefence(String fin_year,String inv_type, String cust_id);
 	
 	public Page<Delivery_challan_Pagination_DTO> getDeliveryChallans_pagination(int page,int size);
 	

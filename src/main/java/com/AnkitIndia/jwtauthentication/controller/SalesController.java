@@ -989,6 +989,12 @@ public class SalesController {
 		return delivery_challanService.getDCSequenceId(fin_year,inv_type);
 	}
 	
+	@GetMapping("/getDCSequenceIdforDefence/{fin_year}/{inv_type}/{cust_id}")
+	public SalesSequenceIdDTO getDCSequenceIdforDefence(@PathVariable(value = "fin_year") String fin_year,@PathVariable(value = "inv_type") String inv_type,@PathVariable(value = "cust_id") String cust_id)
+	{
+		return delivery_challanService.getDCSequenceIdforDefence(fin_year,inv_type,cust_id);
+	}
+	
   @GetMapping(value = "/searchDeliveryChallan")
 		public List<Delivery_challan_Pagination_DTO> searchDeliveryChallan(@RequestParam(defaultValue = "") String orderno,@RequestParam(defaultValue = "") String fromdate,
 				@RequestParam(defaultValue = "") String todate,@RequestParam(defaultValue = "") String party1,@RequestParam(defaultValue = "") String finyear)
@@ -1352,6 +1358,12 @@ public class SalesController {
 	public SalesSequenceIdDTO getSISequenceId(@PathVariable(value = "fin_year") String fin_year,@PathVariable(value = "inv_type") String inv_type)
 	{
 		return sales_InvoiceService.getSISequenceId(fin_year,inv_type);
+	}
+	
+	@GetMapping("/getSISequenceIdforDefence/{fin_year}/{inv_type}/{custid}")
+	public SalesSequenceIdDTO getSISequenceIdforDefence(@PathVariable(value = "fin_year") String fin_year,@PathVariable(value = "inv_type") String inv_type,@PathVariable(value = "custid") String custid)
+	{
+		return sales_InvoiceService.getSISequenceIdforDefence(fin_year,inv_type,custid);
 	}
 	
 /*	@PostMapping("/createSalesInvoice")
