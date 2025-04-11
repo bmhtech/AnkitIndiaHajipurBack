@@ -109,17 +109,20 @@ public interface Wm_unload_wgmntRepository extends JpaRepository<Wm_unload_wgmnt
 	@Query( "select w from Wm_unload_wgmnt w where w.modified_type = 'INSERTED' and w.weight2='weight2' and w.advice=:advice_id")
 	Wm_unload_wgmnt getreportwgnmet(@Param("advice_id") String advice_id);
 	
-	@Query(value="select id,wgment_no,vehicle_no,wgment_date,noitemname,nopartyname,gross_weight,tare_weight,net_weight,wgment_rs,we_status,wgment_id from wm_unload_wgmnt where modified_type = 'INSERTED' and fin_year=:finyear and wgment_date=:currDate and weighment_type='Other' ",nativeQuery=true)
-	 List<Map<String,Object>> getOtherWeighmentDataList(@Param("currDate") String currDate,@Param("finyear") String finyear);
+	@Query(value="select id,wgment_no,vehicle_no,wgment_date,noitemname,nopartyname,gross_weight,tare_weight,net_weight,wgment_rs,we_status,wgment_id,weight_bridge_location from wm_unload_wgmnt where modified_type = 'INSERTED' and fin_year=:finyear and wgment_date=:currDate and weighment_type='Other' ",nativeQuery=true)
+	List<Map<String,Object>> getOtherWeighmentDataList(@Param("currDate") String currDate,@Param("finyear") String finyear);
 	
 	@Query(value="select DISTINCT nopartyname from wm_unload_wgmnt where modified_type = 'INSERTED' and weighment_type='Other' ",nativeQuery=true)
-	 List<Map<String,Object>> getNopartyList();
+	List<Map<String,Object>> getNopartyList();
 	
 	@Query(value="select w.wgment_date,w.noitemname,w.nopartyname,w.ref_doc_no,w.ref_doc_date,w.gross_weight,w.gw_unit,w.gw_date,w.gw_time,w.gw_remarks,w.tare_weight,w.tw_unit,w.tw_date,w.tw_time,w.tw_remarks,w.tarebags,w.net_weight,w.nw_unit,w.wgment_charge,w.wgment_rs,w.we_status,w.wgment_id from wm_unload_wgmnt w,vehicle_other_weighment_load_unload v where w.wgment_id=v.weighment_id and v.weighment_status=1 and w.modified_type = 'INSERTED' and w.weighment_type='Other' ",nativeQuery=true)
-	 Map<String,Object> getFirstData();
+	Map<String,Object> getFirstData();
 	
-	@Query(value="select w.wgment_date,w.noitemname,w.nopartyname,w.ref_doc_no,w.ref_doc_date,w.gross_weight,w.gw_unit,w.gw_date,w.gw_time,w.gw_remarks,w.tare_weight,w.tw_unit,w.tw_date,w.tw_time,w.tw_remarks,w.tarebags,w.net_weight,w.nw_unit,w.wgment_charge,w.wgment_rs,w.we_status,w.wgment_id,w.nopartyid,w.noitemid,w.firstbags from wm_unload_wgmnt w,vehicle_other_weighment_load_unload v where w.wgment_id=v.weighment_id and w.vehicle_id=:vehicleid and v.weighment_status=1 and w.modified_type = 'INSERTED' and w.weighment_type='Other' ",nativeQuery=true)
-	 Map<String,Object> getOtherWgFirstData(@Param("vehicleid") String vehicleid);
+	@Query(value="select w.wgment_date,w.noitemname,w.nopartyname,w.ref_doc_no,w.ref_doc_date,w.gross_weight,w.gw_unit,w.gw_date,w.gw_time,w.gw_remarks,w.tare_weight,w.tw_unit,w.tw_date,w.tw_time,w.tw_remarks,w.tarebags,w.net_weight,w.nw_unit,w.wgment_charge,w.wgment_rs,w.we_status,w.wgment_id,w.nopartyid,w.noitemid,w.firstbags,w.weight_bridge_location from wm_unload_wgmnt w,vehicle_other_weighment_load_unload v where w.wgment_id=v.weighment_id and w.vehicle_id=:vehicleid and v.weighment_status=1 and w.modified_type = 'INSERTED' and w.weighment_type='Other' ",nativeQuery=true)
+	Map<String,Object> getOtherWgFirstData(@Param("vehicleid") String vehicleid);
+	
+	@Query(value="select w.wgment_date,w.noitemname,w.nopartyname,w.ref_doc_no,w.ref_doc_date,w.gross_weight,w.gw_unit,w.gw_date,w.gw_time,w.gw_remarks,w.tare_weight,w.tw_unit,w.tw_date,w.tw_time,w.tw_remarks,w.tarebags,w.net_weight,w.nw_unit,w.wgment_charge,w.wgment_rs,w.we_status,w.wgment_id,w.nopartyid,w.noitemid,w.firstbags,w.advice,w.advice_no,w.wgment_for,w.wgment_no,w.weight_bridge_location from wm_unload_wgmnt w,vehicle_other_weighment_load_unload v where w.wgment_id=v.weighment_id and w.vehicle_id=:vehicleid and v.weighment_status=1 and w.modified_type = 'INSERTED' and w.weighment_type='Other' ",nativeQuery=true)
+	Map<String,Object> getOtherWgFirstDataWtWgtFor(@Param("vehicleid") String vehicleid);
 	
 	@Query( "select w from Wm_unload_wgmnt w where w.modified_type = 'INSERTED' and w.fin_year=:finyear and w.wgment_date=:currDate and w.weighment_type!='Other'")
 	List<Wm_unload_wgmnt> getWeighmentData(@Param("currDate") String currDate,@Param("finyear") String finyear);
@@ -156,5 +159,11 @@ public interface Wm_unload_wgmntRepository extends JpaRepository<Wm_unload_wgmnt
 	
 	@Query(value = "{call own_weighment_calculation_multiple_item_grn(:wgment_id)}", nativeQuery = true)
 	List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(@Param("wgment_id") String wgment_id);
+	
+	@Query( "select w from Vehicle_weighment_load_unload w where w.modified_type ='INSERTED' and w.weighment_status=0 AND w.gatepass_status='NA' AND w.weight_bridge_location=:location")
+	List<Vehicle_weighment_load_unload> findVehicleLocationwiseList(@Param("location") String location);
+	
+	@Query( "select w from Vehicle_weighment_load_unload w where w.modified_type ='INSERTED' and w.weighment_status !=2 and w.gatepass_status='IN' and w.we_req=1 AND w.weight_bridge_location=:location")
+	List<Vehicle_weighment_load_unload> getVehicleLocationwiseWeighmentList(@Param("location") String location);
 	
 }

@@ -1299,6 +1299,17 @@ public class SalesController {
 		return delivery_challanService.getLoadingAdviceTransDtls(delveryid);
 	}
 	
+	@GetMapping(value = "/getGrnDetails/{grnid}")
+	public Map<String, Object> getGrnDetails(@PathVariable(value = "grnid") String grnid) {
+		return delivery_challanService.getGrnDetails(grnid);
+	}
+	
+	@GetMapping(value = "/getGrndetailsforWeighment/{grnid}/{company}")
+	public Map<String, Object> getGrndetailsforWeighment(@PathVariable(value = "grnid") String grnid,@PathVariable(value = "company") String company) {
+		return delivery_challanService.getGrndetailsforWeighment(grnid,company);
+	}
+	
+	
 	/************** End Delivery Challan **************/
 	
 	/***************** Gate Pass ****************/

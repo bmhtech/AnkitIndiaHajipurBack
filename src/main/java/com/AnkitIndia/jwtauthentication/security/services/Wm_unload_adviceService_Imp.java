@@ -485,6 +485,7 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 		//new vehicle records table starts
 		//System.out.println("vehicle:"+wAdvice.getVehicle_id());
 		vehicleMasterRepository.updateStatus(wAdvice.getVehicle_id(),true);//AFTER UNLOAD ADVICE THE VEHICLE IS NOT SHOWN IN UNLODING ADVICE VEHICLE LIST UNTILL 2ND WEIGHMENT COMPLETE
+		vehicleMasterRepository.updateVehicleWeighmentLocation(wAdvice.getVehicle_id(),wAdvice.getWeight_bridge_location());
 		
 		Vehicle_weighment_load_unload  vehicle_weighment_load_unload = new Vehicle_weighment_load_unload();
 		
@@ -505,7 +506,7 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 		vehicle_weighment_load_unload.setRef_name_type(wAdvice.getRef_type());
 		vehicle_weighment_load_unload.setGatepass_status("NA");
 		vehicle_weighment_load_unload.setWe_req(wAdvice.isWe_req());
-			
+		vehicle_weighment_load_unload.setWeight_bridge_location(wAdvice.getWeight_bridge_location());	
 		
 		wAdvice.setVehicle_weighment_load_unload(vehicle_weighment_load_unload);
 		//ends
@@ -1024,13 +1025,16 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 	{
 		Optional<Wm_unload_advice> op = wm_unload_adviceRepository.findById(id);
 		LocalDateTime ldt = LocalDateTime.now();
-		wAdvice.setPur_orderid(op.get().getPur_orderid());
-		wAdvice.setUnload_status(0);
-		wAdvice.setWeighment_status(0);
+		//wAdvice.setPur_orderid(op.get().getPur_orderid());
+		//wAdvice.setUnload_status(0);
+		//wAdvice.setWeighment_status(0);
+		System.out.println("Update Main Fields:: "+" /Po Id/ "+op.get().getPur_orderid()+" /Wgt Id/ "+op.get().getWeighment_id()+
+				" /Wgt Sts/ "+op.get().getWeighment_status()+" /UN Sts/ "+op.get().getUnload_status());
 		wAdvice.setAdv_po_tag_no("No");
 		wAdvice.setQc_status(op.get().getQc_status());		
 		wAdvice.setWeighment_id(op.get().getWeighment_id());
 		wAdvice.setWeighment_status(op.get().getWeighment_status());
+		wAdvice.setUnload_status(op.get().getUnload_status());
 		
 		if(Utility.isNullOrEmpty(wAdvice.getItem_subtype())) {
 			wAdvice.setItem_subtypename(item_type_masterRepository.getItemType(wAdvice.getItem_subtype()).getItem_name());
@@ -1199,7 +1203,9 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 			wAdvice.setId(id);
 		}
 		vehicleMasterRepository.updateStatus(op.get().getVehicle_id(),false);//revert vehicle
+		vehicleMasterRepository.updateVehicleWeighmentLocation(op.get().getVehicle_id(),"NA");
 		vehicleMasterRepository.updateStatus(wAdvice.getVehicle_id(),true);//AFTER UNLOAD ADVICE THE VEHICLE IS NOT SHOWN IN UNLODING ADVICE VEHICLE LIST UNTILL 2ND WEIGHMENT COMPLETE
+		vehicleMasterRepository.updateVehicleWeighmentLocation(wAdvice.getVehicle_id(),wAdvice.getWeight_bridge_location());
 		//new vehicle records table starts
 		Vehicle_weighment_load_unload vehicle=  wm_unload_advice_item_dtlsRepository.vehicle_weighment_load_unloadupdateFETCH(wAdvice.getUnadviceid());
 		    
@@ -1235,7 +1241,7 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 				vehicle_weighment_load_unload.setStock_grn_status(vehicle.getStock_grn_status());
 				
 				vehicle_weighment_load_unload.setWeighment_id(vehicle.getWeighment_id());
-				
+				vehicle_weighment_load_unload.setWeight_bridge_location(wAdvice.getWeight_bridge_location());
 				
 				wAdvice.setVehicle_weighment_load_unload(vehicle_weighment_load_unload);
 	//ends

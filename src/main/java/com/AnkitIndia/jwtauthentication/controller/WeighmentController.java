@@ -609,6 +609,12 @@ public class WeighmentController {
 		return wm_unload_wgmntService.getOtherWgFirstData(vehicleid);
 	}
 	
+	@GetMapping("/getOtherWgFirstDataWtWgtFor/{vehicleid}")
+	public Map<String,Object> getOtherWgFirstDataWtWgtFor(@PathVariable(value = "vehicleid") String vehicleid)
+	{
+		return wm_unload_wgmntService.getOtherWgFirstDataWtWgtFor(vehicleid);
+	}
+	
 	@GetMapping("/getWeighmentSequenceId/{prefix}/{orderdate}/{weight}")
 	public SequenceIdDTO getWeighmentSequenceId(@PathVariable(value = "prefix") String prefix,@PathVariable(value = "orderdate") String orderdate,@PathVariable(value = "weight") String weight)
 	{

@@ -4228,9 +4228,36 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return sales_OrderRepository.getSalesOrderReport(fromdate, todate);
 	}
 	
+	public List<Map<String, Object>> getSalesOrderProcessWiseReport(String fromdate, String todate, String salesprocess)
+	{
+		if(salesprocess.compareToIgnoreCase("Sale")==0) {
+			return sales_OrderRepository.getSalesOrderDirectSalesReport(fromdate, todate);
+		}
+		else if(salesprocess.compareToIgnoreCase("Job Work")==0) {
+			return sales_OrderRepository.getSalesOrderDirectJWReport(fromdate, todate);
+		}
+		else { // salesprocess = Stock
+			return sales_OrderRepository.getSalesOrderReport(fromdate, todate);
+		}
+	}
+	
 	public List<Map<String, Object>> getSalesOrderReportOrderWise(String orderno)
 	{
 		return sales_OrderRepository.getSalesOrderReportOrderWise(orderno);
+	}
+	
+	public List<Map<String, Object>> getSalesOrderReportOrderProcessWise(String orderno, String salesprocess)
+	{
+		if(salesprocess.compareToIgnoreCase("Sale")==0) {
+			return sales_OrderRepository.getSalesOrderReportOrderWiseSales(orderno);
+		}
+		else if(salesprocess.compareToIgnoreCase("Job Work")==0) {
+			return sales_OrderRepository.getSalesOrderReportOrderWiseJW(orderno);
+		}
+		else { // salesprocess = Stock
+			return sales_OrderRepository.getSalesOrderReportOrderWise(orderno);
+		}
+		//return sales_OrderRepository.getSalesOrderReportOrderProcessWise(orderno);
 	}
 	
 	public List<Map<String, Object>> findJobSalesOrders(String bunit,String party,String advdate)

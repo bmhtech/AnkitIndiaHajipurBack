@@ -262,6 +262,40 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 		//	+ "WHERE x1.order_date>=:fromdate AND x1.order_date<=:todate AND x1.terminate=0 AND(x1.bag-IFNULL(y1.alt_s_quantity,0))>0", nativeQuery = true)  // Only Pending Qty
 	List<Map<String, Object>> getSalesOrderReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
 	
+	@Query(value= "SELECT x1.order_id,x1.order_date,x1.order_no,x1.terminate,x1.ref_type,x1.partyname,x1.broker_name,x1.order_type,x1.item_name,x1.quantity,x1.bag,x1.price,x1.price_based_on,\r\n"
+			+ "IFNULL(y1.quantity,0) AS dispatched_quantity,IFNULL(y1.squantity,0) AS dispatched_bag,(x1.quantity-IFNULL(y1.quantity,0))AS pending_quantity,\r\n"
+			+ "(x1.bag-IFNULL(y1.squantity,0)) AS pending_bag FROM (SELECT s1.order_id,s.order_date,s.order_no,s.terminate,s.ref_type,c.cp_name AS partyname,\r\n"
+			+ "b.broker_name,s.order_type,s1.item_name,s1.quantity,s1.squantity AS bag,s1.price,s1.price_based_on \r\n"
+			+ "FROM sales_order_item_dtls s1 \r\n"
+			+ "LEFT JOIN sales_order s ON s1.order_id= s.order_id \r\n"
+			+ "LEFT JOIN cust_bussiness_partner c ON c.cp_id =s.customer \r\n"
+			+ "LEFT JOIN sales_order_broker_dtls b ON s.order_id = b.order_id \r\n"
+			+ "WHERE s1.modified_type='INSERTED' AND s.modified_type='INSERTED' AND c.modified_type='INSERTED' AND b.modified_type='INSERTED')x1 \r\n"
+			+ "LEFT JOIN(SELECT dci.delivery_cid,dc.challan_no,dci.item_name,grn.sales_order AS order_id,SUM(dci.quantity) AS quantity,SUM(dci.squantity) AS squantity FROM delivery_challan_item_dtls dci\r\n"
+			+ "LEFT JOIN delivery_challan dc ON dc.delivery_cid=dci.delivery_cid AND dc.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt grn ON grn.grn_id=dc.referance_id AND grn.modified_type='INSERTED' \r\n"
+			+ "WHERE dci.modified_type='INSERTED'\r\n"
+			+ "GROUP BY grn.sales_order,dci.item_name)y1 ON x1.order_id=y1.order_id AND x1.item_name=y1.item_name \r\n"
+			+ "WHERE x1.order_date>=:fromdate AND x1.order_date<=:todate AND x1.terminate=0", nativeQuery = true)  // Only Direct Sales Pending Qty
+	List<Map<String, Object>> getSalesOrderDirectSalesReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
+	
+	@Query(value= "SELECT x1.order_id,x1.order_date,x1.order_no,x1.terminate,x1.ref_type,x1.partyname,x1.broker_name,x1.order_type,x1.item_name,x1.quantity,x1.bag,x1.price,x1.price_based_on,\r\n"
+			+ "IFNULL(y1.quantity,0) AS dispatched_quantity,IFNULL(y1.squantity,0) AS dispatched_bag,(x1.quantity-IFNULL(y1.quantity,0))AS pending_quantity,\r\n"
+			+ "(x1.bag-IFNULL(y1.squantity,0))AS pending_bag FROM (SELECT s1.order_id,s.order_date,s.order_no,s.terminate,s.ref_type,c.cp_name AS partyname,\r\n"
+			+ "b.broker_name,s.order_type,s1.item_name,s1.quantity,s1.squantity AS bag,s1.price,s1.price_based_on \r\n"
+			+ "FROM sales_order_item_dtls s1 \r\n"
+			+ "LEFT JOIN sales_order s ON s1.order_id= s.order_id \r\n"
+			+ "LEFT JOIN cust_bussiness_partner c ON c.cp_id =s.customer \r\n"
+			+ "LEFT JOIN sales_order_broker_dtls b ON s.order_id = b.order_id \r\n"
+			+ "WHERE s1.modified_type='INSERTED' AND s.modified_type='INSERTED' AND c.modified_type='INSERTED' AND b.modified_type='INSERTED')x1 \r\n"
+			+ "LEFT JOIN(SELECT dci.delivery_cid,dc.challan_no,dci.item_name,grn.sales_order AS order_id,SUM(dci.quantity) AS quantity,SUM(dci.squantity) AS squantity FROM delivery_challan_item_dtls dci\r\n"
+			+ "LEFT JOIN delivery_challan dc ON dc.delivery_cid=dci.delivery_cid AND dc.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt grn ON grn.grn_id=dc.referance_id AND grn.modified_type='INSERTED' \r\n"
+			+ "WHERE dci.modified_type='INSERTED'\r\n"
+			+ "GROUP BY grn.sales_order,dci.item_name)y1 ON x1.order_id=y1.order_id AND x1.item_name=y1.item_name \r\n"
+			+ "WHERE x1.order_date>=:fromdate AND x1.order_date<=:todate AND x1.terminate=0", nativeQuery = true)  // Only Direct JW Pending Qty
+	List<Map<String, Object>> getSalesOrderDirectJWReport(@Param("fromdate") String fromdate, @Param("todate") String todate);
+	
 	@Query(value= "SELECT x1.order_id,x1.order_date,x1.order_no,x1.terminate,x1.ref_type,x1.partyname,x1.broker_name,x1.order_type,x1.item_name,x1.mat_wt,x1.bag,x1.price,x1.price_based_on,\r\n"
 			+ "IFNULL(y1.mat_wt,0) AS dispatched_quantity,IFNULL(y1.alt_s_quantity,0) AS dispatched_bag,(x1.mat_wt-IFNULL(y1.mat_wt,0))AS pending_quantity,\r\n"
 			+ "(x1.bag-IFNULL(y1.alt_s_quantity,0))AS pending_bag FROM (SELECT s1.order_id,s.order_date,s.order_no,s.terminate,s.ref_type,c.cp_name AS partyname,\r\n"
@@ -276,6 +310,40 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 			+ "GROUP BY wmd.order_id,wmd.item_name)y1 ON x1.order_id=y1.order_id AND x1.item_name=y1.item_name \r\n"
 			+ "WHERE x1.order_no=:orderno AND x1.terminate=0", nativeQuery = true)  // Only Pending Qty
 	List<Map<String, Object>> getSalesOrderReportOrderWise(@Param("orderno") String  orderno);
+	
+	@Query(value= "SELECT x1.order_id,x1.order_date,x1.order_no,x1.terminate,x1.ref_type,x1.partyname,x1.broker_name,x1.order_type,x1.item_name,x1.quantity,x1.bag,x1.price,x1.price_based_on,\r\n"
+			+ "IFNULL(y1.quantity,0) AS dispatched_quantity,IFNULL(y1.squantity,0) AS dispatched_bag,(x1.quantity-IFNULL(y1.quantity,0))AS pending_quantity,\r\n"
+			+ "(x1.bag-IFNULL(y1.squantity,0))AS pending_bag FROM (SELECT s1.order_id,s.order_date,s.order_no,s.terminate,s.ref_type,c.cp_name AS partyname,\r\n"
+			+ "b.broker_name,s.order_type,s1.item_name,s1.quantity,s1.squantity AS bag,s1.price,s1.price_based_on \r\n"
+			+ "FROM sales_order_item_dtls s1 \r\n"
+			+ "LEFT JOIN sales_order s ON s1.order_id= s.order_id \r\n"
+			+ "LEFT JOIN cust_bussiness_partner c ON c.cp_id =s.customer \r\n"
+			+ "LEFT JOIN sales_order_broker_dtls b ON s.order_id = b.order_id \r\n"
+			+ "WHERE s1.modified_type='INSERTED' AND s.modified_type='INSERTED' AND c.modified_type='INSERTED' AND b.modified_type='INSERTED')x1 \r\n"
+			+ "LEFT JOIN(SELECT dci.delivery_cid,dc.challan_no,dci.item_name,grn.sales_order AS order_id,SUM(dci.quantity) AS quantity,SUM(dci.squantity) AS squantity FROM delivery_challan_item_dtls dci\r\n"
+			+ "LEFT JOIN delivery_challan dc ON dc.delivery_cid=dci.delivery_cid AND dc.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt grn ON grn.grn_id=dc.referance_id AND grn.modified_type='INSERTED' \r\n"
+			+ "WHERE dci.modified_type='INSERTED'\r\n"
+			+ "GROUP BY grn.sales_order,dci.item_name)y1 ON x1.order_id=y1.order_id AND x1.item_name=y1.item_name \r\n"
+			+ "WHERE x1.order_no=:orderno AND x1.terminate=0", nativeQuery = true)  // Only Pending Qty
+	List<Map<String, Object>> getSalesOrderReportOrderWiseSales(@Param("orderno") String  orderno);
+	
+	@Query(value= "SELECT x1.order_id,x1.order_date,x1.order_no,x1.terminate,x1.ref_type,x1.partyname,x1.broker_name,x1.order_type,x1.item_name,x1.quantity,x1.bag,x1.price,x1.price_based_on,\r\n"
+			+ "IFNULL(y1.quantity,0) AS dispatched_quantity,IFNULL(y1.squantity,0) AS dispatched_bag,(x1.quantity-IFNULL(y1.quantity,0))AS pending_quantity,\r\n"
+			+ "(x1.bag-IFNULL(y1.squantity,0))AS pending_bag FROM (SELECT s1.order_id,s.order_date,s.order_no,s.terminate,s.ref_type,c.cp_name AS partyname,\r\n"
+			+ "b.broker_name,s.order_type,s1.item_name,s1.quantity,s1.squantity AS bag,s1.price,s1.price_based_on \r\n"
+			+ "FROM sales_order_item_dtls s1 \r\n"
+			+ "LEFT JOIN sales_order s ON s1.order_id= s.order_id \r\n"
+			+ "LEFT JOIN cust_bussiness_partner c ON c.cp_id =s.customer \r\n"
+			+ "LEFT JOIN sales_order_broker_dtls b ON s.order_id = b.order_id \r\n"
+			+ "WHERE s1.modified_type='INSERTED' AND s.modified_type='INSERTED' AND c.modified_type='INSERTED' AND b.modified_type='INSERTED')x1 \r\n"
+			+ "LEFT JOIN(SELECT dci.delivery_cid,dc.challan_no,dci.item_name,grn.sales_order AS order_id,SUM(dci.quantity) AS quantity,SUM(dci.squantity) AS squantity FROM delivery_challan_item_dtls dci\r\n"
+			+ "LEFT JOIN delivery_challan dc ON dc.delivery_cid=dci.delivery_cid AND dc.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt grn ON grn.grn_id=dc.referance_id AND grn.modified_type='INSERTED' \r\n"
+			+ "WHERE dci.modified_type='INSERTED'\r\n"
+			+ "GROUP BY grn.sales_order,dci.item_name)y1 ON x1.order_id=y1.order_id AND x1.item_name=y1.item_name \r\n"
+			+ "WHERE x1.order_no=:orderno AND x1.terminate=0", nativeQuery = true)  // Only Pending Qty
+	List<Map<String, Object>> getSalesOrderReportOrderWiseJW(@Param("orderno") String  orderno);
 	
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Sales_Order p SET p.cust_channel_list=:custid WHERE p.cust_channel = :channel_custid" )
@@ -342,10 +410,12 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 	@Query(value= "SELECT * FROM loading_sales_order_jobworks_w_tolerance l WHERE l.`order_id`=:order_id AND l.`job_item`=:item_id AND l.`job_packing`=:item_code", nativeQuery=true)
 	List<Map<String, Object>> getSOjwRestQty(@Param("order_id") String order_id,@Param("item_id") String item_id,@Param("item_code") String item_code);
 	
-	@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
+	//@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
+	@Query(value= "SELECT s.order_id,s.order_no,CONCAT(s.order_no,'/',(SELECT IFNULL(c.alt_name,'') AS alt_name FROM cust_bussiness_partner c WHERE c.cp_id=s.customer AND c.modified_type='INSERTED'),'/',IFNULL(s.cust_refdocno,'')) AS cust_order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
 	List<Map<String, Object>> getSalesOrderJWList(@Param("fin_year") String fin_year);
 	
-	@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type!='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
+	//@Query(value= "SELECT s.order_id,s.order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type!='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
+	@Query(value= "SELECT s.order_id,s.order_no,CONCAT(s.order_no,'/',(SELECT IFNULL(c.alt_name,'') AS alt_name FROM cust_bussiness_partner c WHERE c.cp_id=s.customer AND c.modified_type='INSERTED'),'/',IFNULL(s.cust_refdocno,'')) AS cust_order_no FROM sales_order s WHERE s.modified_type='INSERTED' AND s.inv_type!='INV00003' AND s.fin_year=:fin_year AND s.terminate=0", nativeQuery=true)
 	List<Map<String, Object>> getSalesOrderList(@Param("fin_year") String fin_year);
 	
 	@Query(value= "SELECT s.order_id,s.order_no,s.order_date,s.business_unit,s.inv_type,CASE WHEN (SELECT cp_name FROM cust_bussiness_partner WHERE cp_id=s.customer) IS NULL THEN '' ELSE (SELECT cp_name FROM cust_bussiness_partner WHERE cp_id=s.customer) END  AS customer_name,s.q_status,s.ref_type FROM sales_order s WHERE s.modified_type='INSERTED' AND s.order_id=:salesid AND s.terminate=0 AND s.fin_year=:fyear", nativeQuery=true)
@@ -353,7 +423,7 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 	
 	@Query(value= "SELECT s.order_id,s.slno,s.item_code,s.item_name,s.packing,s.packing_name,s.uom,s.suom,w.tarebags AS squantity,w.net_weight AS quantity,\r\n"
 			+ "s.con_factor,w.net_weight AS mat_wt,price,s.price_based_on,s.discount_type,s.discount_rate,s.tolerance,s.tax_code,s.tax_rate,s.tax_amt,s.acc_norms\r\n"
-			+ " FROM sales_Order_Item_Dtls s,wm_unload_wgmnt w,pur_good_receipt p,wm_unload_advice a \r\n"
+			+ " FROM sales_order_item_dtls s,wm_unload_wgmnt w,pur_good_receipt p,wm_unload_advice a \r\n"
 			+ " WHERE s.order_id=p.sales_order AND a.unadviceid=p.referance_id AND w.advice=a.unadviceid AND p.modified_type = 'INSERTED' AND a.modified_type = 'INSERTED'\r\n"
 			+ " AND w.modified_type = 'INSERTED' AND s.modified_type = 'INSERTED' AND s.order_id =:salesid AND w.wgment_id=:weighment_id ORDER BY s.slno", nativeQuery=true)
 	List<Map<String, Object>> getSaleOrderItemThroughGrn(@Param("salesid") String salesid,@Param("weighment_id") String weighment_id);

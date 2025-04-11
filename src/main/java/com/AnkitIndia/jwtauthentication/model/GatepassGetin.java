@@ -47,6 +47,9 @@ public class GatepassGetin extends CommonProperties{
 	@Column(columnDefinition="TEXT")
 	private String  doc_pdf;
 	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String weight_bridge_location;
+	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="gatepassGetin",cascade = CascadeType.ALL)
 	private Set<GatepassGetin_details> gatepassGetin_details;
 	

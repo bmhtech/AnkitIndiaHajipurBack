@@ -75,6 +75,8 @@ public interface Wm_unload_wgmntService {
 	
 	public Map<String,Object> getOtherWgFirstData(String vehicleid);
 	
+	public Map<String,Object> getOtherWgFirstDataWtWgtFor(String vehicleid);
+	
 	public List<Wm_unload_wgmnt> getdailygatewheatOUTwardreport(String fromdate,String todate);
 	
 	public List<Map<String, Object>> getOtherKataReport(String fromdate,String todate);
@@ -90,4 +92,9 @@ public interface Wm_unload_wgmntService {
 	public List<Map<String,Object>> getOtherWgnmtList();
 
 	public List<Map<String,Object>> getUnloadWeightmentWtmultipopupmultipleItem(String wgment_id);
+	
+	public List<Vehicle_weighment_load_unload> getVehicleListWeighmentLocation(String location);
+	
+	public List<Vehicle_weighment_load_unload> getVehicleLocationwiseWeighmentList(String location);
+	
 }

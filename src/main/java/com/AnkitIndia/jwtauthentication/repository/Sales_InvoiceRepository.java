@@ -267,7 +267,7 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
     @Query("UPDATE Sales_Invoice SET cancel_ewaybill_wo_invoice=1 WHERE id =:id and modified_type='INSERTED'")
     int updateWaybillCancelWOInv(@Param("id") long id);
     
-    @Query(value="SELECT\r\n" + 
+    /*@Query(value="SELECT\r\n" + 
     		"  `soi`.`invoice_date` AS `invoice_date`,\r\n" + 
     		"  `soi`.`invoice_id`   AS `invoice_id`,\r\n" + 
     		"  `soi`.`invoice_no`   AS `invoice_no`,\r\n" + 
@@ -322,7 +322,65 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
     		"     ON (((`soi`.`party` = `z`.`cp_id`)))\r\n" + 
     		"     \r\n" + 
     		"     )\r\n" + 
-    		"  WHERE (`soi`.`modified_type` = 'INSERTED'  AND `soi`.`invoice_date`>=:fromdate AND `soi`.`invoice_date`<=:todate AND `soi`.`jobwork` =0)",nativeQuery=true)
+    		"  WHERE (`soi`.`modified_type` = 'INSERTED'  AND `soi`.`invoice_date`>=:fromdate AND `soi`.`invoice_date`<=:todate AND `soi`.`jobwork` =0)",nativeQuery=true)*/
+    @Query(value="SELECT\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`invoice_date` AS `invoice_date`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`invoice_id`   AS `invoice_id`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`invoice_no`   AS `invoice_no`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`state`        AS `state`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`party`        AS `party`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`partyname`    AS `partyname`,\\r\\n\" + \r\n"
+    		+ "    		\"  `z`.`add1`    AS `address`,\\r\\n\" + \r\n"
+    		+ "    		\"   CASE WHEN (SELECT pincode FROM `cust_bussiness_partner_address` WHERE cp_id=`soi`.`party` AND modified_type='INSERTED') IS NULL THEN 'NA' ELSE (SELECT pincode FROM `cust_bussiness_partner_address` WHERE cp_id=`soi`.`party` AND modified_type='INSERTED') END AS pincode,\\r\\n\" +\r\n"
+    		+ "    		\"  `x`.`item_name`         AS `item_name`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`packing_name`      AS `packing_name`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`squantity`         AS `squantity`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`quantity`          AS `quantity`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`price`             AS `price`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`amount`            AS `amount`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`cgstamt`           AS `cgstamt`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`igstamt`           AS `igstamt`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`sgstamt`           AS `sgstamt`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`tax_amt`           AS `tax_amt`,\\r\\n\" + \r\n"
+    		+ "    		\"  `x`.`total_amt`         AS `total_amt`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`payable_amt`     AS `payable_amt`,\\r\\n\" + \r\n"
+    		+ "    		\"  `y`.`vehicleno`         AS `vehicleno`,\\r\\n\" + \r\n"
+    		+ "    		\"  `soi`.`waybill`         AS `waybill`\\r\\n\" + \r\n"
+    		+ "    		\"FROM (`sales_invoice` `soi`\\r\\n\" + \r\n"
+    		+ "    		\"   LEFT JOIN (SELECT\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`invoice_id`        AS `invoice_id`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`item_name`         AS `item_name`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`packing_name`      AS `packing_name`,\\r\\n\" + \r\n"
+    		+ "    		\"                CONCAT(`si`.`squantity`,\\\" \\\",`si`.`suom`)         AS `squantity`,\\r\\n\" + \r\n"
+    		+ "    		\"                CONCAT(`si`.`quantity`,\\\" \\\",`si`.`uom`)          AS `quantity`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`price`             AS `price`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`amount`            AS `amount`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`cgstamt`           AS `cgstamt`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`igstamt`           AS `igstamt`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`sgstamt`           AS `sgstamt`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`tax_amt`           AS `tax_amt`,\\r\\n\" + \r\n"
+    		+ "    		\"                `si`.`total_amt`           AS `total_amt`\\r\\n\" + \r\n"
+    		+ "    		\"              FROM (`sales_invoice_item_dtls` `si`)\\r\\n\" + \r\n"
+    		+ "    		\"              WHERE (`si`.`modified_type` = 'INSERTED')\\r\\n\" + \r\n"
+    		+ "    		\"              GROUP BY `si`.`invoice_id`,`si`.`item_name`,`si`.`packing_name`) `x`\\r\\n\" + \r\n"
+    		+ "    		\"     ON (((`soi`.`invoice_id` = `x`.`invoice_id`)))\\r\\n\" + \r\n"
+    		+ "    		\"      LEFT JOIN (SELECT\\r\\n\" + \r\n"
+    		+ "    		\"                `v`.`invoice_id`           AS `invoice_id`,\\r\\n\" + \r\n"
+    		+ "    		\"                `v`.`vehicleno`           AS `vehicleno`\\r\\n\" + \r\n"
+    		+ "    		\"              FROM (`sales_invoice_trans_dtls` `v`)\\r\\n\" + \r\n"
+    		+ "    		\"              WHERE (`v`.`modified_type` = 'INSERTED')\\r\\n\" + \r\n"
+    		+ "    		\"              GROUP BY `v`.`invoice_id`) `y`\\r\\n\" + \r\n"
+    		+ "    		\"     ON (((`soi`.`invoice_id` = `y`.`invoice_id`)))\\r\\n\" + \r\n"
+    		+ "    		\"      LEFT JOIN (SELECT\\r\\n\" + \r\n"
+    		+ "    		\"                `c`.`cp_id`           AS `cp_id`,\\r\\n\" + \r\n"
+    		+ "    		\"                `c`.`add1`           AS `add1`\\r\\n\" + \r\n"
+    		+ "    		\"              FROM (`cust_bussiness_partner_address` `c`)\\r\\n\" + \r\n"
+    		+ "    		\"              WHERE (`c`.`modified_type` = 'INSERTED')\\r\\n\" + \r\n"
+    		+ "    		\"              GROUP BY `c`.`cp_id`) `z`\\r\\n\" + \r\n"
+    		+ "    		\"     ON (((`soi`.`party` = `z`.`cp_id`)))\\r\\n\" + \r\n"
+    		+ "    		\"     \\r\\n\" + \r\n"
+    		+ "    		\"     )\\r\\n\" + \r\n"
+    		+ "    		\"  WHERE (`soi`.`modified_type` = 'INSERTED'  AND `soi`.`invoice_date`>=:fromdate AND `soi`.`invoice_date`<=:todate AND `soi`.`jobwork` =0)",nativeQuery=true)
     List<Map<String,Object>> getSalesInvoicetransitReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
     
     @Modifying(clearAutomatically = true)

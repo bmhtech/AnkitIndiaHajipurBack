@@ -1190,11 +1190,34 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 	 
 	 public StatusDTO checkGRNUsage(String grnid)
 	 {
-			String result = pur_good_receiptRepository.checkGRNUsage(grnid);
+			/*String result = pur_good_receiptRepository.checkGRNUsage(grnid); //off for multiple usage of grn
 			Type listType = new TypeToken<StatusDTO>() {}.getType();
 			StatusDTO statusDTO= new ModelMapper().map(result,listType);
 			statusDTO.setStatus(result);
-			return statusDTO;
+			return statusDTO;*/
+		 	StatusDTO result = new StatusDTO();
+			boolean purchase=false,sales=false;
+			
+			if(pur_good_receiptRepository.checkPurBillGrnUsage(grnid))
+			{
+				purchase=true;
+			}
+			
+			if(pur_good_receiptRepository.checkDelChallanGrnUsage(grnid))
+			{
+				sales=true;
+			}
+			
+			if(purchase == true || sales == true )
+			{
+				result.setStatus("Yes");
+			}
+			else
+			{
+				result.setStatus("No");
+			}
+			
+			return result;
 		}
 	 
 	 @Transactional

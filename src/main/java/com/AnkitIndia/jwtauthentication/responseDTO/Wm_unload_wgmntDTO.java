@@ -97,8 +97,17 @@ public class Wm_unload_wgmntDTO {
 	
 	private double shifting_price;
 	
+	private String weight_bridge_location;
 	
 	
+	public String getWeight_bridge_location() {
+		return weight_bridge_location;
+	}
+
+	public void setWeight_bridge_location(String weight_bridge_location) {
+		this.weight_bridge_location = weight_bridge_location;
+	}
+
 	public double getShifting_price() {
 		return shifting_price;
 	}
