@@ -3195,8 +3195,15 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					if(op.get().getChallan().compareToIgnoreCase("Single")==0) 
 					{
 						String loadingid=delivery_challanRepository.deliveryChallanListUpdate(op.get().getReference_id()).getReferance_id();
+						String reftype=delivery_challanRepository.deliveryChallanListUpdate(op.get().getReference_id()).getRef_type();
+		                if(reftype.compareToIgnoreCase("GRN")==0)
+		                {
+		                	trucknumber=sales_Invoice_Trans_DtlsRepository.getSalesInvTransDtls(op.get().getInvoice_id()).getVehicleno();
+		                }
+		                else{
+		                	trucknumber=wm_loading_adviceRepository.getvehicleno(loadingid).getVehicle_no();
+		                }
 						
-						trucknumber=wm_loading_adviceRepository.getvehicleno(loadingid).getVehicle_no();
 					}
 					if(op.get().getChallan().compareToIgnoreCase("Multiple")==0)
 					{
@@ -3204,10 +3211,14 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 						String variousrefid[]=op.get().getReference_id().split(",");
 						
 		                String loadingid=delivery_challanRepository.deliveryChallanListUpdate(variousrefid[0]).getReferance_id();
-						
-						trucknumber=wm_loading_adviceRepository.getvehicleno(loadingid).getVehicle_no();
-					
-				
+		                String reftype=delivery_challanRepository.deliveryChallanListUpdate(op.get().getReference_id()).getRef_type();
+		                if(reftype.compareToIgnoreCase("GRN")==0)
+		                {
+		                	trucknumber=sales_Invoice_Trans_DtlsRepository.getSalesInvTransDtls(op.get().getInvoice_id()).getVehicleno();
+		                }
+		                else{
+		                	trucknumber=wm_loading_adviceRepository.getvehicleno(loadingid).getVehicle_no();
+		                }
 					}
 				
 				
