@@ -338,6 +338,107 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		return genCode;
 	}
 	
+	public SalesSequenceIdDTO getSISequenceIdforDefence(String fin_year,String inv_type,String custid)
+	{
+		String prefix="";
+		String prefix1="";
+		//String prefix=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
+		int slno=0;
+		String gen_sno="";
+		if(companyMasterRepository.getCompanyName().compareToIgnoreCase("ANKIT INDIA LIMITED")==0)
+		{
+		
+			String sno=sales_InvoiceRepository.countSalesInvoice(fin_year,inv_type);
+			System.out.println("SI normal Serial:: "+sno);
+			if(sno != null ) {
+				slno=Integer.parseInt(sno);
+			}
+			
+			String fin_yearspit[]=fin_year.split("-");
+			String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
+			
+			prefix1=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
+			String cust_group = cust_bussiness_partnerRepository.getCustomer(custid).getGroup_type();
+			System.out.println("DC Defence Group:: "+cust_group);
+			//prefix=prefix+"-"+fin_year+"-";
+			if(inv_type.compareToIgnoreCase("INV00001") == 0 && cust_group.compareToIgnoreCase("CG00019") == 0) {
+				sno=sales_InvoiceRepository.countSalesInvoice4Defence(fin_year);
+				System.out.println("DC Defence sno:: "+sno);
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				prefix="AILP"+"/"+final_fyear+"/DF";
+			}
+			else if(inv_type.compareToIgnoreCase("INV00001") == 0)
+			{
+				prefix="AILP"+"/"+final_fyear+"/TW";
+			}
+			else
+			{
+				prefix="AILP"+"/"+final_fyear+"/"+prefix1;
+			}
+			
+			//System.err.println(prefix);
+			gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);
+			
+			// Commented on 1104 for army
+			/*gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);
+            String sno=sales_InvoiceRepository.countSalesInvoice(fin_year,inv_type);
+			
+			if(sno != null ) {
+				slno=Integer.parseInt(sno);
+			}
+			
+			
+			String fin_yearspit[]=fin_year.split("-");
+			String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
+			
+			//prefix=prefix+"-"+fin_year+"-";
+			//prefix=prefix+"-"+final_fyear+"-";
+			prefix1=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
+			//prefix=prefix+"-"+fin_year+"-";
+			if(inv_type.compareToIgnoreCase("INV00001") == 0)
+			{
+				prefix="AILP"+"/"+final_fyear+"/TW";
+			}
+			else
+			{
+				prefix="AILP"+"/"+final_fyear+"/"+prefix1;
+			}
+			//System.err.println(prefix);
+			
+			gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);*/
+		}
+		else 
+		{
+			prefix=invoice_typeRepository.getSalesInvTypesDtls(inv_type).getInvtype_prefix();
+			
+			String sno=sales_InvoiceRepository.countSalesInvoice(fin_year,inv_type);
+			
+			if(sno != null ) {
+				slno=Integer.parseInt(sno);
+			}
+			
+			
+			String fin_yearspit[]=fin_year.split("-");
+			String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
+			
+			//prefix=prefix+"-"+fin_year+"-";
+			prefix=prefix+"-"+final_fyear+"-";
+			//System.err.println(prefix);
+			
+			//String gen_sno=UniqueIDTransaction.uniqueId4(prefix,slno);
+			 //String gen_sno=UniqueIDTransaction.uniqueId6(prefix,slno);
+			gen_sno=UniqueIDTransaction.uniqueId6(prefix,slno);
+		}
+		
+		Type listType = new TypeToken<SalesSequenceIdDTO>() {}.getType();
+		SalesSequenceIdDTO genCode = new ModelMapper().map(gen_sno,listType);
+		genCode.setSequenceid(gen_sno);
+		
+		return genCode;
+	}
+	
 	public SalesSequenceIdDTO getReceiptSequenceId(String tdate)
 	{
 		int slno=0;
@@ -379,7 +480,63 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		
 		if(companyMasterRepository.getCompanyName().compareToIgnoreCase("ANKIT INDIA LIMITED")==0)
 		{
-			//String tprefix=invoice_typeRepository.getSalesInvTypesDtls(sinvoice.getInvoice_type()).getInvtype_prefix();
+			if(cust_bussiness_partnerRepository.getCustomer(sinvoice.getParty()).getGroup_type().compareToIgnoreCase("CG00019")==0) {
+				String tsno=sales_InvoiceRepository.countSalesInvoice4Defence(sinvoice.getFin_year());
+				System.out.println("SI Defence Serial Save:: "+tsno);
+				if(tsno != null ) {
+					nslno=Integer.parseInt(tsno);
+				}
+				
+				String fin_yearspit[]=sinvoice.getFin_year().split("-");
+				String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
+				String tprefix="";
+				String prefix1=invoice_typeRepository.getSalesInvTypesDtls(sinvoice.getInvoice_type()).getInvtype_prefix();
+				String cust_group = cust_bussiness_partnerRepository.getCustomer(sinvoice.getParty()).getGroup_type();
+				System.out.println("SI Defence Group:: "+cust_group);
+				//prefix=prefix+"-"+fin_year+"-";
+				if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00001") == 0 && cust_group.compareToIgnoreCase("CG00019") == 0) {
+					tprefix="AILP"+"/"+final_fyear+"/DF";
+				}
+				else if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00001") == 0)
+				{
+					tprefix="AILP"+"/"+final_fyear+"/TW";
+				}
+				else
+				{
+					tprefix="AILP"+"/"+final_fyear+"/"+prefix1;
+				}
+				
+				//System.err.println(prefix);
+				gen_tslno=UniqueIDTransaction.uniqueId4(tprefix,nslno);
+			}
+			else {
+				String tsno=sales_InvoiceRepository.countSalesInvoice(sinvoice.getFin_year(),sinvoice.getInvoice_type());
+				
+				if(tsno != null ) {
+					nslno=Integer.parseInt(tsno);
+				}
+				
+				String fin_yearspit[]=sinvoice.getFin_year().split("-");
+				String final_fyear=fin_yearspit[0].substring(fin_yearspit[0].length()-2, fin_yearspit[0].length())+fin_yearspit[1].substring(fin_yearspit[1].length()-2, fin_yearspit[1].length());
+				
+				//tprefix=tprefix+"-"+sinvoice.getFin_year()+"-";
+				//String tprefix="AILP"+"/"+final_fyear+"/TW";
+				String tprefix="";
+				String prefix1=invoice_typeRepository.getSalesInvTypesDtls(sinvoice.getInvoice_type()).getInvtype_prefix();
+				//prefix=prefix+"-"+fin_year+"-";
+				if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00001") == 0)
+				{
+					tprefix="AILP"+"/"+final_fyear+"/TW";
+				}
+				else
+				{
+					tprefix="AILP"+"/"+final_fyear+"/"+prefix1;
+				}
+			
+				gen_tslno=UniqueIDTransaction.uniqueId4(tprefix,nslno);
+			}
+			// Commented on 1104 for army
+			/*//String tprefix=invoice_typeRepository.getSalesInvTypesDtls(sinvoice.getInvoice_type()).getInvtype_prefix();
 			String tsno=sales_InvoiceRepository.countSalesInvoice(sinvoice.getFin_year(),sinvoice.getInvoice_type());
 					
 			if(tsno != null ) {
@@ -403,7 +560,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 				tprefix="AILP"+"/"+final_fyear+"/"+prefix1;
 			}
 		
-			gen_tslno=UniqueIDTransaction.uniqueId4(tprefix,nslno);
+			gen_tslno=UniqueIDTransaction.uniqueId4(tprefix,nslno);*/
 		}
 		else
 		{
