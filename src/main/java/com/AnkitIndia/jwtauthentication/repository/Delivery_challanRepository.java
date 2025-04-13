@@ -269,4 +269,10 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	@Query("select s from Delivery_challan s where s.modified_type = 'INSERTED' AND invoicestatus='No' AND inv_type=:inv_type AND party=:party AND challan_date<=:challan_date")
 	List<Delivery_challan> challanTypeList(@Param("inv_type") String inv_type, @Param("party") String party, @Param("challan_date") String challan_date);
 	
+	@Query(value="SELECT * FROM delivery_challan_docs WHERE modified_type='INSERTED' And doc_pdf=:doc_pdf ",nativeQuery=true)
+	List<Map<String,Object>> getdocumentListwithfileDelvChallan(@Param("doc_pdf") String doc_pdf);
+	
+	@Query(value="SELECT ref_type,gatepass FROM delivery_challan WHERE modified_type='INSERTED' And sales_invoice_id=:challan ",nativeQuery=true)
+	Map<String,Object> getGatepassByChallan(@Param("challan") String challan);
+	
 }

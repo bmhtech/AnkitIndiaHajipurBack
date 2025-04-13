@@ -133,6 +133,8 @@ public class Delivery_challan extends CommonProperties{
 	 @Column(columnDefinition="varchar(10) default 'NA'")
 	 private String sales_invoice_id;
 	 
+	 @Column(columnDefinition="varchar(50) default 'NA'")
+	 private String gatepass;
 	 
 	 @Column(columnDefinition="tinyint(1) default 0")
 	 private boolean jobwork;

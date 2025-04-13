@@ -4010,4 +4010,9 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			result.setStatus("Yes");
 			return result;
 		 }
+		 
+		 public Map<String,Object> getGatepassByChallan(String challan)
+		 {
+			return delivery_challanRepository.getGatepassByChallan(challan);
+         }
 }

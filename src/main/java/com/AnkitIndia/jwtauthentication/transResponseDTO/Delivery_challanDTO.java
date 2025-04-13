@@ -78,7 +78,16 @@ public class Delivery_challanDTO {
 	
 	private boolean jobwork;
 	
+	private String gatepass;
 	
+
+	public String getGatepass() {
+		return gatepass;
+	}
+
+	public void setGatepass(String gatepass) {
+		this.gatepass = gatepass;
+	}
 
 	public boolean isJobwork() {
 		return jobwork;

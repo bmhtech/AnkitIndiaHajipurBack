@@ -2,6 +2,8 @@ package com.AnkitIndia.jwtauthentication.transResponseDTO;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+
 
 public class Delivery_challan_DocsDTO {
 	
@@ -12,6 +14,10 @@ public class Delivery_challan_DocsDTO {
 	private String company_id;
 	
 	private String doc_name;
+	
+	private String doc_pdf;
+	
+	private String doc_file_name;
 	
 	private String fin_year;
 	
@@ -28,6 +34,22 @@ public class Delivery_challan_DocsDTO {
 	private LocalDateTime deleted_on;
 	
 	private String deleted_by;
+	
+	public String getDoc_pdf() {
+		return doc_pdf;
+	}
+
+	public void setDoc_pdf(String doc_pdf) {
+		this.doc_pdf = doc_pdf;
+	}
+
+	public String getDoc_file_name() {
+		return doc_file_name;
+	}
+
+	public void setDoc_file_name(String doc_file_name) {
+		this.doc_file_name = doc_file_name;
+	}
 
 	public Long getId() {
 		return id;
