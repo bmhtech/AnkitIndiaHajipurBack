@@ -3,8 +3,8 @@ package com.AnkitIndia.Utility;
 public class NumToWord
 {
     final static String [] a1={"Hundred","Thousand","Lakh","Crore"};
-    final static String [] a2={"Ten","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninty"};
-    final static String [] a3={"Eleven","Twelve","Thirteen","Forteen","Fifteen","Sixteen","Seventeen","Eighteen","Ninteen"};
+    final static String [] a2={"Ten","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"};
+    final static String [] a3={"Eleven","Twelve","Thirteen","Forteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"};
     final static String [] a4={"Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"};
     final static String [] a5={"Cent"};
     static String  word="";

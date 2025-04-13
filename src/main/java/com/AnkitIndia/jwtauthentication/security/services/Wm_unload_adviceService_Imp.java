@@ -1204,7 +1204,14 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 		}
 		vehicleMasterRepository.updateStatus(op.get().getVehicle_id(),false);//revert vehicle
 		vehicleMasterRepository.updateVehicleWeighmentLocation(op.get().getVehicle_id(),"NA");
-		vehicleMasterRepository.updateStatus(wAdvice.getVehicle_id(),true);//AFTER UNLOAD ADVICE THE VEHICLE IS NOT SHOWN IN UNLODING ADVICE VEHICLE LIST UNTILL 2ND WEIGHMENT COMPLETE
+		System.out.println("WeighmentStatus:: "+op.get().getWeighment_status());
+		if(op.get().getWeighment_status()==2) {
+			vehicleMasterRepository.updateStatus(wAdvice.getVehicle_id(),false);//AFTER UNLOAD ADVICE THE VEHICLE IS FREE IN UNLODING ADVICE, IF 2ND WEIGHMENT IS COMPLETED
+		}
+		else {
+			vehicleMasterRepository.updateStatus(wAdvice.getVehicle_id(),true);//AFTER UNLOAD ADVICE THE VEHICLE IS NOT SHOWN IN UNLODING ADVICE VEHICLE LIST UNTILL 2ND WEIGHMENT COMPLETE
+		}
+		
 		vehicleMasterRepository.updateVehicleWeighmentLocation(wAdvice.getVehicle_id(),wAdvice.getWeight_bridge_location());
 		//new vehicle records table starts
 		Vehicle_weighment_load_unload vehicle=  wm_unload_advice_item_dtlsRepository.vehicle_weighment_load_unloadupdateFETCH(wAdvice.getUnadviceid());
