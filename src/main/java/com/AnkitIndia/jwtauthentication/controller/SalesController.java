@@ -1009,13 +1009,23 @@ public class SalesController {
 	 {
 		return delivery_challanService.searchDeliveryChallanFast(orderno,fromdate,todate,party1,finyear);
 	 }
-			
-	@PostMapping("/createDeliveryChallan")
+ 
+  	/*@PostMapping("/createDeliveryChallan")
 	public Delivery_challan save(@Valid @RequestBody Delivery_challan dChallan) 
 	{
 		return delivery_challanService.save(dChallan);
+	}*/
+		
+  	@PostMapping("/createDeliveryChallan")
+	public Delivery_challan createDeliveryChallan(@RequestParam(required=false,value="files") MultipartFile files[],@Valid @RequestParam("Input") String input) throws JsonParseException,JsonMappingException,IOException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+		
+		Delivery_challan delivery_challan=objectMapper.readValue(input, Delivery_challan.class);
+		return delivery_challanService.save(delivery_challan,files);
 	}
-	
+  
 	@GetMapping("/getDeliveryChallans")
 	public List<Delivery_challan> findAllDeliveryChallans()
 	{
@@ -1249,11 +1259,23 @@ public class SalesController {
 		return delivery_challanService.getDlvCDoc(delivery_cid);
 	}
 	
-	@PutMapping("/updateDlvChallan/{id}")
-	public ResponseEntity<Delivery_challan> updateDlvChallan(@PathVariable(value="id") long id,@Valid @RequestBody Delivery_challan iMaster)
-	{
-		Delivery_challan op=delivery_challanService.update(iMaster,id);
-		return ResponseEntity.ok().body(op);
+//	@PutMapping("/updateDlvChallan/{id}")
+//	public ResponseEntity<Delivery_challan> updateDlvChallan(@PathVariable(value="id") long id,@Valid @RequestBody Delivery_challan iMaster)
+//	{
+//		Delivery_challan op=delivery_challanService.update(iMaster,id);
+//		return ResponseEntity.ok().body(op);
+//	}
+	
+	@PostMapping("/updateDlvChallan")
+	public Delivery_challan updateDlvChallan(@RequestParam(required=false,value="files") MultipartFile files[],@Valid @RequestParam("Input") String input) throws JsonParseException,JsonMappingException,IOException {
+		System.out.println(" input check  "+ input);
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		objectMapper.setVisibilityChecker(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+		
+		Delivery_challan delivery_challan=objectMapper.readValue(input, Delivery_challan.class);
+		
+		return delivery_challanService.update(delivery_challan,files);
 	}
 	
 	@PutMapping("/updateDlvChallantransport/{id}")
@@ -1618,6 +1640,12 @@ public class SalesController {
 		return sales_InvoiceService.getSalesInvPayDtls(invid);
 	}
 
+	@GetMapping(value = "/getGatepassByChallan/{challan}")
+	public Map<String,Object> getGatepassByChallan(@PathVariable(value = "challan") String challan)
+	{
+		return sales_InvoiceService.getGatepassByChallan(challan);
+	}
+	
 	/*@GetMapping(value = "/createEinvoiceGeneration/{id}/{einvjson}")
 	public StatusDTO createEinvoiceGeneration(@PathVariable(value = "id") Long id,@PathVariable(value = "einvjson") Object  einvjson) throws JsonProcessingException
 

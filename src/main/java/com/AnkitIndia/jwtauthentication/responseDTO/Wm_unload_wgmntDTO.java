@@ -3,6 +3,8 @@ package com.AnkitIndia.jwtauthentication.responseDTO;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+
 public class Wm_unload_wgmntDTO {
 	
 	private Long id;
@@ -99,7 +101,46 @@ public class Wm_unload_wgmntDTO {
 	
 	private String weight_bridge_location;
 	
+	private String outside_weighment;
 	
+	private String outside_weighmentno;
+	
+	private double outside_netwt;
+	
+	private String outer_date;
+	
+	public String getOuter_date() {
+		return outer_date;
+	}
+
+	public void setOuter_date(String outer_date) {
+		this.outer_date = outer_date;
+	}
+
+	public String getOutside_weighment() {
+		return outside_weighment;
+	}
+
+	public void setOutside_weighment(String outside_weighment) {
+		this.outside_weighment = outside_weighment;
+	}
+
+	public String getOutside_weighmentno() {
+		return outside_weighmentno;
+	}
+
+	public void setOutside_weighmentno(String outside_weighmentno) {
+		this.outside_weighmentno = outside_weighmentno;
+	}
+
+	public double getOutside_netwt() {
+		return outside_netwt;
+	}
+
+	public void setOutside_netwt(double outside_netwt) {
+		this.outside_netwt = outside_netwt;
+	}
+
 	public String getWeight_bridge_location() {
 		return weight_bridge_location;
 	}

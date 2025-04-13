@@ -11,6 +11,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -21,7 +25,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.AnkitIndia.Utility.FileUtil;
 import com.AnkitIndia.Utility.Utility;
 import com.AnkitIndia.generators.UniqueID;
 import com.AnkitIndia.generators.UniqueIDTransaction;
@@ -41,6 +48,7 @@ import com.AnkitIndia.jwtauthentication.model.Item_opening_stk_pack_dtls;
 import com.AnkitIndia.jwtauthentication.model.Pur_good_receipt;
 import com.AnkitIndia.jwtauthentication.model.Return_approval_note;
 import com.AnkitIndia.jwtauthentication.model.Sales_Invoice;
+import com.AnkitIndia.jwtauthentication.model.Sales_Invoice_Docs;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order;
 import com.AnkitIndia.jwtauthentication.model.Sales_credit_note;
 import com.AnkitIndia.jwtauthentication.model.Sales_transport;
@@ -326,7 +334,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 	}
 	
 	@Transactional
-	public Delivery_challan save(Delivery_challan dChallan)
+	public Delivery_challan save(Delivery_challan dChallan,MultipartFile files[]) throws IOException
 	{
 		LocalDateTime ldt = LocalDateTime.now();
 		
@@ -711,10 +719,27 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setDelivery_challan_Chgs_dyn(trnasportcharges);
 		
 		//Dynamic
-		Set<Delivery_challan_Docs> docSet = new HashSet<Delivery_challan_Docs>();
+		
+		Set<Delivery_challan_Docs> docSet=new HashSet<Delivery_challan_Docs>();
 		docSet.addAll(dChallan.getDelivery_challan_Docs());
-		for(Delivery_challan_Docs docDts : docSet)
+		int g=0;
+		for(Delivery_challan_Docs docDts:docSet) 
 		{
+	
+			if(files.length > 0) 
+			{
+				try 
+				{
+					docDts.setDoc_pdf(fileUpload(files[g],gen_sno+"_"));	
+					docDts.setDoc_file_name(dChallan.getDelivery_cid()+"_"+files[g].getOriginalFilename());
+				g++;
+				}
+				catch (IOException e)
+				{
+					System.out.println(e);
+				}
+			}
+			
 			docDts.setDelivery_cid(gen_sno);
 			docDts.setCompany_id(dChallan.getCompany_id());
 			docDts.setFin_year(dChallan.getFin_year());
@@ -728,13 +753,62 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		}
 		dChallan.setDelivery_challan_Docs(docSet);
 		
+		
 		return dChallanRepository.save(dChallan);
 	}
 	
 	@Transactional
-	public Delivery_challan update(Delivery_challan dChallan,Long id)
+	public  String fileUpload(@RequestParam("files") MultipartFile files,String fileName) throws IOException
 	{
-		Optional<Delivery_challan> op = dChallanRepository.findById(id);
+		 
+				createDirIfNotExist();
+			
+				//System.out.println("fileName::"+fileName+" files::"+files.getOriginalFilename());
+		
+		    String  files_name = FileUtil.folderPathDeliveryChallan+fileName+files.getOriginalFilename();
+		            	 
+		            	 File convertFile = new File(FileUtil.folderPathDeliveryChallan+fileName+files.getOriginalFilename());
+		                 convertFile.createNewFile();
+		                 FileOutputStream fout = new FileOutputStream(convertFile);
+		                 fout.write(files.getBytes());
+		                 fout.close();
+		 
+		            return files_name;
+	}
+	
+	private void createDirIfNotExist() {
+        //create directory to save the files
+        File directory = new File(FileUtil.folderPathDeliveryChallan);
+        if (! directory.exists()){
+            directory.mkdir();
+        }
+    }
+	
+	public List<Map<String,Object>> getdocumentListwithfileDelvChallan(String doc_pdf)
+	{
+		String filename="D:/AayogAgroDocuments/deliverychallan/"+doc_pdf;
+		//String filename="/usr/documents/deliverychallan/"+doc_pdf;	//Online  Aayog
+		System.out.println("filename " +filename);
+		return dChallanRepository.getdocumentListwithfileDelvChallan(filename);
+	}
+	
+	public Delivery_challan_Docs findOneInvDoc(long id) 
+	{
+		Optional<Delivery_challan_Docs> op=this.delivery_challan_DocsRepository.findById(id);
+		return op.get();
+	}
+	
+	@Transactional
+	public void deleteSIDocument(Delivery_challan_Docs delivery_challan_Docs) 
+	{
+		//System.out.println("process_master_doc.getId()"+delivery_challan_Docs.getId());
+		delivery_challan_DocsRepository.updatepdfdelete(delivery_challan_Docs.getId());
+	}
+	
+	@Transactional
+	public Delivery_challan update(Delivery_challan dChallan,MultipartFile files[])
+	{
+		Optional<Delivery_challan> op = dChallanRepository.findById(dChallan.getId());
 		LocalDateTime ldt = LocalDateTime.now();
 		
 		dChallan.setModified_type("INSERTED");
@@ -787,7 +861,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		}else {dChallan.setReferance_id(op.get().getDelivery_cid());}
 		
 		if(op.isPresent()){
-			dChallan.setId(id);
+			dChallan.setId(dChallan.getId());
 		}
 		
 		
@@ -1041,11 +1115,33 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		
 		Set<Delivery_challan_Docs> docSet = new HashSet<Delivery_challan_Docs>();
 		docSet.addAll(dChallan.getDelivery_challan_Docs());
-		for(Delivery_challan_Docs docDts : docSet)
+		int g=0;
+		for(Delivery_challan_Docs docDts:docSet) 
 		{
-			docDts.setDelivery_cid(dChallan.getDelivery_cid());
-			docDts.setCompany_id(dChallan.getCompany_id());
+			System.out.println(" hello files : "+files.length);
+			//here start
+			
+			if(files.length > 0) {
+				try {
+					System.out.println("files[g] :: "+g+" / "+files[g]);
+						//fileUpload(files[i],gen_sno+"_");
+					
+					docDts.setDoc_pdf(fileUpload(files[g],dChallan.getDelivery_cid()+"_"));
+					docDts.setDoc_file_name(dChallan.getDelivery_cid()+"_"+files[g].getOriginalFilename());
+					
+				g++;
+				}
+				catch (IOException e)
+				{
+					System.out.println(e);
+					}
+				
+			}
+			//System.out.println("3 :: ");
+			docDts.setDelivery_cid(dChallan.getDelivery_cid());	
+			docDts.setUsername(dChallan.getUsername());
 			docDts.setFin_year(dChallan.getFin_year());
+			docDts.setCompany_id(dChallan.getCompany_id());
 			docDts.setModified_type("INSERTED");
 			docDts.setInserted_by(dChallan.getInserted_by());
 			docDts.setInserted_on(dChallan.getInserted_on());
@@ -1055,7 +1151,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			docDts.setDeleted_on(ldt);
 		}
 		dChallan.setDelivery_challan_Docs(docSet);
-				
+		
 		//Dynamic
 		delivery_challan_Broker_DtlsRepository.deliveryChallanBrokerDtlsupdate(dChallan.getDelivery_cid(),"UPDATED");
 		Set<Delivery_challan_Broker_Dtls> BrokerSet = new HashSet<Delivery_challan_Broker_Dtls>();

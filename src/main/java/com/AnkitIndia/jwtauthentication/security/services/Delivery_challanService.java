@@ -1,14 +1,19 @@
 package com.AnkitIndia.jwtauthentication.security.services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.AnkitIndia.jwtauthentication.model.Delivery_challan;
 import com.AnkitIndia.jwtauthentication.model.Delivery_challan_Chgs_dyn;
+import com.AnkitIndia.jwtauthentication.model.Delivery_challan_Docs;
 import com.AnkitIndia.jwtauthentication.model.Delivery_challan_Item_Dtls;
+import com.AnkitIndia.jwtauthentication.model.Sales_Invoice;
+import com.AnkitIndia.jwtauthentication.model.Sales_Invoice_Docs;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order;
 import com.AnkitIndia.jwtauthentication.model.Wm_loading_advice;
 import com.AnkitIndia.jwtauthentication.responseDTO.ChallanpertransportreportDTO;
@@ -30,7 +35,8 @@ public interface Delivery_challanService {
 	
 	public SalesSequenceIdDTO getDCSequenceId(String fin_year,String inv_type);
 	
-	public Delivery_challan save(Delivery_challan dChallan);
+	//public Delivery_challan save(Delivery_challan dChallan);
+	public Delivery_challan save(Delivery_challan delivery_challan,MultipartFile files[]) throws IOException;
 	
 	public SalesSequenceIdDTO getDCSequenceIdforDefence(String fin_year,String inv_type, String cust_id);
 	
@@ -40,7 +46,8 @@ public interface Delivery_challanService {
 	
 	public List<Map<String,Object>> searchDeliveryChallanFast(String orderno,String fromdate, String todate,String party1,String finyear);
 	
-	public Delivery_challan update(Delivery_challan dChallan,Long iMaster);
+	//public Delivery_challan update(Delivery_challan dChallan,Long iMaster);
+	public Delivery_challan update(Delivery_challan selivery_challan,MultipartFile files[]);
 	
 	public Delivery_challan updateDlvChallantransport(Delivery_challan dChallan,Long id);
 	
@@ -151,5 +158,11 @@ public interface Delivery_challanService {
 	public Map<String,Object> getGrnDetails(String grnid);
 	
 	public Map<String,Object> getGrndetailsforWeighment(String grnid,String company);
+	
+	public List<Map<String,Object>> getdocumentListwithfileDelvChallan(String d);
+	 
+	public Delivery_challan_Docs findOneInvDoc(long id);
+		
+	public void deleteSIDocument(Delivery_challan_Docs delivery_challan_Docs);
 	
 }

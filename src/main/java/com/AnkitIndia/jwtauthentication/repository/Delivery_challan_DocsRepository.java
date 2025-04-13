@@ -22,6 +22,8 @@ public interface Delivery_challan_DocsRepository extends JpaRepository<Delivery_
     @Query("UPDATE Delivery_challan_Docs w SET w.modified_type ='DELETED' WHERE w.delivery_cid = :delivery_cid")
     int delivery_challan_DocsUpdate(@Param("delivery_cid") String delivery_cid);
 	
-
+	@Modifying(clearAutomatically = true)
+    @Query("UPDATE Delivery_challan_Docs p SET p.modified_type ='DELETED' WHERE p.id =:id and p.modified_type = 'INSERTED'")
+    int updatepdfdelete(@Param("id") long id);
 
 }
