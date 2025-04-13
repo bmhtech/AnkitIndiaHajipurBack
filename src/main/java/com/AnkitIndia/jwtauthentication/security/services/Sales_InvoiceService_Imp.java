@@ -2939,7 +2939,6 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			//System.out.println();
 			if(op.get().isJobwork()) 
 			{
-				
 				String partyname=op.get().getPartyname();
 				String print_to_name=cust_bussiness_partnerRepository.getCustomerThruBUstringnew(op.get().getParty()).getPrint_to_name();
 				String creditnotedate=op.get().getSalesorderdate();
@@ -3472,9 +3471,6 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					//getgstdetails_dynamic
 					List<Item_groupwise_taxsumm>gst_details_dyna =new ArrayList<Item_groupwise_taxsumm>();
 					gst_details_dyna.addAll(sales_InvoiceRepository.getgstdetails_dynamic(op.get().getInvoice_id()));
-					
-					
-					
 					
 					if(gst_details_dyna.size()==1) 
 					{
