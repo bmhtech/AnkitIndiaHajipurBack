@@ -32,6 +32,12 @@ public class Delivery_challan_Docs extends CommonProperties{
 	@Column(columnDefinition="varchar(50) default 'NA'")
 	private String doc_name;
 	
+	@Column(columnDefinition = "varchar(200) default '0'")
+	private String doc_pdf;
+	
+	@Column(columnDefinition="varchar(100) default 'NA'")
+	private String doc_file_name;
+	
 	@ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "dc_id")
     private Delivery_challan delivery_challan;

@@ -42,6 +42,7 @@ import com.AnkitIndia.jwtauthentication.model.Cust_bussiness_partner_address;
 import com.AnkitIndia.jwtauthentication.model.Cust_group;
 import com.AnkitIndia.jwtauthentication.model.Custom_uom_master;
 import com.AnkitIndia.jwtauthentication.model.Delivery_challan;
+import com.AnkitIndia.jwtauthentication.model.Delivery_challan_Docs;
 import com.AnkitIndia.jwtauthentication.model.Delivery_challan_Item_Dtls;
 import com.AnkitIndia.jwtauthentication.model.Financialyear;
 import com.AnkitIndia.jwtauthentication.model.Gst_input_output_ledger_dtls;
@@ -3681,7 +3682,6 @@ public class ListController {
 		                .body(file);
 		    }
 			
-			
 			public Resource loadFile(String fileName) {
 		        try{
 		        	//Path location = Paths.get("D:/AayogAgroDocuments/SalesInvoice/");
@@ -3698,6 +3698,35 @@ public class ListController {
 		            throw new RuntimeException("Failed");
 		        }
 		    }
+			
+			@GetMapping("file/downloadDC/{fileName:.+}")
+		    @ResponseBody
+		    public ResponseEntity<Resource> getFileByNameDC(@PathVariable String fileName) {
+				System.out.println("fileName :: " + fileName);
+		        Resource file = loadFileDC(fileName);
+		        return ResponseEntity.ok()
+		                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+		                .body(file);
+		    }
+			
+			public Resource loadFileDC(String fileName) {
+		        try{
+		        	Path location = Paths.get("D:/AayogAgroDocuments/deliverychallan/");
+		        	//Path location = Paths.get("/usr/ankitindiahajipur/documents/deliverychallan/");   //Online Aayog
+		            Path file = location.resolve(fileName);
+		            System.out.println("file::"+file);
+		            Resource resource = new UrlResource(file.toUri());
+		            if(resource.exists() || resource.isReadable()) {
+		                return  resource;
+		            } else {
+		                throw new RuntimeException("Failed");
+		            }
+		        } catch (MalformedURLException e) {
+		            throw new RuntimeException("Failed");
+		        }
+		    }
+			
+			
 			
 			
 			
@@ -4154,6 +4183,23 @@ public class ListController {
 					return ResponseEntity.notFound().build();
 				} else {
 					sales_InvoiceService.deleteSIDocument(docpdf);
+					return ResponseEntity.ok().build();
+				}
+			}
+			
+			@GetMapping("/getdocumentListwithfileDelvChallan/{doc_pdf}")
+			public List<Map<String,Object>> getdocumentListwithfileDelvChallan(@PathVariable(value = "doc_pdf") String doc_pdf)
+			{
+				return delivery_challanService.getdocumentListwithfileDelvChallan(doc_pdf);
+			}
+			
+			@DeleteMapping("/getdeletefileDelvChallan/{id}")
+			public ResponseEntity<Sales_Invoice_Docs> getdeletefileDelvChallan(@PathVariable(value = "id") long id) {
+				Delivery_challan_Docs docpdf = delivery_challanService.findOneInvDoc(id);
+				if (docpdf == null) {
+					return ResponseEntity.notFound().build();
+				} else {
+					delivery_challanService.deleteSIDocument(docpdf);
 					return ResponseEntity.ok().build();
 				}
 			}

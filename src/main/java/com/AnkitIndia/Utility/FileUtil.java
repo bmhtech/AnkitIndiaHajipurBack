@@ -23,6 +23,9 @@ public class FileUtil {
 		//public static final String folderPathload =  "D:/AayogAgroDocuments/load/";	
 		public static final String folderPathload =  "/usr/ankitindiahajipur/documents/load/";   //online
 		
+		public static final String folderPathDeliveryChallan =  "D:/AayogAgroDocuments/deliverychallan/";
+		//public static final String folderPathDeliveryChallan =  "/usr/ankitindiahajipur/documents/deliverychallan/";   //online
+				
 		//public static final String folderPathSalesInvoice =  "D:/AayogAgroDocuments/SalesInvoice/";
 		public static final String folderPathSalesInvoice =  "/usr/ankitindiahajipur/documents/salesinvoice/";   //online
 		

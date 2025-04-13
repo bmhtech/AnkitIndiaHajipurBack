@@ -183,6 +183,18 @@ public class Wm_unload_wgmnt extends CommonProperties{
 	@Column(columnDefinition="varchar(30) default 'NA'")
 	private String weight_bridge_location;
 	
+	@Column(columnDefinition="varchar(20) default 'NA'")
+	private String outside_weighment;
+	
+	@Column(columnDefinition="varchar(50) default 'NA'")
+	private String outside_weighmentno;
+	
+	@Column(columnDefinition = "Decimal(10,3) default 0.000")
+	private double outside_netwt;
+	
+	@Column(columnDefinition="varchar(50) default 'NA'")
+	private String outer_date;
+	
 	//Dynamic
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="wm_unload_wgmnt",cascade = CascadeType.ALL)
 	private Set<Wm_unload_wgmnt_dtls> wm_unload_wgmnt_dtls;

@@ -124,7 +124,7 @@ public interface Sales_InvoiceService {
 	 
 	 public Sales_Invoice_Docs findOneInvDoc(long id);
 		
-	public void deleteSIDocument(Sales_Invoice_Docs sales_Invoice_Docs);
+	 public void deleteSIDocument(Sales_Invoice_Docs sales_Invoice_Docs);
 	
 	 public Map<String,Object> getTransportimage1(String refno);
 	 
@@ -159,5 +159,7 @@ public interface Sales_InvoiceService {
 	 public List<Map<String, Object>> getSalesInvoicetransitReport(String fromdate,String todate);
 	 
 	 public StatusDTO updateArnNo(Long id,String invoiceno,String asnno);
+	 
+	 public Map<String,Object> getGatepassByChallan(String challan);
 	 
 	}
