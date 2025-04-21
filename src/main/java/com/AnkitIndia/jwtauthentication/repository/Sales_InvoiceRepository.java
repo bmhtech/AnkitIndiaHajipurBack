@@ -46,7 +46,6 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
 	@Query(value="SELECT invoice_id,invoice_no,invoice_date,party,partyname from sales_invoice where invoice_id=:invid and modified_type = 'INSERTED'", nativeQuery=true)
 	Map<String,Object> getSalesInvoiceReturnList(@Param("invid") String delvid);
 	
-	
 	@Query( "select s from Sales_Invoice s where s.modified_type = 'INSERTED' and s.invoice_id =:invoice_id ORDER BY s.invoice_id DESC")
 	Sales_Invoice getSalesInvDetails(@Param("invoice_id") String invoice_id);
 	
@@ -55,6 +54,9 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
 	
 	@Query(value = "select COUNT(d.id) from sales_invoice d left join cust_bussiness_partner c on d.party=c.cp_id and c.modified_type='INSERTED' where d.fin_year =:fin_year and c.group_type='CG00019'", nativeQuery=true)
 	String countSalesInvoice4Defence(@Param("fin_year") String fin_year);
+	
+	@Query(value = "select COUNT(d.id) from sales_invoice d left join cust_bussiness_partner c on d.party=c.cp_id and c.modified_type='INSERTED' where d.fin_year =:fin_year AND d.invoice_type =:inv_type and c.group_type!='CG00019'", nativeQuery=true)
+	String countSalesInvoiceNotDefenceReg(@Param("fin_year") String fin_year,@Param("inv_type") String inv_type);
 	
 	@Query( "select s from Sales_Invoice s where s.modified_type = 'INSERTED' and s.reference_id =:reference_id ")
 	Sales_Invoice getSalesInvDetailsthroughdelivery(@Param("reference_id") String reference_id);
@@ -325,64 +327,60 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
     		"     \r\n" + 
     		"     )\r\n" + 
     		"  WHERE (`soi`.`modified_type` = 'INSERTED'  AND `soi`.`invoice_date`>=:fromdate AND `soi`.`invoice_date`<=:todate AND `soi`.`jobwork` =0)",nativeQuery=true)*/
-    @Query(value="SELECT\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`invoice_date` AS `invoice_date`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`invoice_id`   AS `invoice_id`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`invoice_no`   AS `invoice_no`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`state`        AS `state`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`party`        AS `party`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`partyname`    AS `partyname`,\\r\\n\" + \r\n"
-    		+ "    		\"  `z`.`add1`    AS `address`,\\r\\n\" + \r\n"
-    		+ "    		\"   CASE WHEN (SELECT pincode FROM `cust_bussiness_partner_address` WHERE cp_id=`soi`.`party` AND modified_type='INSERTED') IS NULL THEN 'NA' ELSE (SELECT pincode FROM `cust_bussiness_partner_address` WHERE cp_id=`soi`.`party` AND modified_type='INSERTED') END AS pincode,\\r\\n\" +\r\n"
-    		+ "    		\"  `x`.`item_name`         AS `item_name`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`packing_name`      AS `packing_name`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`squantity`         AS `squantity`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`quantity`          AS `quantity`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`price`             AS `price`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`amount`            AS `amount`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`cgstamt`           AS `cgstamt`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`igstamt`           AS `igstamt`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`sgstamt`           AS `sgstamt`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`tax_amt`           AS `tax_amt`,\\r\\n\" + \r\n"
-    		+ "    		\"  `x`.`total_amt`         AS `total_amt`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`payable_amt`     AS `payable_amt`,\\r\\n\" + \r\n"
-    		+ "    		\"  `y`.`vehicleno`         AS `vehicleno`,\\r\\n\" + \r\n"
-    		+ "    		\"  `soi`.`waybill`         AS `waybill`\\r\\n\" + \r\n"
-    		+ "    		\"FROM (`sales_invoice` `soi`\\r\\n\" + \r\n"
-    		+ "    		\"   LEFT JOIN (SELECT\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`invoice_id`        AS `invoice_id`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`item_name`         AS `item_name`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`packing_name`      AS `packing_name`,\\r\\n\" + \r\n"
-    		+ "    		\"                CONCAT(`si`.`squantity`,\\\" \\\",`si`.`suom`)         AS `squantity`,\\r\\n\" + \r\n"
-    		+ "    		\"                CONCAT(`si`.`quantity`,\\\" \\\",`si`.`uom`)          AS `quantity`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`price`             AS `price`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`amount`            AS `amount`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`cgstamt`           AS `cgstamt`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`igstamt`           AS `igstamt`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`sgstamt`           AS `sgstamt`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`tax_amt`           AS `tax_amt`,\\r\\n\" + \r\n"
-    		+ "    		\"                `si`.`total_amt`           AS `total_amt`\\r\\n\" + \r\n"
-    		+ "    		\"              FROM (`sales_invoice_item_dtls` `si`)\\r\\n\" + \r\n"
-    		+ "    		\"              WHERE (`si`.`modified_type` = 'INSERTED')\\r\\n\" + \r\n"
-    		+ "    		\"              GROUP BY `si`.`invoice_id`,`si`.`item_name`,`si`.`packing_name`) `x`\\r\\n\" + \r\n"
-    		+ "    		\"     ON (((`soi`.`invoice_id` = `x`.`invoice_id`)))\\r\\n\" + \r\n"
-    		+ "    		\"      LEFT JOIN (SELECT\\r\\n\" + \r\n"
-    		+ "    		\"                `v`.`invoice_id`           AS `invoice_id`,\\r\\n\" + \r\n"
-    		+ "    		\"                `v`.`vehicleno`           AS `vehicleno`\\r\\n\" + \r\n"
-    		+ "    		\"              FROM (`sales_invoice_trans_dtls` `v`)\\r\\n\" + \r\n"
-    		+ "    		\"              WHERE (`v`.`modified_type` = 'INSERTED')\\r\\n\" + \r\n"
-    		+ "    		\"              GROUP BY `v`.`invoice_id`) `y`\\r\\n\" + \r\n"
-    		+ "    		\"     ON (((`soi`.`invoice_id` = `y`.`invoice_id`)))\\r\\n\" + \r\n"
-    		+ "    		\"      LEFT JOIN (SELECT\\r\\n\" + \r\n"
-    		+ "    		\"                `c`.`cp_id`           AS `cp_id`,\\r\\n\" + \r\n"
-    		+ "    		\"                `c`.`add1`           AS `add1`\\r\\n\" + \r\n"
-    		+ "    		\"              FROM (`cust_bussiness_partner_address` `c`)\\r\\n\" + \r\n"
-    		+ "    		\"              WHERE (`c`.`modified_type` = 'INSERTED')\\r\\n\" + \r\n"
-    		+ "    		\"              GROUP BY `c`.`cp_id`) `z`\\r\\n\" + \r\n"
-    		+ "    		\"     ON (((`soi`.`party` = `z`.`cp_id`)))\\r\\n\" + \r\n"
-    		+ "    		\"     \\r\\n\" + \r\n"
-    		+ "    		\"     )\\r\\n\" + \r\n"
-    		+ "    		\"  WHERE (`soi`.`modified_type` = 'INSERTED'  AND `soi`.`invoice_date`>=:fromdate AND `soi`.`invoice_date`<=:todate AND `soi`.`jobwork` =0)",nativeQuery=true)
+    @Query(value="SELECT \r\n"
+    		+ "soi.invoice_date AS invoice_date, \r\n"
+    		+ "soi.invoice_id   AS invoice_id, \r\n"
+    		+ "soi.invoice_no   AS invoice_no, \r\n"
+    		+ "soi.state        AS state, \r\n"
+    		+ "soi.party        AS party, \r\n"
+    		+ "soi.partyname    AS partyname, \r\n"
+    		+ "z.add1    AS address, \r\n"
+    		+ "CASE WHEN (SELECT pincode FROM cust_bussiness_partner_address WHERE cp_id=soi.party AND modified_type='INSERTED') IS NULL THEN 'NA' ELSE (SELECT pincode FROM cust_bussiness_partner_address WHERE cp_id=soi.party AND modified_type='INSERTED') END AS pincode,\r\n"
+    		+ "x.item_name         AS item_name, \r\n"
+    		+ "x.packing_name      AS packing_name, \r\n"
+    		+ "x.squantity         AS squantity, \r\n"
+    		+ "x.quantity          AS quantity, \r\n"
+    		+ "x.price             AS price, \r\n"
+    		+ "x.amount            AS amount, \r\n"
+    		+ "x.cgstamt           AS cgstamt, \r\n"
+    		+ "x.igstamt           AS igstamt, \r\n"
+    		+ "x.sgstamt           AS sgstamt, \r\n"
+    		+ "x.tax_amt           AS tax_amt, \r\n"
+    		+ "x.total_amt         AS total_amt, \r\n"
+    		+ "soi.payable_amt     AS payable_amt, \r\n"
+    		+ "y.vehicleno         AS vehicleno, \r\n"
+    		+ "soi.waybill         AS waybill \r\n"
+    		+ "FROM (sales_invoice soi \r\n"
+    		+ "LEFT JOIN (SELECT \r\n"
+    		+ "si.invoice_id        AS invoice_id, \r\n"
+    		+ "si.item_name         AS item_name, \r\n"
+    		+ "si.packing_name      AS packing_name, \r\n"
+    		+ "CONCAT(si.squantity,\" \",si.suom)         AS squantity, \r\n"
+    		+ "CONCAT(si.quantity,\" \",si.uom)          AS quantity, \r\n"
+    		+ "si.price             AS price, \r\n"
+    		+ "si.amount            AS amount, \r\n"
+    		+ "si.cgstamt           AS cgstamt, \r\n"
+    		+ "si.igstamt           AS igstamt, \r\n"
+    		+ "si.sgstamt           AS sgstamt, \r\n"
+    		+ "si.tax_amt           AS tax_amt, \r\n"
+    		+ "si.total_amt           AS total_amt \r\n"
+    		+ "FROM (sales_invoice_item_dtls si) \r\n"
+    		+ "WHERE (si.modified_type = 'INSERTED') \r\n"
+    		+ "GROUP BY si.invoice_id,si.item_name,si.packing_name) x \r\n"
+    		+ "ON (((soi.invoice_id = x.invoice_id))) \r\n"
+    		+ "LEFT JOIN (SELECT \r\n"
+    		+ "v.invoice_id           AS invoice_id, \r\n"
+    		+ "v.vehicleno           AS vehicleno \r\n"
+    		+ "FROM (sales_invoice_trans_dtls v) \r\n"
+    		+ "WHERE (v.modified_type = 'INSERTED') \r\n"
+    		+ "GROUP BY v.invoice_id) y \r\n"
+    		+ "ON (((soi.invoice_id = y.invoice_id))) \r\n"
+    		+ "LEFT JOIN (SELECT \r\n"
+    		+ "c.cp_id           AS cp_id, \r\n"
+    		+ "c.add1           AS add1 \r\n"
+    		+ "FROM (cust_bussiness_partner_address c) \r\n"
+    		+ "WHERE (c.modified_type = 'INSERTED') GROUP BY c.cp_id) z ON (((soi.party = z.cp_id)))) \r\n"
+    		+ "WHERE (soi.modified_type = 'INSERTED'  AND soi.invoice_date>=:fromdate AND soi.invoice_date<=:todate AND soi.jobwork =0)",nativeQuery=true)
     List<Map<String,Object>> getSalesInvoicetransitReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
     
     @Modifying(clearAutomatically = true)

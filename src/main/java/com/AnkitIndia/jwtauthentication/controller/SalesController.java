@@ -483,6 +483,11 @@ public class SalesController {
 		return sales_OrderService.getSalesOrderDetailsthdeliverchallan(delveryid);
 	}
 	
+	@GetMapping(value = "/getSalesOrderTransDtlswtGRN/{delveryid}")
+	public Map<String, Object> getSalesOrderTransDtlswtGRN(@PathVariable(value = "delveryid") String delveryid) {
+		return sales_OrderService.getSalesOrderTransDtlswtGRN(delveryid);
+	}
+	
 	@GetMapping(value = "/getsaleorderjobworkprice/{delveryid}")
 	public List<Map<String, Object>> getsaleorderjobworkprice(@PathVariable(value = "delveryid") String delveryid) {
 		return sales_OrderService.getsaleorderjobworkprice(delveryid);

@@ -1,8 +1,24 @@
 package com.AnkitIndia.jwtauthentication.security.services;
 
+import java.awt.image.BufferedImage;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.impl.auth.DigestScheme;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -1711,6 +1727,148 @@ public class Wm_unload_wgmntService_Imp implements Wm_unload_wgmntService {
 		modelList.addAll(wm_unload_wgmntRepository.getVehicleLocationwiseWeighmentList(location));
 
 		return modelList;
+	}
+	
+	public SequenceIdDTO getSecondkataSrlnoCamera(String bridge_location) throws IOException
+	{
+		long slno1=0;
+		String prefix="WULW";
+		slno1=Long.parseLong(wm_unload_wgmntRepository.countId(prefix).get());
+		String gen_sno1=UniqueID.uniqueid(prefix,slno1);
+		//System.err.println(prefix1);
+		Type listType = new TypeToken<SequenceIdDTO>() {}.getType();
+		SequenceIdDTO genCode = new ModelMapper().map(gen_sno1,listType);
+		genCode.setSequenceid(gen_sno1);
+		String image=gen_sno1+"_1";
+		String image1=gen_sno1+"_2";
+		String imageUrl="";
+		String imageUrl1="";
+		if(bridge_location.compareToIgnoreCase("Weight Bridge 2") == 0) {
+			imageUrl = "http://192.168.10.11/cgi-bin/snapshot.cgi?channel=1"; // CP Plus Camera AAYOG
+			//String imageUrl = "http://192.168.1.13:85/images/snapshot.jpg"; // UNV Camera
+			imageUrl1 = "http://192.168.10.12/cgi-bin/snapshot.cgi?channel=1";	// CP Plus Camera AAYOG
+			
+			//imageUrl = "http://192.168.1.12/cgi-bin/snapshot.cgi?channel=1"; // CP Plus Camera NAYAGAON
+			//imageUrl1 = "http://192.168.1.13:85/images/snapshot.jpg"; // UNV Camera NAYAGAON
+		}
+		if(bridge_location.compareToIgnoreCase("Weight Bridge 1") == 0) {
+			imageUrl = "http://192.168.10.13/cgi-bin/snapshot.cgi?channel=1"; // CP Plus Camera
+			//String imageUrl = "http://192.168.1.13:85/images/snapshot.jpg"; // UNV Camera
+			imageUrl1 = "http://192.168.10.14/cgi-bin/snapshot.cgi?channel=1";
+		}
+		//String imageUrl = "http://192.168.11.55/cgi-bin/snapshot.cgi?channel=1"; // CP Plus Camera
+		//String imageUrl = "http://192.168.1.13:85/images/snapshot.jpg"; // UNV Camera
+		//String imageUrl1 = "http://192.168.11.55/cgi-bin/snapshot.cgi?channel=1";
+	    //String destinationFile = FileUtil.folderPathKataImg+image+".jpg";
+	    //String destinationFile1 = FileUtil.folderPathKataImg+image1+".jpg";
+	    //Wm_unload_wgmntService_Imp.saveCameraImage(imageUrl,destinationFile);
+		Wm_unload_wgmntService_Imp.saveCameraImage(imageUrl,imageUrl1,image,image1,bridge_location);
+	    //Wm_unload_wgmntService_Imp.saveCameraImage(imageUrl1,destinationFile1);
+		return genCode;
+	}
+	
+	public static void saveCameraImage(String imageUrl, String imageUrl1, String image_name, String image_name1, String bridge_location) throws IOException {
+		/* //String cameraURL = "http://192.168.11.55/cgi-bin/snapshot.cgi?channel=1";
+        String username = "admin";
+        String password = "admin@123";
+
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+            new AuthScope("192.168.10.13", AuthScope.ANY_PORT, AuthScope.ANY_REALM),
+            new UsernamePasswordCredentials(username, password)
+        );
+
+        try (CloseableHttpClient httpClient = HttpClients.custom()
+                .setDefaultCredentialsProvider(credsProvider)
+                .build()) {
+
+            HttpGet request = new HttpGet(imageUrl);
+            //request.setHeader("User-Agent", "*");
+
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode == 200) {
+                    try (InputStream inputStream = response.getEntity().getContent()) {
+                        BufferedImage image = ImageIO.read(inputStream);
+                        ImageIO.write(image, "jpg", new File(FileUtil.folderPathKataImg+image_name+".jpg"));
+                        System.out.println("Image captured and saved.");
+                    } catch (IOException e) {  // <-- This block was missing a closing brace
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println("Error: HTTP " + statusCode);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/		// Commented on 12042025 for better digestAuth
+		
+		// BETTER DIGEST AUTH STARTS
+		//String url = "http://192.168.11.55/cgi-bin/snapshot.cgi?channel=1";
+        String username = "admin";
+        String password = "admin@123";
+
+        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
+                new UsernamePasswordCredentials(username, password));
+
+        try (CloseableHttpClient httpClient = HttpClients.custom()
+                .setDefaultCredentialsProvider(credsProvider)
+                .build()) {
+
+            HttpGet httpGet = new HttpGet(imageUrl);
+            HttpGet httpGet1 = new HttpGet(imageUrl1);
+            HttpContext localContext = new BasicHttpContext();
+            DigestScheme digestAuth = new DigestScheme();
+            digestAuth.overrideParamter("realm", "exampleRealm");
+            digestAuth.overrideParamter("nonce", "exampleNonce");
+            localContext.setAttribute("preemptive-auth", digestAuth);
+
+            HttpResponse response = httpClient.execute(httpGet, localContext);
+            HttpResponse response1 = httpClient.execute(httpGet1, localContext);
+            System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
+            System.out.println("Response1 Code: " + response1.getStatusLine().getStatusCode());
+            // FRONT WGT CAMERA IMAGE
+            if (response.getStatusLine().getStatusCode() == 200) {
+                    try (InputStream inputStream = response.getEntity().getContent()) {
+                        BufferedImage image = ImageIO.read(inputStream);
+                        if(bridge_location.compareToIgnoreCase("Weight Bridge 2") == 0) {
+                        	ImageIO.write(image, "jpg", new File(FileUtil.folderPathKata2Img+image_name+".jpg"));
+                        }
+                        if(bridge_location.compareToIgnoreCase("Weight Bridge 1") == 0) {
+                        	ImageIO.write(image, "jpg", new File(FileUtil.folderPathKata1Img+image_name+".jpg"));
+                        }
+                        
+                        System.out.println("Front Camera Image captured and saved.");
+                    } catch (IOException e) {  // <-- This block was missing a closing brace
+                        e.printStackTrace();
+                    }
+                } 
+                else 
+                    System.out.println("Error FRONT CAMERA: HTTP " + response.getStatusLine().getStatusCode());
+            
+            // TOP CAMERA WGT IMAGE 
+            if (response1.getStatusLine().getStatusCode() == 200) {
+                try (InputStream inputStream1 = response1.getEntity().getContent()) {
+                    BufferedImage image1 = ImageIO.read(inputStream1);
+                    if(bridge_location.compareToIgnoreCase("Weight Bridge 1") == 0) {
+                    	ImageIO.write(image1, "jpg", new File(FileUtil.folderPathKata1Img+image_name1+".jpg"));
+                    }
+                    if(bridge_location.compareToIgnoreCase("Weight Bridge 2") == 0) {
+                    	ImageIO.write(image1, "jpg", new File(FileUtil.folderPathKata2Img+image_name1+".jpg"));
+                    }
+                    
+                    System.out.println("Top Camera Image captured and saved.");
+                } catch (IOException e1) {  // <-- This block was missing a closing brace
+                    e1.printStackTrace();
+                }
+            } 
+            else 
+                System.out.println("Error TOP CAMERA: HTTP " + response1.getStatusLine().getStatusCode());
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 	}
 	
 }

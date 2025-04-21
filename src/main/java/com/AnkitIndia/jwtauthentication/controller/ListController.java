@@ -3711,8 +3711,8 @@ public class ListController {
 			
 			public Resource loadFileDC(String fileName) {
 		        try{
-		        	Path location = Paths.get("D:/AayogAgroDocuments/deliverychallan/");
-		        	//Path location = Paths.get("/usr/ankitindiahajipur/documents/deliverychallan/");   //Online Aayog
+		        	//Path location = Paths.get("D:/AayogAgroDocuments/deliverychallan/");
+		        	Path location = Paths.get("/usr/ankitindiahajipur/documents/deliverychallan/");   //Online Aayog
 		            Path file = location.resolve(fileName);
 		            System.out.println("file::"+file);
 		            Resource resource = new UrlResource(file.toUri());
