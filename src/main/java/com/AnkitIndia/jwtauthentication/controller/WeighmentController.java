@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.AnkitIndia.Utility.FileUtil;
 
 import com.AnkitIndia.jwtauthentication.model.Driver_master;
 
@@ -972,5 +972,47 @@ public class WeighmentController {
 		return tag_advice_with_poService.searchtaggedadviceFast(orderno,pono,fromdate,todate,bus_partner1,finyear);
 	 }
 		
+	/*		Kata Image Capture Starts			*/
+	@GetMapping("/getSecondkataSrlnoCamera/{bridge_location}")
+	public SequenceIdDTO getSecondkataSrlnoCamera(@PathVariable(value = "bridge_location")  String bridge_location) throws IOException
+	{
+		return wm_unload_wgmntService.getSecondkataSrlnoCamera(bridge_location);
+	}
+	
+	@GetMapping("/getKataImg/{bridge_location}/{doc_img}")
+    public ResponseEntity<?> getInnerImg(@PathVariable(value = "bridge_location")  String bridge_location, @PathVariable(value = "doc_img")  String doc_img) {        
+        try {
+        	
+        	Path imagePath = null;
+        	System.out.println("bridge_location:: "+bridge_location);
+        	if(bridge_location.compareToIgnoreCase("Weight Bridge 1") == 0) {
+        		System.out.println("bridge_location IF:: "+bridge_location);
+        		imagePath = Paths.get(FileUtil.folderPathKata1Img+doc_img);
+        	}
+        	if(bridge_location.compareToIgnoreCase("Weight Bridge 2") == 0) {
+        		System.out.println("bridge_location IF:: "+bridge_location);
+        		imagePath = Paths.get(FileUtil.folderPathKata2Img+doc_img);
+        	}
+        	
+			if (imagePath != null) {
+                ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(imagePath));
+                
+                return ResponseEntity
+                        .ok()
+                        .contentLength(imagePath.toFile().length())
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);                    
+            }
+            else 
+            {
+       
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+	
+	/*		Kata Image Capture Ends			*/
 	
 }

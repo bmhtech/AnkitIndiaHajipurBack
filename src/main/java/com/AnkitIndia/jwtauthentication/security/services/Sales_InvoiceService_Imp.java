@@ -298,6 +298,12 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			//prefix=prefix+"-"+fin_year+"-";
 			if(inv_type.compareToIgnoreCase("INV00001") == 0)
 			{
+				sno=sales_InvoiceRepository.countSalesInvoiceNotDefenceReg(fin_year,inv_type);
+				
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				
 				prefix="AILP"+"/"+final_fyear+"/TW";
 			}
 			else
@@ -347,7 +353,6 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		String gen_sno="";
 		if(companyMasterRepository.getCompanyName().compareToIgnoreCase("ANKIT INDIA LIMITED")==0)
 		{
-		
 			String sno=sales_InvoiceRepository.countSalesInvoice(fin_year,inv_type);
 			System.out.println("SI normal Serial:: "+sno);
 			if(sno != null ) {
@@ -371,6 +376,12 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			}
 			else if(inv_type.compareToIgnoreCase("INV00001") == 0)
 			{
+				sno=sales_InvoiceRepository.countSalesInvoiceNotDefenceReg(fin_year,inv_type);
+				
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				
 				prefix="AILP"+"/"+final_fyear+"/TW";
 			}
 			else
@@ -526,6 +537,12 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 				//prefix=prefix+"-"+fin_year+"-";
 				if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00001") == 0)
 				{
+					tsno=sales_InvoiceRepository.countSalesInvoiceNotDefenceReg(sinvoice.getFin_year(),sinvoice.getInvoice_type());
+					
+					if(tsno != null ) {
+						nslno=Integer.parseInt(tsno);
+					}
+					
 					tprefix="AILP"+"/"+final_fyear+"/TW";
 				}
 				else

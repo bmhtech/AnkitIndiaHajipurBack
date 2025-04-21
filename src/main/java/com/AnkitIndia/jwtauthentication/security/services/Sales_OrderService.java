@@ -154,6 +154,8 @@ public interface Sales_OrderService {
 	
 	public Sales_Order getSalesOrderDetailsthdeliverchallan(String deliveryid);
 	
+	public Map<String, Object> getSalesOrderTransDtlswtGRN(String deliveryid);
+	
 	public List<Map<String, Object>> getsaleorderjobworkprice(String deliveryid);
 	
 	public Sales_Order updatesalesorder(Long id);

@@ -2294,5 +2294,20 @@ public class Pur_BillService_Imp implements Pur_BillService{
 		 
 		 return pur_BillRepository.getSuppliertdsStatDtls(suppid,financial_year);
 	 }
+		
+		public List<Map<String, Object>> getWhPeriQCReport(String fromdate, String todate) {
+				return pur_BillRepository.getWhPeriQCReport(fromdate, todate);//based on unloadadvice
+		}
+		
+		public List<Map<String, Object>> getWhQCReport(String fromdate, String todate, String basedon) {
+			if(basedon.compareToIgnoreCase("Unload Advice")==0)
+			{
+				return pur_BillRepository.getWhQCReportUnloadAdvice(fromdate, todate);
+			}
+			else
+			{
+				return pur_BillRepository.getWhQCReport(fromdate, todate);//based on grn
+			}
+		}
 	 	
 }

@@ -2221,4 +2221,21 @@ public class ReportController {
 				return sales_orderService.getWeighmentReportForAnujSir(fromdate,todate);
 			}
 			
+			/* QC REPORTS API STARTS */
+			@GetMapping("/getWhPeriQCReport/{fromdate}/{todate}")
+			public List<Map<String, Object>> getWhPeriQCReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate)
+			{
+				return pur_BillService.getWhPeriQCReport(fromdate,todate);
+			}
+			
+			@GetMapping("/getWhQCReport/{fromdate}/{todate}/{basedon}")
+			public List<Map<String, Object>> getWhQCReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate,
+															  @PathVariable(value = "basedon") String basedon)
+			{
+				return pur_BillService.getWhQCReport(fromdate,todate,basedon);
+			}
+			/* QC REPORTS API ENDS */
+			
 }

@@ -59,6 +59,8 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 	@Query("select s from Sales_Order s where s.modified_type = 'INSERTED' and s.order_id =:orderid ")
 	Sales_Order getSalesOrderDetails(@Param("orderid") String orderid);
 	
+	@Query(value="SELECT s.* FROM sales_order_terms_con s LEFT JOIN pur_good_receipt p ON p.sales_order=s.order_id AND p.modified_type='INSERTED' LEFT JOIN delivery_challan d ON d.referance_id=p.grn_id AND d.modified_type='INSERTED' WHERE s.modified_type = 'INSERTED' AND d.delivery_cid =:deliveryid", nativeQuery=true)
+	Map<String, Object> getSalesOrderTransDtlswtGRN(@Param("deliveryid") String deliveryid);
 	
 	@Query("select s from Sales_Order s where s.modified_type = 'INSERTED' and s.order_no =:order_no ")
 	Sales_Order getSalesOrderDetailssearch(@Param("order_no") String order_no);
