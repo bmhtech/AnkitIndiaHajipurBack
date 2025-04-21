@@ -119,4 +119,8 @@ import com.AnkitIndia.jwtauthentication.responseDTO.SequenceIdDTO;
 	
 	public Map<String, Object> getSuppliertdsStatDtls(String suppid,String financial_year);
 	
+	public List<Map<String, Object>> getWhPeriQCReport(String fromdate, String todate);
+	
+	public List<Map<String, Object>> getWhQCReport(String fromdate, String todate,String basedon);
+	
 }

@@ -97,4 +97,5 @@ public interface Wm_unload_wgmntService {
 	
 	public List<Vehicle_weighment_load_unload> getVehicleLocationwiseWeighmentList(String location);
 	
+	public SequenceIdDTO getSecondkataSrlnoCamera(String bridge_location) throws IOException;
 }

@@ -298,6 +298,12 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			//prefix=prefix+"-"+fin_year+"-";
 			if(inv_type.compareToIgnoreCase("INV00001") == 0)
 			{
+				sno=sales_InvoiceRepository.countSalesInvoiceNotDefenceReg(fin_year,inv_type);
+				
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				
 				prefix="AILP"+"/"+final_fyear+"/TW";
 			}
 			else
@@ -347,7 +353,6 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		String gen_sno="";
 		if(companyMasterRepository.getCompanyName().compareToIgnoreCase("ANKIT INDIA LIMITED")==0)
 		{
-		
 			String sno=sales_InvoiceRepository.countSalesInvoice(fin_year,inv_type);
 			System.out.println("SI normal Serial:: "+sno);
 			if(sno != null ) {
@@ -371,6 +376,12 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			}
 			else if(inv_type.compareToIgnoreCase("INV00001") == 0)
 			{
+				sno=sales_InvoiceRepository.countSalesInvoiceNotDefenceReg(fin_year,inv_type);
+				
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				
 				prefix="AILP"+"/"+final_fyear+"/TW";
 			}
 			else
@@ -526,6 +537,12 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 				//prefix=prefix+"-"+fin_year+"-";
 				if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00001") == 0)
 				{
+					tsno=sales_InvoiceRepository.countSalesInvoiceNotDefenceReg(sinvoice.getFin_year(),sinvoice.getInvoice_type());
+					
+					if(tsno != null ) {
+						nslno=Integer.parseInt(tsno);
+					}
+					
 					tprefix="AILP"+"/"+final_fyear+"/TW";
 				}
 				else
@@ -2939,7 +2956,6 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			//System.out.println();
 			if(op.get().isJobwork()) 
 			{
-				
 				String partyname=op.get().getPartyname();
 				String print_to_name=cust_bussiness_partnerRepository.getCustomerThruBUstringnew(op.get().getParty()).getPrint_to_name();
 				String creditnotedate=op.get().getSalesorderdate();
@@ -3472,9 +3488,6 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					//getgstdetails_dynamic
 					List<Item_groupwise_taxsumm>gst_details_dyna =new ArrayList<Item_groupwise_taxsumm>();
 					gst_details_dyna.addAll(sales_InvoiceRepository.getgstdetails_dynamic(op.get().getInvoice_id()));
-					
-					
-					
 					
 					if(gst_details_dyna.size()==1) 
 					{

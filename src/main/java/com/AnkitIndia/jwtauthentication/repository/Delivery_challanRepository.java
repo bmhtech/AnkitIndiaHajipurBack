@@ -27,6 +27,9 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	@Query(value = "select COUNT(d.id) from delivery_challan d left join cust_bussiness_partner c on d.party=c.cp_id and c.modified_type='INSERTED' where d.fin_year =:fin_year and c.group_type='CG00019'", nativeQuery=true)
 	String countDlvChln4Defence(@Param("fin_year") String fin_year);
 	
+	@Query(value = "select COUNT(d.id) from delivery_challan d left join cust_bussiness_partner c on d.party=c.cp_id and c.modified_type='INSERTED' where d.fin_year =:fin_year AND d.inv_type =:inv_type and c.group_type!='CG00019'", nativeQuery=true)
+	String countDlvChlnNotDefenceReg(@Param("fin_year") String fin_year,@Param("inv_type") String inv_type);
+	
 	@Query( "select s from Delivery_challan s where s.modified_type ='INSERTED' and s.delivery_cid =:delivery_cid ")
 	Delivery_challan getDeliveryChallanDtls(@Param("delivery_cid") String delivery_cid);
 

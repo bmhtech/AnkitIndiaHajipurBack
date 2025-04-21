@@ -3968,6 +3968,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return salesdetails;
 	}
 	
+	public Map<String, Object> getSalesOrderTransDtlswtGRN(String deliveryid) 
+	{
+		return sales_OrderRepository.getSalesOrderTransDtlswtGRN(deliveryid);
+	}
+	
 	public List<Map<String, Object>> getsaleorderjobworkprice(String deliveryid)
 	{
 		

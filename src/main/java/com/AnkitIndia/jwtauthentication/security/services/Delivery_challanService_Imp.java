@@ -198,7 +198,8 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		String gen_sno="";
 		if(companyMasterRepository.getCompanyName().compareToIgnoreCase("ANKIT INDIA LIMITED")==0)
 		{
-			String sno=dChallanRepository.countDlvChln(fin_year,inv_type);
+			String sno="";
+			sno=dChallanRepository.countDlvChln(fin_year,inv_type);
 			
 			if(sno != null ) {
 				slno=Integer.parseInt(sno);
@@ -211,6 +212,12 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			//prefix=prefix+"-"+fin_year+"-";
 			if(inv_type.compareToIgnoreCase("INV00001") == 0)
 			{
+				sno=dChallanRepository.countDlvChlnNotDefenceReg(fin_year,inv_type);
+				
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				
 				prefix="AILP"+"/"+final_fyear+"/TW";
 			}
 			else
@@ -288,6 +295,12 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 			}
 			else if(inv_type.compareToIgnoreCase("INV00001") == 0)
 			{
+				sno=dChallanRepository.countDlvChlnNotDefenceReg(fin_year,inv_type);
+				
+				if(sno != null ) {
+					slno=Integer.parseInt(sno);
+				}
+				
 				prefix="AILP"+"/"+final_fyear+"/TW";
 			}
 			else
@@ -404,6 +417,11 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 				//prefix=prefix+"-"+fin_year+"-";
 				if(dChallan.getInv_type().compareToIgnoreCase("INV00001") == 0)
 				{
+					tsno=dChallanRepository.countDlvChlnNotDefenceReg(dChallan.getFin_year(),dChallan.getInv_type());
+					
+					if(tsno != null ) {
+						nslno=Integer.parseInt(tsno);
+					}
 					tprefix="AILP"+"/"+final_fyear+"/TW";
 				}
 				else
@@ -786,8 +804,8 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 	
 	public List<Map<String,Object>> getdocumentListwithfileDelvChallan(String doc_pdf)
 	{
-		String filename="D:/AayogAgroDocuments/deliverychallan/"+doc_pdf;
-		//String filename="/usr/documents/deliverychallan/"+doc_pdf;	//Online  Aayog
+		//String filename="D:/AayogAgroDocuments/deliverychallan/"+doc_pdf;
+		String filename="/usr/ankitindiahajipur/documents/deliverychallan/"+doc_pdf;	//Online  Aayog
 		System.out.println("filename " +filename);
 		return dChallanRepository.getdocumentListwithfileDelvChallan(filename);
 	}
