@@ -1369,8 +1369,13 @@ public class SalesController {
 	@Autowired
 	Sales_InvoiceService sales_InvoiceService;
 	 
-	@GetMapping("/getSalesInvoiceDataList/{currDate}/{finyear}")
+	/*@GetMapping("/getSalesInvoiceDataList/{currDate}/{finyear}")
 	public List<Sales_InvoiceDTO> getSalesInvoiceDataList(@PathVariable(value = "currDate") String currDate,@PathVariable(value = "finyear") String finyear)
+	{
+		return sales_InvoiceService.getSalesInvoiceDataList(currDate,finyear);
+	}*/
+	@GetMapping("/getSalesInvoiceDataList/{currDate}/{finyear}")
+	public List<Map<String,Object>> getSalesInvoiceDataList(@PathVariable(value = "currDate") String currDate,@PathVariable(value = "finyear") String finyear)
 	{
 		return sales_InvoiceService.getSalesInvoiceDataList(currDate,finyear);
 	}
@@ -1767,8 +1772,11 @@ public class SalesController {
 			 {
 				//1ST API CALLING START
 				
-				// String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				//String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
+				//for Aayogagro
+				//String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				//for Ankit Hajipur
+				String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -1806,8 +1814,11 @@ public class SalesController {
 				  // 1st Api Calling End....
 				  
 				  
-				  //String url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&AuthToken="+authtoken+"&user_name=TaxProEnvPON&QRCodeSize=200";
-				  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog&QRCodeSize=200";
+				 // String url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&AuthToken="+authtoken+"&user_name=TaxProEnvPON&QRCodeSize=200";
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog&QRCodeSize=200";
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&AuthToken="+authtoken+"&user_name=API_AILH1&QRCodeSize=200";
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -1888,8 +1899,11 @@ public class SalesController {
 					             String Irn=""+obj.get("Irn");
 					            
 					             
-					              //urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-					              urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+					             // urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
+					              //For Aayogagro
+					              //urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+					              //For Ankit Hajipur
+					              urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 								
 								  url = new URL(urlString);
 								  con = (HttpURLConnection) url.openConnection();
@@ -1923,7 +1937,10 @@ public class SalesController {
 								  authtoken=""+obj.get("AuthToken");
 								  
 								  //url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-								  url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog";
+								  //For Aayogagro
+								  //url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog";
+								  //For Ankit Hajipur
+								  url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&AuthToken="+authtoken+"&user_name=API_AILH1";
 								  
 								  url = new URL(url1);
 								  con = (HttpURLConnection) url.openConnection();
@@ -2065,7 +2082,7 @@ public class SalesController {
 				  
 				//path where we want to get QR Code  
 				 // String path = "G:\\Aayog_Einvoice\\"+inv_id+".png"; //Local 
-				  //String path =  "/usr/documents/aayogeinvoice/"+inv_id+".png";	//online 
+				 // String path =  "D:/ankitindiahajipur/ankithajipureinvoice/"+inv_id+".png";	//local 
 				  String path =  "/usr/ankitindiahajipur/documents/ankithajipureinvoice/"+inv_id+".png";	//online 
 				  //Encoding charset to be used  
 				  String charset = "UTF-8";  
@@ -2110,7 +2127,10 @@ public class SalesController {
 			//1ST API CALLING START
 			
 			 //String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-			 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+			 //For Aayogagro
+			 //String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+			 //For Ankit Hajipur
+			 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 			
 			 URL url = new URL(urlString);
 			 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -2150,7 +2170,10 @@ public class SalesController {
 			  //2nd API calling Start
 			  
 			  //String url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-			  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+			  //For Aayogagro
+			  //String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=Aayog@2022*&AuthToken="+authtoken+"&user_name=API_aayog";
+			  //For Ankit Hajipur
+			  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&eInvPwd=Ankit@1981*&AuthToken="+authtoken+"&user_name=API_AILH1";
 			  
 			  URL objnew = new URL(url1);
 			  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -2250,7 +2273,10 @@ public class SalesController {
 				//1ST API CALLING START
 				
 				 //String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				 //For Aayogagro
+				 //String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				 //For Ankit Hajipur
+				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -2290,7 +2316,10 @@ public class SalesController {
 				  //2nd API calling Start
 				  
 				  //String url1 = "https://gstsandbox.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-				  String url1 = "https://einvapi.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&eInvPwd=Ankit@1981*&AuthToken="+authtoken+"&user_name=API_AILH1";
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -2406,7 +2435,10 @@ public class SalesController {
 				//1ST API CALLING START
 				
 				 //String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				 //For Aayogagro
+				 //String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				 //For Ankit Hajipur
+				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -2446,7 +2478,10 @@ public class SalesController {
 				  //2nd API calling Start
 				  
 				  //String url1 = "http://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-				  String url1 = "https://einvapi.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&eInvPwd=Ankit@1981*&AuthToken="+authtoken+"&user_name=API_AILH1";
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -2545,8 +2580,11 @@ public class SalesController {
 			 {
 				//1ST API CALLING START
 				
-				// String urlString =  "https://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/auth?action=ACCESSTOKEN&aspid=1659183221&password=Avijit!12ch&gstin=34AACCC1596Q002&username=TaxProEnvPON&ewbpwd=abc34*";
-				String urlString =  "https://einvapi.charteredinfo.com/v1.03/dec/auth?action=ACCESSTOKEN&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&ewbpwd=Aayog@2022";
+				//String urlString =  "https://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/auth?action=ACCESSTOKEN&aspid=1659183221&password=Avijit!12ch&gstin=34AACCC1596Q002&username=TaxProEnvPON&ewbpwd=abc34*";
+				//For Aayogagro
+				//String urlString =  "https://einvapi.charteredinfo.com/v1.03/dec/auth?action=ACCESSTOKEN&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&ewbpwd=Aayog@2022";
+				//For Ankit Hajipur
+				String urlString =  "https://einvapi.charteredinfo.com/v1.03/dec/auth?action=ACCESSTOKEN&aspid=1780231025&password=Ankit@1981&gstin=10AADCA2518H1ZD&username=API_AILH1&ewbpwd=Ankit@1981";
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
 				 con.setRequestMethod("GET");
@@ -2588,7 +2626,10 @@ public class SalesController {
 				  
 				  
 				  //String url1 = "https://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=GENEWAYBILL&aspid=1659183221&password=Avijit!12ch&gstin=34AACCC1596Q002&username=TaxProEnvPON&authtoken="+authtoken;
-				  String url1 = "https://einvapi.charteredinfo.com/v1.03/dec/ewayapi?action=GENEWAYBILL&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&authtoken="+authtoken;
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/v1.03/dec/ewayapi?action=GENEWAYBILL&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&authtoken="+authtoken;
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/v1.03/dec/ewayapi?action=GENEWAYBILL&aspid=1780231025&password=Ankit@1981&gstin=10AADCA2518H1ZD&username=API_AILH1&authtoken="+authtoken;
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -3183,7 +3224,10 @@ public class SalesController {
 				//1ST API CALLING START
 				
 				// String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				//For Aayogagro
+				//String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				//For Ankit Hajipur
+				String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -3221,8 +3265,11 @@ public class SalesController {
 				  // 1st Api Calling End....
 				  
 				  
-				 // String url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&AuthToken="+authtoken+"&user_name=TaxProEnvPON&QRCodeSize=200";
-				  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog&QRCodeSize=200";
+				  // String url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&AuthToken="+authtoken+"&user_name=TaxProEnvPON&QRCodeSize=200";
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog&QRCodeSize=200";
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&AuthToken="+authtoken+"&user_name=API_AILH1&QRCodeSize=200";
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -3304,7 +3351,10 @@ public class SalesController {
 					            
 					             
 					             // urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-					              urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+					             //For Ankit Hajipur
+					             //urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+					             //For Ankit Hajipur
+					             urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 								
 								  url = new URL(urlString);
 								  con = (HttpURLConnection) url.openConnection();
@@ -3338,7 +3388,10 @@ public class SalesController {
 								  authtoken=""+obj.get("AuthToken");
 								  
 								  //url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-								  url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog";
+								  //For Aayogagro
+								  //url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&AuthToken="+authtoken+"&user_name=API_aayog";
+								  //For Ankit Hajipur
+								  url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/irn/"+Irn+"?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&AuthToken="+authtoken+"&user_name=API_AILH1";
 								  
 								  url = new URL(url1);
 								  con = (HttpURLConnection) url.openConnection();
@@ -3460,7 +3513,8 @@ public class SalesController {
 
 				//path where we want to get QR Code  
 				 // String path = "D:\\AayogAgroDocuments\\Aayog_Creditnote_Einvoice\\"+inv_id+".png"; //Local
-				  String path =  "/usr/documents/aayogcreditnoteeinvoice/"+inv_id+".png";	//online 
+				  //String path =  "/usr/documents/aayogcreditnoteeinvoice/"+inv_id+".png";	//online
+				  String path =  "/usr/ankitindiahajipur/documents/ankithajipurcreditnoteeinvoice/"+inv_id+".png";	//online 
 				  //Encoding charset to be used  
 				  String charset = "UTF-8";  
 				  Map<EncodeHintType, ErrorCorrectionLevel> hashMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();  
@@ -3504,7 +3558,10 @@ public class SalesController {
 			//1ST API CALLING START
 			
 			 //String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-			 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+			 //For Aayogagro
+			 //String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+			 //For Ankit Hajipur
+			 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 			
 			 URL url = new URL(urlString);
 			 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -3544,7 +3601,10 @@ public class SalesController {
 			  //2nd API calling Start
 			  
 			  //String url1 = "https://gstsandbox.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-			  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+			  //For Aayogagro
+			  //String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+			  //For Ankit Hajipur
+			  String url1 = "https://einvapi.charteredinfo.com/eicore/dec/v1.03/Invoice/Cancel?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&eInvPwd=Ankit@1981*&AuthToken="+authtoken+"&user_name=API_AILH1";
 			  
 			  URL objnew = new URL(url1);
 			  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -3642,7 +3702,10 @@ public class SalesController {
 				//1ST API CALLING START
 				
 				// String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				//For Aayogagro
+				//String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				//For Ankit Hajipur
+				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -3682,7 +3745,10 @@ public class SalesController {
 				  //2nd API calling Start
 				  
 				 // String url1 = "https://gstsandbox.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-				  String url1 = "https://einvapi.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				 //For Aayogagro
+				 // String url1 = "https://einvapi.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				 //For Ankit Hajipur
+				 String url1 = "https://einvapi.charteredinfo.com/eiewb/dec/v1.03/ewaybill?aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&eInvPwd=Ankit@1981*&AuthToken="+authtoken+"&user_name=API_AILH1";
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -3795,7 +3861,10 @@ public class SalesController {
 			 {
 				//1ST API CALLING START
 				 //String urlString =  "https://gstsandbox.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&user_name=TaxProEnvPON&eInvPwd=abc34*";
-				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				 //For Aayogagro
+				 //String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&user_name=API_aayog&eInvPwd=Aayog@2022";
+				 //For Ankit Hajipur
+				 String urlString =  "https://einvapi.charteredinfo.com/eivital/dec/v1.04/auth?&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&user_name=API_AILH1&eInvPwd=Ankit@1981";
 				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -3833,7 +3902,10 @@ public class SalesController {
 				  //2nd API calling Start
 				  
 				  //String url1 = "http://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1659183221&password=Avijit!12ch&Gstin=34AACCC1596Q002&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=TaxProEnvPON";
-				  String url1 = "https://einvapi.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1751181923&password=Aayog@123&Gstin=10AATCA7447B1ZV&eInvPwd=abc34*&AuthToken="+authtoken+"&user_name=API_aayog";
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=CANEWB&aspid=1780231025&password=Ankit@1981&Gstin=10AADCA2518H1ZD&eInvPwd=Ankit@1981*&AuthToken="+authtoken+"&user_name=API_AILH1";
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
@@ -3903,7 +3975,11 @@ public class SalesController {
 				//1ST API CALLING START
 				
 				//String urlString =  "https://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/auth?action=ACCESSTOKEN&aspid=1659183221&password=Avijit!12ch&gstin=34AACCC1596Q002&username=TaxProEnvPON&ewbpwd=abc34*";
-				String urlString =  "https://einvapi.charteredinfo.com/v1.03/dec/auth?action=ACCESSTOKEN&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&ewbpwd=Aayog@2022";
+				//For Aayogagro
+				//String urlString =  "https://einvapi.charteredinfo.com/v1.03/dec/auth?action=ACCESSTOKEN&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&ewbpwd=Aayog@2022";
+				//For Ankit Hajipur
+				String urlString =  "https://einvapi.charteredinfo.com/v1.03/dec/auth?action=ACCESSTOKEN&aspid=1780231025&password=Ankit@1981&gstin=10AADCA2518H1ZD&username=API_AILH1&ewbpwd=Ankit@1981";
+				
 				 URL url = new URL(urlString);
 				 HttpURLConnection con = (HttpURLConnection) url.openConnection();
 				 con.setRequestMethod("GET");
@@ -3940,8 +4016,11 @@ public class SalesController {
 				  // 1st Api Calling End....
 				  
 				  
-				 // String url1 = "https://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=GENEWAYBILL&aspid=1659183221&password=Avijit!12ch&gstin=34AACCC1596Q002&username=TaxProEnvPON&authtoken="+authtoken;
-				  String url1 = "https://einvapi.charteredinfo.com/v1.03/dec/ewayapi?action=GENEWAYBILL&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&authtoken="+authtoken;
+				  // String url1 = "https://gstsandbox.charteredinfo.com/ewaybillapi/dec/v1.03/ewayapi?action=GENEWAYBILL&aspid=1659183221&password=Avijit!12ch&gstin=34AACCC1596Q002&username=TaxProEnvPON&authtoken="+authtoken;
+				  //For Aayogagro
+				  //String url1 = "https://einvapi.charteredinfo.com/v1.03/dec/ewayapi?action=GENEWAYBILL&aspid=1751181923&password=Aayog@123&gstin=10AATCA7447B1ZV&username=API_aayog&authtoken="+authtoken;
+				  //For Ankit Hajipur
+				  String url1 = "https://einvapi.charteredinfo.com/v1.03/dec/ewayapi?action=GENEWAYBILL&aspid=1780231025&password=Ankit@1981&gstin=10AADCA2518H1ZD&username=API_AILH1&authtoken="+authtoken;
 				  
 				  URL objnew = new URL(url1);
 				  HttpURLConnection con1 = (HttpURLConnection) objnew.openConnection();
