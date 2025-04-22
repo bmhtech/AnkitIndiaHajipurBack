@@ -102,7 +102,8 @@ public interface Sales_InvoiceService {
 	
 	public List<Map<String,Object>> searchSalesInvoiceFast(String orderno,String fromdate, String todate,String party1,String finyear);
 	
-	public List<Sales_InvoiceDTO> getSalesInvoiceDataList(String currDate,String finyear);
+	//public List<Sales_InvoiceDTO> getSalesInvoiceDataList(String currDate,String finyear);
+	public List<Map<String,Object>> getSalesInvoiceDataList(String currDate,String finyear);
 
 	public List<Map<String,Object>> getSalesInvoiceDataListFast(String currDate,String finyear);
 	

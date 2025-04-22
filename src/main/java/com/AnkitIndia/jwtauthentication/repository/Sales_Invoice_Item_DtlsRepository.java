@@ -20,7 +20,7 @@ public interface Sales_Invoice_Item_DtlsRepository extends JpaRepository<Sales_I
 	List<Sales_Invoice_Item_Dtls> getSalesInvItmDtls(@Param("invoice_id") String invoice_id);
 	
 	//@Query( value="SELECT s.*,i.alt_name FROM sales_invoice_item_dtls s LEFT JOIN item_master i ON s.item_code=i.item_id WHERE s.modified_type = 'INSERTED' AND i.modified_type='INSERTED' AND s.invoice_id =:invoice_id ORDER BY s.slno", nativeQuery = true)
-	@Query( value="SELECT s.*,CASE WHEN a.party='CBP00006' THEN '10019910' ELSE s.hsn_code END AS hsnm_code,i.alt_name FROM sales_invoice_item_dtls s LEFT JOIN item_master i ON s.item_code=i.item_id\r\n" //hsn code hard core for itc
+	@Query( value="SELECT s.*,CASE WHEN a.party='CBP00004' THEN s.hsn_code ELSE '10019910' END AS hsnm_code,i.alt_name FROM sales_invoice_item_dtls s LEFT JOIN item_master i ON s.item_code=i.item_id\r\n" //hsn code hard core for itc
 			+ "LEFT JOIN sales_invoice a ON s.`invoice_id`=a.`invoice_id` WHERE s.modified_type = 'INSERTED' AND i.modified_type='INSERTED' AND a.modified_type='INSERTED' AND s.invoice_id =:invoice_id ORDER BY s.slno", nativeQuery = true)
 	List<Map<String,Object>> getSalesInvItmDtlswtAltName(@Param("invoice_id") String invoice_id);
 	
