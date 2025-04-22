@@ -3692,7 +3692,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		return op1.get();
 	}
 	
-	 public List<Sales_InvoiceDTO> getSalesInvoiceDataList(String currDate,String finyear)
+	 /*public List<Sales_InvoiceDTO> getSalesInvoiceDataList(String currDate,String finyear)
 		{
 		 
 			//List<Sales_Invoice> modelList=sales_InvoiceRepository.getSalesInvoiceDataList(currDate);
@@ -3703,15 +3703,16 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			
 			Type listType = new TypeToken<List<Sales_InvoiceDTO>>() {}.getType();
 			List<Sales_InvoiceDTO> advList = new ModelMapper().map(modelList,listType);
-			
-			/*advList.forEach((sInv) -> {
-				if(Utility.isNullOrEmpty(sInv.getInvoice_type())) {
-					sInv.setInvoice_type(invoice_typeRepository.getSalesInvTypesDtls(sInv.getInvoice_type()).getInvtype_name());
-				}
-				else {sInv.setInvoice_type("None");}
-			});*/
-			
 			return advList;
+		}*/
+	 
+	 public List<Map<String,Object>> getSalesInvoiceDataList(String currDate,String finyear)
+		{
+			List<Map<String,Object>> searchsalesinvoice =new ArrayList<Map<String,Object>>();
+			String tablename="sales_invoice",party_name="party",order_no="invoice_no",order_date="invoice_date";
+			String orderno="",party1="";
+			searchsalesinvoice.addAll(sales_InvoiceRepository.getsearchdata1(tablename,party_name,order_no,order_date,orderno,currDate,currDate,party1,finyear));
+			return searchsalesinvoice;
 		}
 	 
 	 public List<Map<String,Object>> getSalesInvoiceDataListFast(String currDate,String finyear)

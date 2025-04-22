@@ -142,6 +142,16 @@ public class Sales_InvoiceDTO {
 	
 	private String asn_no;
 	
+	private String group_type;
+	
+	public String getGroup_type() {
+		return group_type;
+	}
+
+	public void setGroup_type(String group_type) {
+		this.group_type = group_type;
+	}
+
 	public String getAsn_no() {
 		return asn_no;
 	}
