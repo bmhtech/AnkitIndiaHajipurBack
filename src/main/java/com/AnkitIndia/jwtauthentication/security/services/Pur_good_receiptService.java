@@ -132,4 +132,6 @@ public interface Pur_good_receiptService {
 	
 	public Map<String, Object> getGrnDetailsById(String grnid);
 
+	public StatusDTO getSoRestQtyCheckWithGrn(String orderid,String advice_id);
+	
 }

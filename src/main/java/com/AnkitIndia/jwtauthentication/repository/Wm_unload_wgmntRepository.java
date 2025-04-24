@@ -166,4 +166,7 @@ public interface Wm_unload_wgmntRepository extends JpaRepository<Wm_unload_wgmnt
 	@Query( "select w from Vehicle_weighment_load_unload w where w.modified_type ='INSERTED' and w.weighment_status !=2 and w.gatepass_status='IN' and w.we_req=1 AND w.weight_bridge_location=:location")
 	List<Vehicle_weighment_load_unload> getVehicleLocationwiseWeighmentList(@Param("location") String location);
 	
+	@Query(value="SELECT net_weight FROM wm_unload_wgmnt w WHERE w.advice=:adviceid AND w.weight2 ='weight2' AND w.modified_type='INSERTED'",nativeQuery=true)
+	double getNetWt(@Param("adviceid") String adviceid);
+	
 }
