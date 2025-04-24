@@ -189,4 +189,7 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 	@Query(value = "SELECT CASE  WHEN count(pl)> 0 THEN true ELSE false END FROM Delivery_challan pl where pl.modified_type = 'INSERTED' and pl.referance_id=:grnid")
 	Boolean checkDelChallanGrnUsage(@Param("grnid") String grnid);
 	
+	@Query(value="SELECT CASE WHEN d.rest_wt>=:netwt THEN \"Yes\" ELSE \"No\" END FROM delivery_challan_sales_order_w_tolerance d WHERE d.order_id =:orderid",nativeQuery=true)
+	String getSoRestQtyCheckWithGrn(@Param("orderid") String orderid,@Param("netwt") Double netwt);
+	
 }
