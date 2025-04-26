@@ -302,8 +302,13 @@ public class Sales_transportService_Imp implements Sales_transportService{
 		try  
 		{
 			
-			transportationcharges="TRANSPORTATION CHRG - FIN MISC (P/L)";
-			//System.out.println("transportationcharges::"+transportationcharges);
+			//transportationcharges="TRANSPORTATION CHRG - FIN MISC (P/L)";
+			//transportationcharges="TRANSPORTATION CHARGES-ARMY";
+			
+			//String challanno=sales_transportRepository.getSalesTransport(Long.toString(id)).get("challanno").toString(); // Pull out string from Map<String,Object>
+			transportationcharges=sales_transportRepository.getSalesTransportLedger(Long.toString(id));
+			System.out.println("transportationcharges:: "+transportationcharges);
+			
 			transportationamount=op.get().getBalance_amt();
 			
 			//System.out.println("transportationamount"+transportationamount);
@@ -455,4 +460,30 @@ public class Sales_transportService_Imp implements Sales_transportService{
 		return res;
 	}
 	
+	@Transactional
+	public Sales_transport delete(Sales_transport sales_transport,long id,String reason)
+	{
+		LocalDateTime ldt = LocalDateTime.now();
+		Optional<Sales_transport> op = sales_transportRepository.findById(id);
+		
+		Sales_transport st=op.get();
+		st.setDel_remarks(reason);		
+		st.setModified_type("DELETED");
+		st.setInserted_by(op.get().getInserted_by());
+		st.setInserted_on(op.get().getInserted_on());
+		st.setUpdated_by(op.get().getUpdated_by());
+		st.setUpdated_on(op.get().getUpdated_on());
+		st.setDeleted_by(userRepository.getUserDetails(st.getUsername()).getName());
+		st.setDeleted_on(ldt);
+		
+		if(op.isPresent())
+		{
+			st.setId(id);
+		}
+		
+		salestransport_app_chgsRepository.deleteSTACDetails(op.get().getSales_tranport_id(),
+								ldt,userRepository.getUserDetails(st.getUsername()).getName());
+		
+		return sales_transportRepository.save(st);
+	}
 }

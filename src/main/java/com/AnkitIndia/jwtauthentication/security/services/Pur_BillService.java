@@ -121,6 +121,6 @@ import com.AnkitIndia.jwtauthentication.responseDTO.SequenceIdDTO;
 	
 	public List<Map<String, Object>> getWhPeriQCReport(String fromdate, String todate);
 	
-	public List<Map<String, Object>> getWhQCReport(String fromdate, String todate,String basedon);
+	public List<Map<String, Object>> getWhQCReport(String fromdate, String todate,String process);
 	
 }
