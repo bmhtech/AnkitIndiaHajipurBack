@@ -19,6 +19,8 @@ public interface Sales_transportService {
 	
 	public Sales_transport update(Sales_transport sales_transport,long id);
 	
+	public Sales_transport delete(Sales_transport sales_transport,long id,String reason);
+	
 	//public List<Map<String, Object>> getSalesTransactionReport(String fromdate,String todate);
 	
 	public List<Map<String, Object>> getSalesTransactionReport(String fromdate,String todate,String challanno,String salestype,String finyear,String jvnum,String date_search_type);

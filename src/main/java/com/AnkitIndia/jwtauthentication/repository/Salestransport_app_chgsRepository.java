@@ -1,5 +1,6 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +27,8 @@ public interface Salestransport_app_chgsRepository extends JpaRepository<Salestr
 	@Query(value = "SELECT * FROM salestransport_app_chgs WHERE modified_type='INSERTED' AND sales_tranport_id=:transportId", nativeQuery=true)
 	List<Map<String, Object>> getSalesTransportChgs(@Param("transportId") String transportId);
 	
+	@Modifying(clearAutomatically = true)
+    @Query("UPDATE Salestransport_app_chgs w SET w.modified_type ='DELETED',w.deleted_by=:user,w.deleted_on=:ldt WHERE w.sales_tranport_id = :sales_tranport_id and w.modified_type='INSERTED'")
+    int deleteSTACDetails(@Param("sales_tranport_id") String sales_tranport_id,
+    		@Param("ldt") LocalDateTime ldt,@Param("user") String user);
 }

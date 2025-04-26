@@ -189,6 +189,53 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 	@Query(value = "SELECT CASE  WHEN count(pl)> 0 THEN true ELSE false END FROM Delivery_challan pl where pl.modified_type = 'INSERTED' and pl.referance_id=:grnid")
 	Boolean checkDelChallanGrnUsage(@Param("grnid") String grnid);
 	
+	@Query(value= "SELECT m.tw_date AS unload_date,w.vehicle_no AS vehicle,i.item_name AS item,\r\n"
+			+ "CASE WHEN i.packing_name LIKE \"%GUNNY BAG%\" THEN REPLACE(i.packing_name,i.packing_name,\"GUNNY\")\r\n"
+			+ "WHEN i.packing_name LIKE \"%HDPE%\" THEN REPLACE(i.packing_name,i.packing_name,\"HDPE\")\r\n"
+			+ "ELSE i.packing_name END AS sh_pack,i.mat_wt AS ul_mat_weight,q.qc_date AS qc_date,\r\n"
+			+ "q.MOIS,q.HLW,q.INFES,q.ODOUR,q.STONE,q.POTIA,q.KB,\r\n"
+			+ "g.grn_no,g.grn_date,gi.pssd_mat_wt AS grn_pssd_mat_weight,\r\n"
+			+ "IF(mq.M_MOIS!=\"\",mq.mas_qc_date,\"\") AS mas_qc_date,mq.M_MOIS,mq.M_HLW,mq.M_INFES,mq.M_ODOUR,mq.M_STONE,mq.M_POTIA,mq.M_KB,mq.M_2_5MM,mq.M_OFG,\r\n"
+			+ "mq.M_IDK,mq.M_SVINML,mq.M_BR_SH,mq.M_WETGLUTEN,mq.M_TOTALIMPURITES,mq.M_6MM,\r\n"
+			+ "g.sales_process,IFNULL(d.challan_no,\"NA\") AS challan_no,IFNULL(d.challan_date,\"NA\") AS challan_date,IFNULL(d.partyname,\"NA\") AS partyname,\r\n"
+			+ "IF(gi.warehouse_name=\"MULTIPLE\",'MULTIPLE',wh.warehouse_name) AS warehouse_name,IF(gi.rack=\"0\",\"\",gi.rack) AS stack\r\n"
+			+ "FROM peripheral_qc q\r\n"
+			+ "LEFT JOIN master_qc mq ON q.quality_check_id=mq.quality_check_id\r\n"
+			+ "LEFT JOIN wm_unload_advice w ON q.unloadid=w.unadviceid  AND w.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN wm_unload_advice_item_dtls i ON q.unloadid=i.unadviceid  AND i.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN wm_unload_wgmnt m ON q.unloadid=m.advice AND m.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt g ON g.referance_id=w.unadviceid AND g.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt_item_details gi ON gi.grn_id=g.grn_id AND gi.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN delivery_challan d ON g.grn_id=d.referance_id AND d.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN `warehouse_master` wh ON wh.warehouse_code=gi.warehouse_name AND wh.modified_type='INSERTED' \r\n"
+			+ "WHERE m.tw_date BETWEEN :fromdate AND :todate\r\n"
+			+ "ORDER BY m.tw_date",nativeQuery = true)
+	List<Map<String, Object>> getAllWhQCReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
+	
+	@Query(value= "SELECT m.tw_date AS unload_date,w.vehicle_no AS vehicle,i.item_name AS item,\r\n"
+			+ "CASE WHEN i.packing_name LIKE \"%GUNNY BAG%\" THEN REPLACE(i.packing_name,i.packing_name,\"GUNNY\")\r\n"
+			+ "WHEN i.packing_name LIKE \"%HDPE%\" THEN REPLACE(i.packing_name,i.packing_name,\"HDPE\")\r\n"
+			+ "ELSE i.packing_name END AS sh_pack,i.mat_wt AS ul_mat_weight,q.qc_date AS qc_date,\r\n"
+			+ "q.MOIS,q.HLW,q.INFES,q.ODOUR,q.STONE,q.POTIA,q.KB,\r\n"
+			+ "g.grn_no,g.grn_date,gi.pssd_mat_wt AS grn_pssd_mat_weight,\r\n"
+			+ "IF(mq.M_MOIS!=\"\",mq.mas_qc_date,\"\") AS mas_qc_date,mq.M_MOIS,mq.M_HLW,mq.M_INFES,mq.M_ODOUR,mq.M_STONE,mq.M_POTIA,mq.M_KB,mq.M_2_5MM,mq.M_OFG,\r\n"
+			+ "mq.M_IDK,mq.M_SVINML,mq.M_BR_SH,mq.M_WETGLUTEN,mq.M_TOTALIMPURITES,mq.M_6MM,\r\n"
+			+ "g.sales_process,IFNULL(d.challan_no,\"NA\") AS challan_no,IFNULL(d.challan_date,\"NA\") AS challan_date,IFNULL(d.partyname,\"NA\") AS partyname,\r\n"
+			+ "IF(gi.warehouse_name=\"MULTIPLE\",'MULTIPLE',wh.warehouse_name) AS warehouse_name,IF(gi.rack=\"0\",\"\",gi.rack) AS stack\r\n"
+			+ "FROM peripheral_qc q\r\n"
+			+ "LEFT JOIN master_qc mq ON q.quality_check_id=mq.quality_check_id\r\n"
+			+ "LEFT JOIN wm_unload_advice w ON q.unloadid=w.unadviceid  AND w.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN wm_unload_advice_item_dtls i ON q.unloadid=i.unadviceid  AND i.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN wm_unload_wgmnt m ON q.unloadid=m.advice AND m.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt g ON g.referance_id=w.unadviceid AND g.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN pur_good_receipt_item_details gi ON gi.grn_id=g.grn_id AND gi.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN delivery_challan d ON g.grn_id=d.referance_id AND d.modified_type='INSERTED' \r\n"
+			+ "LEFT JOIN `warehouse_master` wh ON wh.warehouse_code=gi.warehouse_name AND wh.modified_type='INSERTED' \r\n"
+			+ "WHERE m.tw_date BETWEEN :fromdate AND :todate\r\n"
+			+ "AND g.sales_process=:process\r\n"
+			+ "ORDER BY m.tw_date",nativeQuery = true)
+	List<Map<String, Object>> getWhQCReport(@Param("fromdate") String fromdate,@Param("todate") String todate,@Param("process") String process);
+
 	@Query(value="SELECT CASE WHEN d.rest_wt>=:netwt THEN \"Yes\" ELSE \"No\" END FROM delivery_challan_sales_order_w_tolerance d WHERE d.order_id =:orderid",nativeQuery=true)
 	String getSoRestQtyCheckWithGrn(@Param("orderid") String orderid,@Param("netwt") Double netwt);
 	
