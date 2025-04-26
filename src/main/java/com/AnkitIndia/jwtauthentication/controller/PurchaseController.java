@@ -596,6 +596,12 @@ public class PurchaseController {
 		  return pur_good_receiptService.purchasechecktotaltranslimitupdate(totalamount,supplier_name,finyear,id);
 	}
 	
+	@GetMapping("/getSoRestQtyCheckWithGrn/{orderid}/{advice_id}")
+	public StatusDTO getSoRestQtyCheckWithGrn(@PathVariable(value = "orderid") String orderid,@PathVariable(value = "advice_id") String advice_id)
+	{
+		return pur_good_receiptService.getSoRestQtyCheckWithGrn(orderid,advice_id);
+	}
+	
 	 /*********************************************************************************grn purbill report***********************************/
 	 
 	 

@@ -235,4 +235,8 @@ public interface Pur_good_receiptRepository extends JpaRepository<Pur_good_recei
 			+ "AND g.sales_process=:process\r\n"
 			+ "ORDER BY m.tw_date",nativeQuery = true)
 	List<Map<String, Object>> getWhQCReport(@Param("fromdate") String fromdate,@Param("todate") String todate,@Param("process") String process);
+
+	@Query(value="SELECT CASE WHEN d.rest_wt>=:netwt THEN \"Yes\" ELSE \"No\" END FROM delivery_challan_sales_order_w_tolerance d WHERE d.order_id =:orderid",nativeQuery=true)
+	String getSoRestQtyCheckWithGrn(@Param("orderid") String orderid,@Param("netwt") Double netwt);
+	
 }

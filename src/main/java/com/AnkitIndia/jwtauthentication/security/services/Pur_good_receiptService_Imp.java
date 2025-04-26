@@ -60,6 +60,7 @@ import com.AnkitIndia.jwtauthentication.repository.Tax_code_detailsRepository;
 import com.AnkitIndia.jwtauthentication.repository.UserRepository;
 import com.AnkitIndia.jwtauthentication.repository.VehicleMasterRepository;
 import com.AnkitIndia.jwtauthentication.repository.Wm_unload_adviceRepository;
+import com.AnkitIndia.jwtauthentication.repository.Wm_unload_wgmntRepository;
 import com.AnkitIndia.jwtauthentication.responseDTO.Pur_Order_Pagination_DTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Pur_good_receiptDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Pur_good_receipt_Business_Partner_detailsDTO;
@@ -115,6 +116,9 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 	
 	@Autowired
 	Tax_code_detailsRepository tax_code_detailsRepository;
+	
+	@Autowired
+	Wm_unload_wgmntRepository wm_unload_wgmntRepository;
 	
 	public SequenceIdDTO getGRNSequenceId(String bunit,boolean itype,String ptype,String psubtype,String orderdate)
 	{
@@ -1375,4 +1379,12 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 	 {
 		return pur_good_receiptRepository.getGrnDetailsById(grnid);
 	 }
+	 
+	 public StatusDTO getSoRestQtyCheckWithGrn(String orderid,String advice_id)
+		{
+			StatusDTO grnchk=new StatusDTO();
+			double netwt= wm_unload_wgmntRepository.getNetWt(advice_id);
+			grnchk.setStatus(pur_good_receiptRepository.getSoRestQtyCheckWithGrn(orderid,netwt));
+			return grnchk;
+		}
 }
