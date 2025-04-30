@@ -1,5 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +17,7 @@ public interface Stock_Transfer_Trans_InfoRepository extends JpaRepository<Stock
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Stock_Transfer_Trans_Info s SET s.modified_type ='UPDATED' WHERE s.order_id = :order_id")
     int updateStock_Transfer_Trans_Info(@Param("order_id") String order_id);
+	
+	@Query(value="select * from stock_transfer_trans_info s where s.modified_type = 'INSERTED' and s.order_id = :order_id", nativeQuery = true)
+	Map<String, Object> getStkOrderVehicleNo(@Param("order_id") String order_id);
 }

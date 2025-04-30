@@ -127,6 +127,7 @@ public interface Cust_bussiness_partnerService {
 	
 	public List<Map<String,Object>> getCustomerThruBUnewlist(String bunit);
 	
+	public List<Map<String,Object>> customerNameActiveBlockAllList(String company);
 
 	public List<Map<String,Object>> getChannelPartyList(String group_type,String channeltype);
 

@@ -437,14 +437,14 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 			for(Cust_bussiness_partner_shipping_addr_dtls sa:cSA) 
 			{
 				sa.setCp_Id(gen_sno);
-				System.out.println("DIST SAVE :: "+sa.getDist_code());
-				if(Utility.isNullOrEmpty(sa.getDist_code())) 
+				//System.out.println("DIST SAVE :: "+sa.getDist_code());
+				if(Utility.isNullOrEmpty(sa.getShipping_name())) 
 				{
-					sa.setDist_name(district_masterRepository.getDistrictDtls(sa.getDist_code()).getDist_name());
+					sa.setParty_name(cust_bussiness_partnerRepository.getCustomerName(sa.getShipping_name()).getCp_name());
 				}
 				else 
 				{
-					sa.setDist_name("None");
+					sa.setParty_name("None");
 				}
 				sa.setCompany_id(cPartner.getCompany_id());
 				sa.setFin_year(cPartner.getFin_year());
@@ -831,13 +831,13 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
 		{
 			sa.setCp_Id(iMaster.getCp_Id());
 			System.out.println("Dist : "+ sa.getDist_code());
-			if(Utility.isNullOrEmpty(sa.getDist_code())) 
+			if(Utility.isNullOrEmpty(sa.getShipping_name())) 
 			{
-				sa.setDist_name(district_masterRepository.getDistrictDtls(sa.getDist_code()).getDist_name());
+				sa.setParty_name(cust_bussiness_partnerRepository.getCustomerName(sa.getShipping_name()).getCp_name());
 			}
 			else 
 			{
-				sa.setDist_name("None");
+				sa.setParty_name("None");
 			}
 			sa.setCompany_id(iMaster.getCompany_id());
 			sa.setFin_year(iMaster.getFin_year());
@@ -1756,6 +1756,14 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
  	{
  		List<Map<String,Object>> customerList=new ArrayList <>();
  		customerList.addAll(cust_bussiness_partnerRepository.getCustList(company));
+ 		
+ 		return customerList;
+ 	}
+ 	
+ 	public List<Map<String,Object>> customerNameActiveBlockAllList(String company)
+ 	{
+ 		List<Map<String,Object>> customerList=new ArrayList <>();
+ 		customerList.addAll(cust_bussiness_partnerRepository.customerNameActiveBlockAllList(company));
  		
  		return customerList;
  	}

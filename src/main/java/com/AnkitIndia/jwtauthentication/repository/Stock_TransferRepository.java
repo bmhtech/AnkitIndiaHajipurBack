@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,6 +31,9 @@ public interface Stock_TransferRepository extends JpaRepository<Stock_Transfer, 
 	
 	@Query("select c from Stock_Transfer c where c.modified_type = 'INSERTED' and c.weightment_req='No' and c.stk_grn_status=0")
 	List<Stock_Transfer> getStkTransNew();
+	
+	@Query("select c from Stock_Transfer c where c.modified_type = 'INSERTED' AND c.weightment_req='No' AND (c.stk_grn_status=0 OR c.stk_grn_status IS NULL) AND c.shipment_mode='No Vehicle'")
+	List<Stock_Transfer> getStkTranswtoutVch();
 	
 	@Query("select s from Stock_Transfer s where s.modified_type = 'INSERTED' and s.order_id = :order_id")
 	Stock_Transfer getStockTransDtls(@Param("order_id") String order_id);
@@ -106,5 +110,6 @@ public interface Stock_TransferRepository extends JpaRepository<Stock_Transfer, 
     @Query("UPDATE Stock_Transfer w SET w.stk_grn_status =0 WHERE w.order_id = :refid and w.modified_type ='INSERTED' and w.stk_grn_status =1")
     int revertStockChallanStatus(@Param("refid") String refid);
 	
-	
+	@Query(value="select * from stock_transfer s where s.modified_type = 'INSERTED' and s.order_id = :order_id", nativeQuery = true)
+	Map<String, Object> getstockOrderdetails(@Param("order_id") String order_id);
 }

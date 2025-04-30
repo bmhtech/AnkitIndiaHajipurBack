@@ -10,15 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 
-import com.AnkitIndia.jwtauthentication.model.Cust_bussiness_partner;
 import com.AnkitIndia.jwtauthentication.model.Item_groupwise_taxsumm;
-import com.AnkitIndia.jwtauthentication.model.Process_master_doc;
 import com.AnkitIndia.jwtauthentication.model.Sales_Invoice;
 import com.AnkitIndia.jwtauthentication.model.Sales_Invoice_Item_Dtls_for_jobwork;
-import com.AnkitIndia.jwtauthentication.model.Sales_Invoice_Item_Dtls_for_jobwork_price;
-import com.AnkitIndia.jwtauthentication.model.Sales_Order;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order_Summary_dyn;
-import com.AnkitIndia.jwtauthentication.model.Wm_loading_advice;
 
 public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Long>{
 	
@@ -399,4 +394,59 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
     @Query(value="select s.payable_amt from sales_invoice s where s.modified_type = 'INSERTED' and s.invoice_id =:invoice_id ORDER BY s.invoice_id DESC",nativeQuery=true)
 	double getSalesInvDetailsNew(@Param("invoice_id") String invoice_id);
     
+    @Query(value="SELECT si.invoice_date AS `date`,si.invoice_no AS invoice,dt.vehicle_no AS truck,dc.transport_to AS dispatch_to,si.invoice_date AS dispatch_date,\r\n"
+    		+ "IFNULL(sig.eway_bill_no,si.waybill) AS eway_bill_no,IFNULL(sig.eway_bill_date,'NA') AS eway_bill_date,IFNULL(sig.eway_valid_upto,'NA') AS eway_valid_upto,\r\n"
+    		+ "dt.transporter_name,\"\" AS transport_to,\r\n"
+    		+ "SUM(di.quantity) AS dispatch_qty,\r\n"
+    		+ "IF(dc.`transport_rate`='PER TRUCK',ROUND((dc.`chgs_rate_value`/SUM(di.`quantity`)),2),dc.`chgs_rate_value`) AS trans_rate_per_uom,\r\n"
+    		+ "IF(dc.`transport_rate`='PER UOM',ROUND((dc.`chgs_rate_value`*SUM(di.`quantity`)),2),dc.`chgs_rate_value`) AS trans_rate_per_truck,\r\n"
+    		+ "dt.adv_paid,dt.`trans_borne_by`\r\n"
+    		+ "FROM sales_invoice si\r\n"
+    		+ "LEFT JOIN delivery_challan_trans_info dt ON dt.delivery_cid=si.reference_id AND dt.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN delivery_challan_item_dtls di ON di.delivery_cid=si.reference_id AND di.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN delivery_challan_chgs_dyn dc ON dc.delivery_cid=si.reference_id AND dc.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN sale_invoice_einvoice_gen sig ON sig.invoice_id=si.invoice_id AND sig.modified_type='INSERTED'\r\n"
+    		+ "WHERE si.modified_type='INSERTED'\r\n"
+    		+ "AND si.invoice_no LIKE '%DF%'\r\n"
+    		+ "AND dt.trans_borne_by='FOR'\r\n"
+    		+ "AND si.invoice_date BETWEEN :fromdate AND :todate\r\n"
+    		+ "GROUP BY si.invoice_id",nativeQuery=true)
+    List<Map<String,Object>> getSalesArmyTransportationReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
+    
+    @Query(value="SELECT si.invoice_date AS `date`,si.invoice_no AS invoice,dt.vehicle_no AS truck,dc.transport_to AS dispatch_to,si.invoice_date AS dispatch_date,\r\n"
+    		+ "IFNULL(sig.eway_bill_no,si.waybill) AS eway_bill_no,IFNULL(sig.eway_bill_date,'NA') AS eway_bill_date,IFNULL(sig.eway_valid_upto,'NA') AS eway_valid_upto,\r\n"
+    		+ "dt.transporter_name,\"\" AS transport_to,\r\n"
+    		+ "SUM(di.quantity) AS dispatch_qty,\r\n"
+    		+ "IF(dc.`transport_rate`='PER TRUCK',ROUND((dc.`chgs_rate_value`/SUM(di.`quantity`)),2),dc.`chgs_rate_value`) AS trans_rate_per_uom,\r\n"
+    		+ "IF(dc.`transport_rate`='PER UOM',ROUND((dc.`chgs_rate_value`*SUM(di.`quantity`)),2),dc.`chgs_rate_value`) AS trans_rate_per_truck,\r\n"
+    		+ "dt.adv_paid,dt.`trans_borne_by`\r\n"
+    		+ "FROM sales_invoice si\r\n"
+    		+ "LEFT JOIN delivery_challan_trans_info dt ON dt.delivery_cid=si.reference_id AND dt.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN delivery_challan_item_dtls di ON di.delivery_cid=si.reference_id AND di.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN delivery_challan_chgs_dyn dc ON dc.delivery_cid=si.reference_id AND dc.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN sale_invoice_einvoice_gen sig ON sig.invoice_id=si.invoice_id AND sig.modified_type='INSERTED'\r\n"
+    		+ "WHERE si.modified_type='INSERTED'\r\n"
+    		+ "AND si.invoice_no NOT LIKE '%DF%'\r\n"
+    		+ "AND dt.trans_borne_by='FOR'\r\n"
+    		+ "AND si.invoice_date BETWEEN :fromdate AND :todate \r\n"
+    		+ "GROUP BY si.invoice_id",nativeQuery=true)
+    List<Map<String,Object>> getSalesOtherTransportationReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
+    
+    @Query(value="SELECT si.invoice_date AS `date`,si.invoice_no AS invoice,dt.vehicle_no AS truck,dc.transport_to AS dispatch_to,si.invoice_date AS dispatch_date,\r\n"
+    		+ "IFNULL(sig.eway_bill_no,si.waybill) AS eway_bill_no,IFNULL(sig.eway_bill_date,'NA') AS eway_bill_date,IFNULL(sig.eway_valid_upto,'NA') AS eway_valid_upto,\r\n"
+    		+ "dt.transporter_name,\"\" AS transport_to,\r\n"
+    		+ "SUM(di.quantity) AS dispatch_qty,\r\n"
+    		+ "IF(dc.`transport_rate`='PER TRUCK',ROUND((dc.`chgs_rate_value`/SUM(di.`quantity`)),2),dc.`chgs_rate_value`) AS trans_rate_per_uom,\r\n"
+    		+ "IF(dc.`transport_rate`='PER UOM',ROUND((dc.`chgs_rate_value`*SUM(di.`quantity`)),2),dc.`chgs_rate_value`) AS trans_rate_per_truck,\r\n"
+    		+ "dt.adv_paid,dt.`trans_borne_by`\r\n"
+    		+ "FROM sales_invoice si\r\n"
+    		+ "LEFT JOIN delivery_challan_trans_info dt ON dt.delivery_cid=si.reference_id AND dt.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN delivery_challan_item_dtls di ON di.delivery_cid=si.reference_id AND di.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN delivery_challan_chgs_dyn dc ON dc.delivery_cid=si.reference_id AND dc.modified_type='INSERTED'\r\n"
+    		+ "LEFT JOIN sale_invoice_einvoice_gen sig ON sig.invoice_id=si.invoice_id AND sig.modified_type='INSERTED'\r\n"
+    		+ "WHERE si.modified_type='INSERTED'\r\n"
+    		+ "AND dt.trans_borne_by='FOR'\r\n"
+    		+ "AND si.invoice_date BETWEEN :fromdate AND :todate \r\n"
+    		+ "GROUP BY si.invoice_id",nativeQuery=true)
+    List<Map<String,Object>> getSalesTransportationReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
 }

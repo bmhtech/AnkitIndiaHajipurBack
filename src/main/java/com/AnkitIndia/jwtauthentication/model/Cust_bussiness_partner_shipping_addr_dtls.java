@@ -35,6 +35,9 @@ public class Cust_bussiness_partner_shipping_addr_dtls extends CommonProperties
 	@Column(columnDefinition="varchar(100) default 'NA'")
 	private String shipping_name;
 	
+	@Column(columnDefinition="varchar(100) default 'NA'")
+	private String party_name;
+	
 	@Column(columnDefinition="varchar(20) default 'NA'")
 	private String country_shipping;
 	
@@ -44,9 +47,6 @@ public class Cust_bussiness_partner_shipping_addr_dtls extends CommonProperties
 	@Column(columnDefinition="varchar(30) default 'NA'")
 	private String dist_code; 
 	
-	@Column(columnDefinition="varchar(100) default 'NA'")
-	private String dist_name;
-	
 	@Column(columnDefinition="varchar(50) default 'NA'")
 	private String city;
 	
@@ -55,6 +55,9 @@ public class Cust_bussiness_partner_shipping_addr_dtls extends CommonProperties
 	
 	@Column(columnDefinition="varchar(500) default 'NA'")
 	private String address;
+	
+	@Column(columnDefinition="varchar(30) default 'NA'")
+	private String ship_gst;
 	
 	@ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "cbp_Id")
