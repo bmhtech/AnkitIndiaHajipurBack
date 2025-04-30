@@ -102,6 +102,9 @@ public interface Cust_bussiness_partnerRepository extends JpaRepository<Cust_bus
 	@Query(value="select c.cp_Id,c.cp_code,c.cp_name from cust_bussiness_partner c where c.modified_type='INSERTED' and c.cp_active='1' and c.company_id=:company", nativeQuery=true)
 	List<Map<String,Object>> getCustList(@Param("company") String company);
 	
+	@Query(value="select c.cp_Id,c.cp_code,c.cp_name from cust_bussiness_partner c where c.modified_type='INSERTED' and c.company_id=:company", nativeQuery=true)
+	List<Map<String,Object>> customerNameActiveBlockAllList(@Param("company") String company);
+	
 	@Query(value="select c.cp_Id,c.cp_code,c.cp_name from cust_bussiness_partner c where c.modified_type='INSERTED' and c.cp_active='1' and c.group_type=:group_type", nativeQuery=true)
 	List<Map<String,Object>> getCustChannelList(@Param("group_type") String group_type);
 	

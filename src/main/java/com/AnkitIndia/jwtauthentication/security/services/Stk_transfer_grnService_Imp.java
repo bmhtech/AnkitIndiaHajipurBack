@@ -17,6 +17,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.AnkitIndia.Utility.Utility;
 import com.AnkitIndia.generators.UniqueID;
 import com.AnkitIndia.generators.UniqueIDTransaction;
 import com.AnkitIndia.jwtauthentication.model.Stk_Transfer_Challan;
@@ -150,9 +151,15 @@ public class Stk_transfer_grnService_Imp implements Stk_transfer_grnService {
 			sGrn.setB_unitname(companyBusinessUnitMasterRepository.CompanyBUAddress(sGrn.getB_unit()).getBusinessunit_name());
 		}else {sGrn.setB_unit("None");}
 		
-		if(sGrn.getVehicle_id().compareTo("0") !=0 && sGrn.getVehicle_id().compareTo("") !=0 && sGrn.getVehicle_id() !=null) {
+		if(sGrn.getVehicle_id().compareToIgnoreCase("No Vehicle") == 0) {
+			sGrn.setVehicle_no("No Vehicle");
+		}
+		else {
+			if(sGrn.getVehicle_id().compareTo("0") !=0 && sGrn.getVehicle_id().compareTo("") !=0 && sGrn.getVehicle_id() !=null) {
 			sGrn.setVehicle_no(vehicleMasterRepository.getVehicleDetails(sGrn.getVehicle_id()).getVehicle_no());
-		}else {sGrn.setVehicle_no("None");}
+			}else {sGrn.setVehicle_no("None");}
+		}
+		
 		
 		if(sGrn.getReference_status().compareToIgnoreCase("Stock Transfer")==0)
 		{
@@ -185,11 +192,24 @@ public class Stk_transfer_grnService_Imp implements Stk_transfer_grnService {
 			if(sItem_dtls.getAdv_packing().compareTo("")!=0 && sItem_dtls.getAdv_packing().compareTo("0")!=0) {
 				sItem_dtls.setAdv_packing_name(item_masterRepository.itemNameById(sItem_dtls.getAdv_packing()).getItem_name());
 			}
-			if(sItem_dtls.getWarehouse().compareTo("")!=0 && sItem_dtls.getWarehouse().compareTo("0")!=0) {
+			if(Utility.isNullOrEmpty(sItem_dtls.getWarehouse())) {
+				if(sItem_dtls.getWarehouse().compareTo("")!=0 && sItem_dtls.getWarehouse().compareTo("0")!=0) {
 				sItem_dtls.setWarehouse_name(warehouseMasterRepository.getWarehouseDetails(sItem_dtls.getWarehouse()).getWarehouse_name());
+				}
 			}
-			if(sItem_dtls.getRack().compareTo("")!=0 && sItem_dtls.getRack().compareTo("0")!=0) {
+			else {
+				sItem_dtls.setWarehouse("0");
+				sItem_dtls.setWarehouse_name("NA");
+			}
+			
+			if(Utility.isNullOrEmpty(sItem_dtls.getRack())) {
+				if(sItem_dtls.getRack().compareTo("")!=0 && sItem_dtls.getRack().compareTo("0")!=0) {
 				sItem_dtls.setRack_name(binMasterRepository.getBinDesc(sItem_dtls.getRack()).getBin_description());
+				}
+			}
+			else {
+				sItem_dtls.setRack("0");
+				sItem_dtls.setRack_name("NA");
 			}
 			
 			sItem_dtls.setCompany_id(sGrn.getCompany_id());

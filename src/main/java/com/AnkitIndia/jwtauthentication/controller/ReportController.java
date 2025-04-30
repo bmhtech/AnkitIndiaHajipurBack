@@ -2247,4 +2247,14 @@ public class ReportController {
 			}
 			/* QC REPORTS API ENDS */
 			
+			/* ANKIT INDIA REPORT STARTS */
+			@GetMapping("/getSalesTransportationReport/{fromdate}/{todate}/{trans_to}")
+			public List<Map<String, Object>> getSalesTransportationReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate,
+															  @PathVariable(value = "trans_to") String trans_to)
+			{
+				return sales_invoiceService.getSalesTransportationReport(fromdate,todate,trans_to);
+			}
+			/* ANKIT INDIA REPORT ENDS */
+			
 }

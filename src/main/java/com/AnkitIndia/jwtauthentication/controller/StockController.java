@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -902,5 +903,40 @@ public class StockController {
 		return stk_transfer_sales_invService.getStockSaleInvTaxSum(stk_sales_inv_id);
 	}
 	
+	/* STOCK TRANSFER ORDER TO GRN STARTS */
+
+	@GetMapping(value = "/getStkTranswtoutVch")
+	public ResponseEntity<List<Stock_TransferDTO>> getStkTranswtoutVch() 
+	{
+		List<Stock_TransferDTO> val=stock_Transfer_Service.getStkTranswtoutVch();
+		if(val==null)
+		{
+			return ResponseEntity.notFound().build();
+		}
+		else
+		{
+			return ResponseEntity.ok().body(val);
+		}
+	}
+	
+	@GetMapping("/getstockOrderdetails/{stockTransOrder_id}")
+	public Map<String, Object> getstockOrderdetails(@PathVariable(value = "stockTransOrder_id") String stockTransOrder_id)
+	{
+		return stock_Transfer_Service.getstockOrderdetails(stockTransOrder_id);
+	}
+	
+	@GetMapping("/getStkOrderVehicleNo/{stockTransOrder_id}")
+	public Map<String, Object> getStkOrderVehicleNo(@PathVariable(value = "stockTransOrder_id") String stockTransOrder_id)
+	{
+		return stock_Transfer_Service.getStkOrderVehicleNo(stockTransOrder_id);
+	}
+	
+	@GetMapping("/getStkTransOrderItemDlts/{stockTransOrder_id}")
+	public  List<Map<String, Object>> getStkTransOrderItemDlts(@PathVariable(value = "stockTransOrder_id") String stockTransOrder_id)
+	{
+		return stock_Transfer_Service.getStkTransOrderItemDlts(stockTransOrder_id);
+	}
+	
+	/* STOCK TRANSFER ORDER TO GRN ENDS */
 }
 
