@@ -58,8 +58,16 @@ public class Stk_transfer_grnDTO {
 	
 	private String  rec_b_unit;
 	
+	private String ref_type;
 	
-	
+	public String getRef_type() {
+		return ref_type;
+	}
+
+	public void setRef_type(String ref_type) {
+		this.ref_type = ref_type;
+	}
+
 	public String getRec_b_unit() {
 		return rec_b_unit;
 	}

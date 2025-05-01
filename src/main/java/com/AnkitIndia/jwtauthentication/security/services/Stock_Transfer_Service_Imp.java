@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.lang.reflect.Type;
@@ -594,6 +595,11 @@ public class Stock_Transfer_Service_Imp implements Stock_Transfer_Service{
 			return desc;
 		}
 		
+		public List<Map<String, Object>> getStkTranswtoutVch(){
+			List<Map<String, Object>> modelList=stock_TransferRepository.getStkTranswtoutVch();
+			return modelList;
+		}
+		
 		public Stock_TransferDTO getStockTransDtls(String order_id){
 			Stock_Transfer modelList=stock_TransferRepository.getStockTransDtls(order_id);
 			
@@ -671,7 +677,14 @@ public class Stock_Transfer_Service_Imp implements Stock_Transfer_Service{
 			List<Stock_Transfer_Item_DtlsDTO> stkTrItmDtls=new ModelMapper().map(modelList,listType);
 			
 			return stkTrItmDtls;
-		}	
+		}
+		
+		public List<Map<String, Object>> getStockTransItemDltsArmy(String order_id)
+		{
+			List<Map<String, Object>> modelList=stock_Transfer_Item_DtlsRepository.getStockTransItemDltsArmy(order_id);
+			
+			return modelList;
+		}
 		
 		public List<Stock_transfer_resource_costDTO> getStockTransReCost(String order_id)
 		{
@@ -837,5 +850,17 @@ public class Stock_Transfer_Service_Imp implements Stock_Transfer_Service{
 		}
 		
 		return orderdetails;
+	}
+	
+	public Map<String, Object> getstockOrderdetails(String stockTransOrder_id){
+		return stock_TransferRepository.getstockOrderdetails(stockTransOrder_id);
+	}
+	
+	public Map<String, Object> getStkOrderVehicleNo(String stockTransOrder_id){
+		return stock_Transfer_Trans_InfoRepository.getStkOrderVehicleNo(stockTransOrder_id);
+	}
+	
+	public  List<Map<String, Object>> getStkTransOrderItemDlts(String stockTransOrder_id){
+		return stock_Transfer_Item_DtlsRepository.getStkTransOrderItemDlts(stockTransOrder_id);
 	}
 }

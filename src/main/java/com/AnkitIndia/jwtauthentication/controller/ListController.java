@@ -1818,6 +1818,11 @@ public class ListController {
 		return cust_bussiness_partnerService.customerNameCodeListnew(company);
 	}
 	
+	@GetMapping("/customerNameActiveBlockAllList/{comp}")
+	public List<Map<String, Object>> customerNameActiveBlockAllList(@PathVariable("comp") String comp)
+	{
+		return cust_bussiness_partnerService.customerNameActiveBlockAllList(comp);
+	}
 	
 	@GetMapping("/customerList")
 	public List<Cust_bussiness_partnerDTOC> customerList(@RequestParam("company") String company)

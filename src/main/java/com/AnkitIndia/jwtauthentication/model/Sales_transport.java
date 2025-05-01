@@ -173,6 +173,9 @@ public class Sales_transport extends CommonProperties {
 	@Column(columnDefinition="varchar(10) default 'NA'")
 	private String bulksupply;
 	
+	@Column(columnDefinition="varchar(500) default 'NA'")
+	private String del_remarks;
+	
 	@OneToMany(fetch = FetchType.EAGER,mappedBy="sales_transport",cascade = CascadeType.ALL)
 	private Set<Salestransport_app_chgs> salestransport_app_chgs;
 }

@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.security.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.AnkitIndia.jwtauthentication.model.Sales_Enquiry;
 import com.AnkitIndia.jwtauthentication.model.Sales_Order;
@@ -31,6 +32,8 @@ public interface Stock_Transfer_Service {
 	
 	public List<Stock_TransferDTO> getStkTrans();
 	
+	public List<Map<String, Object>> getStkTranswtoutVch();
+	
 	public Stock_TransferDTO getStockTransDtls(String order_id);
 	
 	public List<Stock_TransferDTO> getStockTransThruInter();
@@ -44,6 +47,8 @@ public interface Stock_Transfer_Service {
 	public List<Stock_Transfer_Summary_dynDTO> getStkTraSumDyn(String order_id);
 	
 	public List<Stock_Transfer_Item_DtlsDTO> getStockTransItemDlts(String order_id);
+	
+	public List<Map<String, Object>> getStockTransItemDltsArmy(String order_id);
 	
 	public List<Stock_transfer_resource_costDTO> getStockTransReCost(String order_id);
 	
@@ -60,5 +65,11 @@ public interface Stock_Transfer_Service {
 	public Stock_Transfer getOrderNumberForChallan(String ref_id,String ref_type);
 	
 	public Stock_Transfer getStockOrdByUnloadCode(String reference_id,String reference_status);
+	
+	public Map<String, Object> getstockOrderdetails(String stockTransOrder_id);
+	
+	public Map<String, Object> getStkOrderVehicleNo(String stockTransOrder_id);
+	
+	public  List<Map<String, Object>> getStkTransOrderItemDlts(String stockTransOrder_id);
 	
 }

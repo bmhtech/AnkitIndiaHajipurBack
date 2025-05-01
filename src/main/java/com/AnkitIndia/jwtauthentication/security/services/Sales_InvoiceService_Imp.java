@@ -4029,4 +4029,17 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		 {
 			return delivery_challanRepository.getGatepassByChallan(challan);
          }
+		 
+		 public List<Map<String, Object>> getSalesTransportationReport(String fromdate,String todate,String trans_to)
+		 {
+			 if(trans_to.compareToIgnoreCase("Army") == 0) {
+				 return sales_InvoiceRepository.getSalesArmyTransportationReport(fromdate,todate);
+			 }
+			 else if(trans_to.compareToIgnoreCase("Other") == 0) {
+				 return sales_InvoiceRepository.getSalesOtherTransportationReport(fromdate,todate);
+			 }
+			 else {
+				 return sales_InvoiceRepository.getSalesTransportationReport(fromdate,todate);
+			 }
+		 }
 }

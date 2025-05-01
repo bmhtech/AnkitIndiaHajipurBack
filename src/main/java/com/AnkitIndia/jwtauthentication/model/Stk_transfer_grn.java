@@ -77,6 +77,9 @@ public class Stk_transfer_grn extends CommonProperties{
 	@Column(columnDefinition="varchar(50) default '0'")
 	private String receipt_criteria;
 	
+	@Column(columnDefinition="varchar(50) default 'NA'")
+	private String ref_type;
+	
 	private int stk_pur_inv_status;
 	
 	@Column(columnDefinition="varchar(50) default '0'")

@@ -1820,6 +1820,15 @@ public class ReportController {
 			return ResponseEntity.ok().body(op);
 		}
 		
+		@PutMapping("/deleteSalesTransport/{id}/{reason}")
+		public ResponseEntity<Sales_transport> deletePurchaseQualityCheck(@Valid @RequestBody Sales_transport sales_transport,
+																		  @PathVariable(value="id") Long id,
+																		  @PathVariable(value="reason") String reason)
+		{
+			Sales_transport deleteST=sales_transportService.delete(sales_transport,id,reason);
+			return ResponseEntity.ok().body(deleteST);
+		}
+		
 		/*@GetMapping("/getSalesTransactionReport/{fromdate}/{todate}")
 		public List<Map<String, Object>> getSalesTransactionReport(@PathVariable(value = "fromdate") String fromdate,@PathVariable(value = "todate") String todate)
 		{
@@ -2229,13 +2238,23 @@ public class ReportController {
 				return pur_BillService.getWhPeriQCReport(fromdate,todate);
 			}
 			
-			@GetMapping("/getWhQCReport/{fromdate}/{todate}/{basedon}")
+			@GetMapping("/getWhQCReport/{fromdate}/{todate}/{process}")
 			public List<Map<String, Object>> getWhQCReport(@PathVariable(value = "fromdate") String fromdate,
 															  @PathVariable(value = "todate") String todate,
-															  @PathVariable(value = "basedon") String basedon)
+															  @PathVariable(value = "process") String process)
 			{
-				return pur_BillService.getWhQCReport(fromdate,todate,basedon);
+				return pur_BillService.getWhQCReport(fromdate,todate,process);
 			}
 			/* QC REPORTS API ENDS */
+			
+			/* ANKIT INDIA REPORT STARTS */
+			@GetMapping("/getSalesTransportationReport/{fromdate}/{todate}/{trans_to}")
+			public List<Map<String, Object>> getSalesTransportationReport(@PathVariable(value = "fromdate") String fromdate,
+															  @PathVariable(value = "todate") String todate,
+															  @PathVariable(value = "trans_to") String trans_to)
+			{
+				return sales_invoiceService.getSalesTransportationReport(fromdate,todate,trans_to);
+			}
+			/* ANKIT INDIA REPORT ENDS */
 			
 }

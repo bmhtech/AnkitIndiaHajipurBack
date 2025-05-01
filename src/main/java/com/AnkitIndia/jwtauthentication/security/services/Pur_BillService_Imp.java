@@ -2299,14 +2299,14 @@ public class Pur_BillService_Imp implements Pur_BillService{
 				return pur_BillRepository.getWhPeriQCReport(fromdate, todate);//based on unloadadvice
 		}
 		
-		public List<Map<String, Object>> getWhQCReport(String fromdate, String todate, String basedon) {
-			if(basedon.compareToIgnoreCase("Unload Advice")==0)
+		public List<Map<String, Object>> getWhQCReport(String fromdate, String todate, String process) {
+			if(process.compareToIgnoreCase("All")==0)
 			{
-				return pur_BillRepository.getWhQCReportUnloadAdvice(fromdate, todate);
+				return pur_good_receiptRepository.getAllWhQCReport(fromdate, todate);
 			}
 			else
 			{
-				return pur_BillRepository.getWhQCReport(fromdate, todate);//based on grn
+				return pur_good_receiptRepository.getWhQCReport(fromdate, todate, process);//based on process
 			}
 		}
 	 	
