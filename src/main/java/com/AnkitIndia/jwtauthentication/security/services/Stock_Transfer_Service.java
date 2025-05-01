@@ -32,7 +32,7 @@ public interface Stock_Transfer_Service {
 	
 	public List<Stock_TransferDTO> getStkTrans();
 	
-	public List<Stock_TransferDTO> getStkTranswtoutVch();
+	public List<Map<String, Object>> getStkTranswtoutVch();
 	
 	public Stock_TransferDTO getStockTransDtls(String order_id);
 	
@@ -47,6 +47,8 @@ public interface Stock_Transfer_Service {
 	public List<Stock_Transfer_Summary_dynDTO> getStkTraSumDyn(String order_id);
 	
 	public List<Stock_Transfer_Item_DtlsDTO> getStockTransItemDlts(String order_id);
+	
+	public List<Map<String, Object>> getStockTransItemDltsArmy(String order_id);
 	
 	public List<Stock_transfer_resource_costDTO> getStockTransReCost(String order_id);
 	
