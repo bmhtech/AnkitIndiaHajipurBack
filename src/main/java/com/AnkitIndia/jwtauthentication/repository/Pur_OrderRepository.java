@@ -77,6 +77,22 @@ public interface Pur_OrderRepository extends JpaRepository<Pur_Order, Long> {
 	@Query(value= "SELECT p.* FROM pur_order p,pur_order_view q,pur_order_termination t WHERE p.pur_orderid = q.pur_orderid AND p.pur_orderid = t.pur_orderid AND q.rest_wt !=0 AND p.sup_channel_list like %:suppid% and p.advice_req='Yes' and p.po_status ='Open' and p.modified_type = 'INSERTED' and p.businessunit = :businessunit and p.tagadvice_status = 'No' and p.unload_status=0 AND t.term_pur_ord='0'", nativeQuery=true)
 	List<Pur_Order> getPurOrdAdvThruSupp(@Param("suppid") String suppid,@Param("businessunit") String businessunit);
 	
+	@Query(value= "SELECT \r\n"
+			+ "p.id,p.company_id,p.deleted_by,p.deleted_on,p.fin_year,p.inserted_by,p.inserted_on,p.modified_type,p.updated_by,p.updated_on,p.username,\r\n"
+			+ "p.advice_req,p.app_chgs_id,p.app_remarks,p.approved,p.broker_info,p.brokerage_active,p.businessunit,p.businessunit_name,p.cal_no_of_advice,\r\n"
+			+ "p.cin_no,p.close_date,p.confirmed_by,p.grn_status,p.gst_no,p.madvice_sin_grn,p.master_roll_required,p.no_of_advice,p.ord_date,p.pan_no,\r\n"
+			+ "p.passing_wt,p.pay_to_addr,p.pay_to_addr_id,p.po_fullfillment,p.po_status,p.pref_doc_no,p.pur_ord_type,p.pur_order_no,p.pur_orderid,p.reason,\r\n"
+			+ "p.receipt_criteria,p.referance_id,p.referance_type,p.remarks,p.ser_item_subtype,p.ser_item_subtype_name,p.ser_item_type,p.ship_to_addr,\r\n"
+			+ "p.ship_to_addr_id,p.staticuom,p.supplier,p.supplier_name,p.tagadvice_status,p.tan_no,IFNULL(q.rest_wt,p.total_qty) AS total_qty,p.total_qty_copy,\r\n"
+			+ "p.unload_status,p.weightment_req,p.orddate,p.purorderno,p.pur_return_status,p.purreturnid,p.channel_req,p.sup_channel,p.sup_channel_list,\r\n"
+			+ "p.poitemnumber,p.consignment_type,p.trans_borne_by_chgs,p.document_no,p.store_charges,p.store_charges_name,p.location,\r\n"
+			+ "p.store_type,p.give_order_person,p.print_po,p.requi_status,p.lieu_pur_order,p.requi_check_remarks,p.requi_checkpoint,\r\n"
+			+ "IF(p.channel_req='Yes',(SELECT cm.channel_desc FROM channel_customer_master cm WHERE cm.modified_type != 'DELETED' AND cm.channel_custid=p.sup_channel),\"NA\") AS sup_channel_name\r\n"
+			+ "FROM pur_order p,pur_order_view q,pur_order_termination t WHERE p.pur_orderid = q.pur_orderid \r\n"
+			+ "AND p.pur_orderid = t.pur_orderid AND q.rest_wt !=0 AND p.sup_channel_list LIKE %:suppid% AND p.advice_req='Yes' \r\n"
+			+ "AND p.po_status ='Open' AND p.modified_type = 'INSERTED' AND t.modified_type = 'INSERTED' AND p.modified_type=t.modified_type \r\n"
+			+ "AND p.businessunit = :businessunit AND p.tagadvice_status = 'No' AND p.unload_status=0 AND t.term_pur_ord='0'", nativeQuery=true)
+	List<Map<String,Object>> getPurOrdAdvThruSuppFast(@Param("suppid") String suppid,@Param("businessunit") String businessunit);
 	
 	//@Query("select p from Pur_Order p where p.advice_req='No' and p.po_status ='Open' and p.modified_type = 'INSERTED' and p.businessunit = :businessunit and p.ser_item_subtype =:pur_type")
 	//@Query("select p from Pur_Order p where p.advice_req='No' and p.po_status ='Open' and p.modified_type = 'INSERTED' and p.businessunit = :businessunit and p.ser_item_subtype =:pur_type and p.grn_status =0")

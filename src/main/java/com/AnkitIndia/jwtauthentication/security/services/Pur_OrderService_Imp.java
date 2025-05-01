@@ -1817,6 +1817,11 @@ public class Pur_OrderService_Imp implements Pur_OrderService {
 			return ordList;
 		}
 		
+		public List<Map<String,Object>> getPurOrdAdvThruSuppFast(String suppid,String businessunit)
+		{
+			return pur_OrderRepository.getPurOrdAdvThruSuppFast(suppid,businessunit);
+		}
+		
 		public List<Pur_OrderDTO> getGrnThroughPurOrd(String businessunit,String pur_type)
 		{
 			//System.out.println("businessunit...."+businessunit+"pur_type:"+pur_type);

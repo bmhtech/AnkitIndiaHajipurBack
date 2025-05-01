@@ -2994,6 +2994,12 @@ public class ListController {
 			return pur_OrderService.getPurOrdAdvThruSupp(suppid,businessunit);
 		}
 		
+		@GetMapping("/getPurOrdAdvThruSuppFast/{suppid}/{businessunit}")
+		public List<Map<String,Object>> getPurOrdAdvThruSuppFast(@PathVariable(value = "suppid") String suppid,@PathVariable(value = "businessunit") String businessunit)
+		{
+			return pur_OrderService.getPurOrdAdvThruSuppFast(suppid,businessunit);
+		}
+		
 		@GetMapping("/getGrnThroughPurOrd/{businessunit}/{pur_type}")
 		public List<Pur_OrderDTO> getGrnThroughPurOrd(@PathVariable(value = "businessunit") String businessunit,@PathVariable(value = "pur_type") String pur_type)
 		{
