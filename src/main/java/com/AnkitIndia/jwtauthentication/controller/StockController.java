@@ -298,6 +298,12 @@ public class StockController {
 		return stock_Transfer_Service.getStockTransItemDlts(order_id);
 	}
 	
+	@GetMapping("/getStockTransItemDltsArmy/{order_id}")
+	public List<Map<String, Object>> getStockTransItemDltsArmy(@PathVariable(value = "order_id") String order_id)
+	{
+		return stock_Transfer_Service.getStockTransItemDltsArmy(order_id);
+	}
+	
 	@GetMapping("/getStockTransReCost/{order_id}")
 	public List<Stock_transfer_resource_costDTO> getStockTransReCost(@PathVariable(value = "order_id") String order_id)
 	{
@@ -906,17 +912,10 @@ public class StockController {
 	/* STOCK TRANSFER ORDER TO GRN STARTS */
 
 	@GetMapping(value = "/getStkTranswtoutVch")
-	public ResponseEntity<List<Stock_TransferDTO>> getStkTranswtoutVch() 
+	public List<Map<String, Object>> getStkTranswtoutVch()
 	{
-		List<Stock_TransferDTO> val=stock_Transfer_Service.getStkTranswtoutVch();
-		if(val==null)
-		{
-			return ResponseEntity.notFound().build();
-		}
-		else
-		{
-			return ResponseEntity.ok().body(val);
-		}
+		List<Map<String, Object>> val=stock_Transfer_Service.getStkTranswtoutVch();
+		return val;
 	}
 	
 	@GetMapping("/getstockOrderdetails/{stockTransOrder_id}")

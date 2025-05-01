@@ -32,8 +32,9 @@ public interface Stock_TransferRepository extends JpaRepository<Stock_Transfer, 
 	@Query("select c from Stock_Transfer c where c.modified_type = 'INSERTED' and c.weightment_req='No' and c.stk_grn_status=0")
 	List<Stock_Transfer> getStkTransNew();
 	
-	@Query("select c from Stock_Transfer c where c.modified_type = 'INSERTED' AND c.weightment_req='No' AND (c.stk_grn_status=0 OR c.stk_grn_status IS NULL) AND c.shipment_mode='No Vehicle'")
-	List<Stock_Transfer> getStkTranswtoutVch();
+	//@Query(value="select * from stock_transfer c where c.modified_type = 'INSERTED' AND c.weightment_req='No' AND (c.stk_grn_status=0 OR c.stk_grn_status IS NULL) AND c.shipment_mode='No Vehicle'", nativeQuery=true)
+	@Query(value="SELECT c.* FROM stock_transfer c LEFT JOIN stock_grn_stock_transfer_rest_wt str ON str.order_id = c.order_id WHERE c.modified_type = 'INSERTED' AND c.weightment_req = 'No' AND (c.stk_grn_status = 0 OR c.stk_grn_status IS NULL) AND c.shipment_mode = 'No Vehicle' GROUP BY c.order_id HAVING COUNT(CASE WHEN str.stock_item_status = 'Open' THEN 1 END) > 0", nativeQuery=true)
+	List<Map<String, Object>> getStkTranswtoutVch();
 	
 	@Query("select s from Stock_Transfer s where s.modified_type = 'INSERTED' and s.order_id = :order_id")
 	Stock_Transfer getStockTransDtls(@Param("order_id") String order_id);

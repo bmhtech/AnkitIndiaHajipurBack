@@ -595,14 +595,9 @@ public class Stock_Transfer_Service_Imp implements Stock_Transfer_Service{
 			return desc;
 		}
 		
-		public List<Stock_TransferDTO> getStkTranswtoutVch(){
-			List<Stock_Transfer> modelList=stock_TransferRepository.getStkTranswtoutVch();
-			
-			Type listType=new TypeToken<List<Stock_TransferDTO>>() {}.getType();
-			
-			List<Stock_TransferDTO> desc=new ModelMapper().map(modelList, listType);
-			
-			return desc;
+		public List<Map<String, Object>> getStkTranswtoutVch(){
+			List<Map<String, Object>> modelList=stock_TransferRepository.getStkTranswtoutVch();
+			return modelList;
 		}
 		
 		public Stock_TransferDTO getStockTransDtls(String order_id){
@@ -682,7 +677,14 @@ public class Stock_Transfer_Service_Imp implements Stock_Transfer_Service{
 			List<Stock_Transfer_Item_DtlsDTO> stkTrItmDtls=new ModelMapper().map(modelList,listType);
 			
 			return stkTrItmDtls;
-		}	
+		}
+		
+		public List<Map<String, Object>> getStockTransItemDltsArmy(String order_id)
+		{
+			List<Map<String, Object>> modelList=stock_Transfer_Item_DtlsRepository.getStockTransItemDltsArmy(order_id);
+			
+			return modelList;
+		}
 		
 		public List<Stock_transfer_resource_costDTO> getStockTransReCost(String order_id)
 		{
