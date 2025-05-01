@@ -127,6 +127,8 @@ public interface Pur_OrderService {
 	 
 	 public List<Pur_OrderDTO> getPurOrdAdvThruSupp(String suppid,String businessunit);
 	 
+	 public List<Map<String,Object>> getPurOrdAdvThruSuppFast(String suppid,String businessunit);
+	 
 	 public List<Pur_OrderDTO> getGrnThroughPurOrd(String businessunit,String pur_type);
 	 
 	 public List<Pur_OrderDTO> getGrnThroughPurOrdstore(String businessunit,String pur_type);
