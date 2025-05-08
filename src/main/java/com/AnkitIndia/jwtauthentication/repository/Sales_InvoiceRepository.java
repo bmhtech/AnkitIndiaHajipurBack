@@ -449,4 +449,7 @@ public interface Sales_InvoiceRepository extends JpaRepository<Sales_Invoice, Lo
     		+ "AND si.invoice_date BETWEEN :fromdate AND :todate \r\n"
     		+ "GROUP BY si.invoice_id",nativeQuery=true)
     List<Map<String,Object>> getSalesTransportationReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
+    
+    @Query(value="SELECT c.* FROM sales_order c LEFT JOIN sales_order_sales_invoice_rest_wt s ON s.order_no = c.order_no WHERE c.modified_type = 'INSERTED' AND c.terminate =0 GROUP BY c.order_id HAVING COUNT(CASE WHEN s.sales_item_status = 'Open' THEN 1 END) > 0",nativeQuery = true)
+    List<Map<String,Object>> getSoSiList();
 }

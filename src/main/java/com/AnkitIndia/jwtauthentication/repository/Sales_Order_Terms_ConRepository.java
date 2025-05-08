@@ -1,5 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
+import java.util.Map;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +13,9 @@ public interface Sales_Order_Terms_ConRepository extends JpaRepository<Sales_Ord
 	
 	@Query( "select s from Sales_Order_Terms_Con s where s.modified_type = 'INSERTED' and s.order_id =:order_id ")
 	Sales_Order_Terms_Con getSalesOrdTermsCon(@Param("order_id") String order_id);
+	
+	@Query(value="select s.* from sales_order_terms_con s where s.modified_type = 'INSERTED' and s.order_id =:order_id ",nativeQuery = true)
+	Map<String,Object> getSalesOrdTermsConFast(@Param("order_id") String order_id);
 	
 	@Modifying(clearAutomatically = true)
     @Query("UPDATE Sales_Order_Terms_Con w SET w.modified_type =:mstatus WHERE w.order_id = :order_id")

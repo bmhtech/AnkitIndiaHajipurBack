@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -579,5 +580,20 @@ public class Stk_transfer_grnService_Imp implements Stk_transfer_grnService {
 		return purstk;
 		
 	}
-
+	
+	public Map<String,Object> getStkTransferGrnRestQty(String orderid,String item,String packing)
+	{
+		return stk_transfer_grnRepository.getStkTransferGrnRestQty(orderid,item,packing);
+	}
+	
+	public List<Map<String,Object>> getStkTranGrnsFast(String comp,String fyear)
+	{
+		return stk_transfer_grnRepository.getStkTranGrnsFast(comp,fyear);
+	}
+	
+	public Map<String,Object> getSalesInvFromStkTransGrn(String stk_grn_id)
+	{
+		return stk_transfer_grn_item_detailsRepository.getSalesInvFromStkTransGrn(stk_grn_id);
+	}
+	
 }

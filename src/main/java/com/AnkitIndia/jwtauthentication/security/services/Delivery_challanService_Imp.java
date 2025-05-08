@@ -2497,4 +2497,13 @@ public List<Delivery_challanDTO> getMultipleDelvChallansApp(String party,String 
 		return pur_good_receiptRepository.getGrndetailsforWeighment(grnid,company);
 	 }
 	 
+	 @Transactional
+	 public StatusDTO updateGatepass(Long id,String gatepass)
+	 {
+		StatusDTO result = new StatusDTO();
+		dChallanRepository.updateGatepass(id,gatepass);
+		result.setStatus("Yes");
+		return result;
+	 }
+	 
 }

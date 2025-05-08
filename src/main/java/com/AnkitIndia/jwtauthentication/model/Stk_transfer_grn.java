@@ -85,6 +85,9 @@ public class Stk_transfer_grn extends CommonProperties{
 	@Column(columnDefinition="varchar(50) default '0'")
 	private String rec_b_unit;
 	
+	@Column(columnDefinition="varchar(20) default 'No'")
+	private String sale_inv_status;
+	
 	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "stc_id")
 	private Stk_Transfer_Challan stk_Transfer_Challan;

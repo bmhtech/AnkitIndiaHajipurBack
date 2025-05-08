@@ -109,6 +109,7 @@ import com.AnkitIndia.jwtauthentication.repository.Sales_Invoice_Shipment_DtlsRe
 import com.AnkitIndia.jwtauthentication.repository.Sales_Invoice_Tax_InfoRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sales_Invoice_Trans_DtlsRepository;
 import com.AnkitIndia.jwtauthentication.repository.Sales_OrderRepository;
+import com.AnkitIndia.jwtauthentication.repository.Stk_transfer_grnRepository;
 import com.AnkitIndia.jwtauthentication.repository.SubgroupmasterRepository;
 import com.AnkitIndia.jwtauthentication.repository.Tax_code_detailsRepository;
 import com.AnkitIndia.jwtauthentication.repository.Trans_bussiness_partnerRepository;
@@ -265,6 +266,9 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	
 	@Autowired
 	CompanyMasterRepository companyMasterRepository;
+	
+	@Autowired
+	Stk_transfer_grnRepository stk_transfer_grnRepository;
 	
 	@Autowired
 	Pur_good_receiptRepository pur_good_receiptRepository;
@@ -645,6 +649,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		sinvoice.setState(cust_bussiness_partnerRepository.gettallycreditnotestate(sinvoice.getParty()).getState());
 		sinvoice.setReturn_approval_status("NO");
 		
+		
 		// GST STATUS Wheather PARTY Resgistered or Not
 		if(Utility.isNullOrEmpty(cust_bussiness_partnerRepository.getInvCustBPGstStatus(sinvoice.getParty())))		
 		{
@@ -658,12 +663,19 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 	//here advice no added in sales invoice through delivery challan 
 		if(sinvoice.getChallan().compareToIgnoreCase("Single")==0) 
 		{
-			String reftype=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getRef_type(); //Bypass for GRN to direct Delivery Challan
-			if(reftype.compareTo("Loading Advice")==0) {
-				String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
-				sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
-			}else {sinvoice.setAdviceno("NA");}
-			
+			if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00006")==0) // For Invoice type sales order bran loosefor by bags
+			{
+				stk_transfer_grnRepository.updateInvoiceStatus(sinvoice.getReference_id(),"Yes");
+				sinvoice.setAdviceno("NA");
+			}
+			else {
+				
+				String reftype=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getRef_type(); //Bypass for GRN to direct Delivery Challan
+				if(reftype.compareTo("Loading Advice")==0) {
+					String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
+					sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+				}else {sinvoice.setAdviceno("NA");}
+			}
 		}
 		else 
 		{
@@ -1411,11 +1423,19 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 				//String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
 				//sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
 				
-				String reftype=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getRef_type(); //Bypass for GRN to direct Delivery Challan
-				if(reftype.compareTo("Loading Advice")==0) {
-					String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
-					sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
-				}else {sinvoice.setAdviceno("NA");}
+				if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00006")==0) // For Invoice type sales order bran loosefor by bags
+				{
+					stk_transfer_grnRepository.updateInvoiceStatus(sinvoice.getReference_id(),"Yes");
+					sinvoice.setAdviceno("NA");
+				}
+				else {
+					String reftype=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getRef_type(); //Bypass for GRN to direct Delivery Challan
+					if(reftype.compareTo("Loading Advice")==0) {
+						String advice_id=delivery_challanRepository.getDeliveryChallanDtls(sinvoice.getReference_id()).getReferance_id();
+						sinvoice.setAdviceno(wm_loading_adviceRepository.getLoadingStk(advice_id).getAdvice_no());
+					}else {sinvoice.setAdviceno("NA");}
+				}
+				
 				
 			}
 			else 
@@ -2074,6 +2094,11 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			sinvoice.setDeleted_by(userRepository.getUserDetails(sinvoice.getUsername()).getName());
 			sinvoice.setDeleted_on(ldt);
 			sinvoice.setPayment_status(false);
+			
+			if(sinvoice.getInvoice_type().compareToIgnoreCase("INV00006")==0) // For Invoice type sales order bran loosefor by bags
+			{
+				stk_transfer_grnRepository.updateInvoiceStatus(sinvoice.getReference_id(),"No");
+			}
 			
 			//account posting off on 21/06/2022
 			/*String voucherno=outstandingledgerRepository.getOutstandingledgerDtls(sinvoice.getInvoice_id()).getVoucherno();
@@ -4041,5 +4066,10 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			 else {
 				 return sales_InvoiceRepository.getSalesTransportationReport(fromdate,todate);
 			 }
+		 }
+		 
+		 public List<Map<String, Object>> getSoSiList()
+		 {
+			 return sales_InvoiceRepository.getSoSiList();
 		 }
 }

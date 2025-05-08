@@ -165,4 +165,6 @@ public interface Delivery_challanService {
 		
 	public void deleteSIDocument(Delivery_challan_Docs delivery_challan_Docs);
 	
+	 public StatusDTO updateGatepass(Long id,String gatepass);
+	 
 }

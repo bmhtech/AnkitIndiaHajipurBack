@@ -649,6 +649,18 @@ public class StockController {
 		return new ResponseEntity<List<Stk_transfer_grn>>(sinvList, new HttpHeaders(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/getStkTranGrnsFast/{comp}/{fyear}")
+	public  List<Map<String, Object>> getStkTranGrnsFast(@PathVariable(value = "comp") String comp,@PathVariable(value="fyear") String fyear)
+	{
+		return stk_transfer_grnService.getStkTranGrnsFast(comp,fyear);
+	}
+	
+	@GetMapping("/getSalesInvFromStkTransGrn/{stk_grn_id}")
+	public  Map<String, Object> getSalesInvFromStkTransGrn(@PathVariable(value = "stk_grn_id") String stk_grn_id)
+	{
+		return stk_transfer_grnService.getSalesInvFromStkTransGrn(stk_grn_id);
+	}
+	
 	@GetMapping("/getStkTranGrn")
 	public ResponseEntity<List<Stk_transfer_grnDTO>> getStkTranGrn(@RequestParam(defaultValue = "") String bunit,@RequestParam(defaultValue = "") String tdate,@RequestParam(defaultValue = "") String company,@RequestParam(defaultValue = "") String finyear) {
 		List<Stk_transfer_grnDTO> grnList = stk_transfer_grnService.getStkTranGrns(bunit,tdate,company,finyear);
@@ -673,6 +685,14 @@ public class StockController {
 		{
 			return ResponseEntity.ok().body(stgrn);
 		}
+	}
+	
+	@GetMapping("/getStkTransferGrnRestQty/{orderid}/{item}/{packing}")
+	public Map<String,Object> getStkTransferGrnRestQty(@PathVariable(value="orderid") String orderid,
+			@PathVariable(value="item") String item,@PathVariable(value="packing") String packing)
+	{
+		 return stk_transfer_grnService.getStkTransferGrnRestQty(orderid,item,packing);
+		
 	}
 	
 	@GetMapping("/getStkTranGrnItemDlts/{stk_grn_id}")
