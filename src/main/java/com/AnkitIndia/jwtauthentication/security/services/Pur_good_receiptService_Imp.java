@@ -304,7 +304,7 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		pur_good_receipt.setDeleted_on(ldt);
 		pur_good_receipt.setGrndate(pur_good_receipt.getGrn_date());
 		pur_good_receipt.setGrnno(pur_good_receipt.getGrn_no());
-		
+		pur_good_receipt.setChallan_status("No");
 		
 		//bill_status
 		pur_good_receipt.setBill_status("0");

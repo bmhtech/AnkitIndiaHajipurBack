@@ -16,12 +16,8 @@ import java.util.Properties;
 
 public class Tallyrequest_ItemMaster {
 	
-	
-
-
-	
-	
-    public String CreateRequest(String itemname,String itemcategory,String masterstock,boolean taxinclude,String packingmasterstock,String hsncode,double conversion,double tax,boolean pakcingstatus)
+	//public String CreateRequest(String itemname,String itemcategory,String masterstock,boolean taxinclude,String packingmasterstock,String hsncode,double conversion,double tax,boolean pakcingstatus)
+	public String CreateRequest(String itemname,String itemcategory,String masterstock,boolean taxinclude,String packingmasterstock,String hsncode,String packingconv,double tax,boolean pakcingstatus)
     {             
     
     	String TXML = null;
@@ -221,12 +217,13 @@ System.out.println("TXML  :: " + TXML);
     	        
     		    
 
-            	TXML+="<BASEUNITS>"+masterstock+"</BASEUNITS>\n"+
+    		    TXML+="<BASEUNITS>"+masterstock+"</BASEUNITS>\n"+
     	      			"<ADDITIONALUNITS>"+packingmasterstock+"</ADDITIONALUNITS>\n"+
     	      			"<GSTREPUOM>"+masterstock+"-"+masterstock+"</GSTREPUOM>\n"+
-    				    "<DENOMINATOR>"+conversion+" </DENOMINATOR>\n"+
+    				    //"<DENOMINATOR>"+conversion+" </DENOMINATOR>\n"+
+    				    "<DENOMINATOR>"+packingconv+" </DENOMINATOR>\n"+
+    				    //"<DENOMINATOR>"+0.5+"</DENOMINATOR>\n"+
     	        		"<CONVERSION>1</CONVERSION>\n";
-    		
     		    
     		    
     	        if(taxinclude == true) 
@@ -337,31 +334,31 @@ System.out.println("TXML  :: " + TXML);
     				        "  </IMPORTDATA>\n" +
     				        " </BODY>\n" +
     				        "</ENVELOPE>";
-
-    	        	
     	        }
-System.out.println("TXML  :: " + TXML);
+    	      System.out.println("TXML  :: " + TXML);
     		  return TXML;
 
         }
 		
     }
    
-    public String SendToTally(String itemname,String itemcategory,String masterstock,boolean taxinclude,String packingmasterstock,String hsncode,double conversion,double tax,boolean pakcingstatus) throws Exception{
+  //public String SendToTally(String itemname,String itemcategory,String masterstock,boolean taxinclude,String packingmasterstock,String hsncode,double conversion,double tax,boolean pakcingstatus) throws Exception{
+  	public String SendToTally(String itemname,String itemcategory,String masterstock,boolean taxinclude,String packingmasterstock,String hsncode,String packingconv,double tax,boolean pakcingstatus) throws Exception{
     	
     	//Properties prop = readPropertiesFile("src/main/resources/credentials.properties");
        
         //String Url = "http://192.168.10.100:9000/";
     	String Url = "http://192.168.10.201:9000/";
-    	// String Url = "http://localhost:9000/";
+    	//String Url = "http://localhost:9000/";
         System.out.println("hello  " + Url );
     	//String Url = "http://192.168.10.105:9000/";     
-     //  String Url = prop.getProperty("tallyurl"); 
+        //String Url = prop.getProperty("tallyurl"); 
         String SOAPAction = "";
        
-        String Voucher = this.CreateRequest(itemname,itemcategory,masterstock,taxinclude,packingmasterstock,hsncode,conversion,tax,pakcingstatus);
-System.out.println("Voucher :: "+Voucher);
-// Create the connection where we're going to send the file.
+        //String Voucher = this.CreateRequest(itemname,itemcategory,masterstock,taxinclude,packingmasterstock,hsncode,conversion,tax,pakcingstatus);
+        String Voucher = this.CreateRequest(itemname,itemcategory,masterstock,taxinclude,packingmasterstock,hsncode,packingconv,tax,pakcingstatus);
+        System.out.println("Voucher :: "+Voucher);
+        // Create the connection where we're going to send the file.
         URL url = new URL(Url);
         URLConnection connection = url.openConnection();
         HttpURLConnection httpConn = (HttpURLConnection) connection;
