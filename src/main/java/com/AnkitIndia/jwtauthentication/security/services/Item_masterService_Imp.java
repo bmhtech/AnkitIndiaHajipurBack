@@ -2007,6 +2007,8 @@ public List<Item_master_pack_mat_tagDTO> getItemMasterPackMat(String code){
 		
 			System.out.println(packingmasterstock);
 			System.out.println(hsncode);
+			System.out.println(packingname);
+			System.out.println(packingconv);
 			
 			
 			
@@ -2086,7 +2088,8 @@ public List<Item_master_pack_mat_tagDTO> getItemMasterPackMat(String code){
 			System.out.println(pakcingstatus);
 			
 			
-			output=tally.SendToTally(itemname,itemcategory,masterstock,taxinclude,packingmasterstock,hsncode,conversion,tax,pakcingstatus);
+			//output=tally.SendToTally(itemname,itemcategory,masterstock,taxinclude,packingmasterstock,hsncode,conversion,tax,pakcingstatus); // conversion is off as is it based on item Name
+			output=tally.SendToTally(itemname,itemcategory,masterstock,taxinclude,packingmasterstock,hsncode,packingconv,tax,pakcingstatus); // conversion is replaced with packingconv with packing_mat_tagging capicity at index[0]
 			
 			System.out.println(" output :: "+output);
 			String [] splitoutput = output.split("\\|\\|");
