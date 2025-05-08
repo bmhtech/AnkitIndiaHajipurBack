@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.security.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
@@ -52,5 +53,11 @@ public interface Stk_transfer_grnService {
 	public StatusDTO checkStockGRNUsage(long id);
 	
 	public Stk_transfer_grnDTO stkPurInv(long id);
+	
+	public Map<String,Object> getStkTransferGrnRestQty(String orderid,String item,String packing);
+	
+	public List<Map<String,Object>> getStkTranGrnsFast(String comp,String fyear);
+	
+	public Map<String,Object> getSalesInvFromStkTransGrn(String stk_grn_id);
 	
 }

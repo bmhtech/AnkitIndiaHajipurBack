@@ -431,4 +431,7 @@ public interface Sales_OrderRepository extends JpaRepository<Sales_Order, Long>{
 			+ " AND w.modified_type = 'INSERTED' AND s.modified_type = 'INSERTED' AND s.order_id =:salesid AND w.wgment_id=:weighment_id ORDER BY s.slno", nativeQuery=true)
 	List<Map<String, Object>> getSaleOrderItemThroughGrn(@Param("salesid") String salesid,@Param("weighment_id") String weighment_id);
 	
+	@Query(value= "SELECT t.* FROM sales_order t WHERE t.modified_type='INSERTED' AND t.order_id=:order_id", nativeQuery=true)
+	Map<String,Object> getsalesOrderDtls(@Param("order_id") String order_id);
+	
 }

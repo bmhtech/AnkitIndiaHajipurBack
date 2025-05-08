@@ -50,4 +50,7 @@ public interface Sales_Order_Item_DtlsRepository extends JpaRepository<Sales_Ord
 						  @Param("itemid") String itemid,
 						  @Param("packingid") String packingid);
 	
+	@Query(value="SELECT s.*,a.rest_wt,a.rest_bag FROM sales_order_item_dtls s,sales_order_sales_invoice_rest_wt a WHERE s.`order_no`=a.order_no AND s.`modified_type`='INSERTED' AND s.order_id =:order_id ",nativeQuery=true)
+	List<Map<String,Object>> getSOItemDltsArmy(@Param("order_id") String order_id);
+	
 }

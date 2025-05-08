@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,5 +18,8 @@ public interface Sales_Order_DocsRepository extends JpaRepository<Sales_Order_Do
 	
 	@Query("select s from Sales_Order_Docs s where s.modified_type = 'INSERTED' and s.order_id =:order_id ORDER BY s.id")
 	List<Sales_Order_Docs> getSalesOrdDocs(@Param("order_id") String order_id);
+
+	@Query(value="select s.* from sales_order_docs s where s.modified_type = 'INSERTED' and s.order_id =:order_id ORDER BY s.id",nativeQuery = true)
+	List<Map<String,Object>> getSalesOrdDocsFast(@Param("order_id") String order_id);
 
 }

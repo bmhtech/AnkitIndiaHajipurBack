@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -94,5 +95,14 @@ public interface Stk_transfer_grnRepository extends JpaRepository<Stk_transfer_g
 	@Query("select s from Stk_Transfer_Challan s where s.modified_type = 'INSERTED' and s.stk_challan_id = :stk_challan_id ")
 	Stk_Transfer_Challan getStkOrderDetails(@Param("stk_challan_id") String stk_challan_id);
 	
+	@Query(value="select s.rest_bag,s.rest_wt from stock_grn_stock_transfer_rest_wt s where s.order_id =:orderid AND s.item_code = :item AND packing=:packing ",nativeQuery = true)
+	Map<String,Object> getStkTransferGrnRestQty(@Param("orderid") String orderid,@Param("item") String item,@Param("packing") String packing);
+	
+	@Query(value="select s.* from stk_transfer_grn s where s.modified_type = 'INSERTED' and s.company_id =:company and s.fin_year =:finyear ORDER BY s.stk_grn_id DESC ",nativeQuery = true)
+	List<Map<String,Object>> getStkTranGrnsFast(@Param("company") String company,@Param("finyear") String finyear);
+	
+	@Modifying(clearAutomatically = true)
+    @Query("UPDATE Stk_transfer_grn v SET v.sale_inv_status =:stat WHERE v.stk_grn_id =:ref_id and v.modified_type = 'INSERTED' ")
+    int updateInvoiceStatus(@Param("ref_id") String ref_id,@Param("stat") String stat);
 	
 }

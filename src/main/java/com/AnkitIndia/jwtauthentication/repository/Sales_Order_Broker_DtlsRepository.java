@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,4 +18,8 @@ public interface Sales_Order_Broker_DtlsRepository extends JpaRepository<Sales_O
 	
 	@Query("select s from Sales_Order_Broker_Dtls s where s.modified_type = 'INSERTED' and s.order_id =:order_id ORDER BY s.slno")
 	List<Sales_Order_Broker_Dtls> getSalesOrdBrokerDtls(@Param("order_id") String order_id);
+	
+	@Query(value="select s.* from sales_order_broker_dtls s where s.modified_type = 'INSERTED' and s.order_id =:order_id ORDER BY s.slno",nativeQuery = true)
+	List<Map<String,Object>> getSalesOrdBrokerDtlsFast(@Param("order_id") String order_id);
+	
 }
