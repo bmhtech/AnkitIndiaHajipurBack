@@ -164,7 +164,7 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	@Query(value ="SELECT COUNT(w.id) FROM `sales_order_terms_con` s ,`wm_loading_advice_itm_dtls` w WHERE  w.modified_type='INSERTED' AND w.advice_id=:advice_id AND w.modified_type=s.modified_type AND s.`order_id` =w.order_id AND s.`payment_mode`='Cash'",nativeQuery=true)
 	int countIdbycheckpaymentmode(@Param("advice_id") String advice_id);
 	
-	@Query(value= "select d.id as id,d.challan_date as challan_date,d.challanno as challanno,d.partyname as partyname,d.inv_type_name as inv_type_name,d.ref_type as ref_type,d.price_term as price_term,d.delivery_cid as delivery_cid,d.referance_id from delivery_challan d where d.modified_type = 'INSERTED' and d.challan_date =:currDate and d.fin_year =:finyear ", nativeQuery=true)
+	@Query(value= "select d.id as id,d.challan_date as challan_date,d.challanno as challanno,d.partyname as partyname,d.inv_type_name as inv_type_name,d.ref_type as ref_type,d.price_term as price_term,d.delivery_cid as delivery_cid,d.referance_id,d.party from delivery_challan d where d.modified_type = 'INSERTED' and d.challan_date =:currDate and d.fin_year =:finyear ", nativeQuery=true)
 	//@Query(value= "SELECT d.id AS id,d.challan_date AS challan_date,d.challanno AS challanno,d.partyname AS partyname,d.inv_type_name AS inv_type_name,d.ref_type AS ref_type,d.price_term AS price_term,d.delivery_cid AS delivery_cid,t.trans_borne_by AS trans_borne_by FROM delivery_challan d,delivery_challan_trans_info t WHERE d.modified_type = 'INSERTED' AND t.modified_type='INSERTED' AND d.modified_type=t.modified_type AND d.delivery_cid=t.delivery_cid AND d.challan_date =:currDate AND d.fin_year =:finyear", nativeQuery=true)
 	List<Map<String,Object>> getDeliveryChallanFastList(@Param("currDate") String currDate,@Param("finyear") String finyear);
 	
@@ -293,5 +293,9 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	
 	@Query(value="SELECT ref_type,gatepass FROM delivery_challan WHERE modified_type='INSERTED' And sales_invoice_id=:challan ",nativeQuery=true)
 	Map<String,Object> getGatepassByChallan(@Param("challan") String challan);
+	
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE Delivery_challan p SET p.gatepass=:gatepass WHERE p.id = :id AND p.modified_type='INSERTED'" )
+	int updateGatepass(@Param("id") long id,@Param("gatepass") String gatepass);
 	
 }

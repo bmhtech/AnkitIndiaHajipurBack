@@ -164,4 +164,7 @@ public interface Sales_InvoiceService {
 	 public Map<String,Object> getGatepassByChallan(String challan);
 	 
 	 public List<Map<String, Object>> getSalesTransportationReport(String fromdate,String todate,String trans_to);
+	 
+	 public List<Map<String, Object>> getSoSiList();
+	 
 	}

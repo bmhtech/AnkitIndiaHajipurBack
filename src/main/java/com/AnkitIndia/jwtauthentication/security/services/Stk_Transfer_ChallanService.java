@@ -1,6 +1,7 @@
 package com.AnkitIndia.jwtauthentication.security.services;
 
 import java.util.List;
+import java.util.Map;
 
 import com.AnkitIndia.jwtauthentication.model.Stk_Transfer_Challan;
 import com.AnkitIndia.jwtauthentication.model.Stk_Transfer_Challan_BusinessUnit_Dtls;
@@ -80,7 +81,5 @@ public interface Stk_Transfer_ChallanService {
 	public Stock_Transfer findOneChallan(long id);
 	
 	public Stk_Transfer_Challan getstockchallandetails(String stk_challan_id);
-	
-	
 	
 }

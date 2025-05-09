@@ -442,6 +442,12 @@ public class SalesController {
 		return sales_OrderService.getSalesOrdBrokerDtls(order_id);
 	}	
 	
+	@GetMapping("/getSalesOrdBrokerDtlsFast/{order_id}")
+	public List<Map<String,Object>> getSalesOrdBrokerDtlsFast(@PathVariable(value = "order_id") String order_id)
+	{
+		return sales_OrderService.getSalesOrdBrokerDtlsFast(order_id);
+	}
+	
 	@GetMapping("/getSalesOrdSumm/{order_id}")
 	public Sales_Order_SummaryDTO getSalesOrdSumm(@PathVariable(value = "order_id") String order_id)
 	{
@@ -471,6 +477,12 @@ public class SalesController {
 	public Sales_Order_Trans_InfoDTO getSalesOrdTransInfo(@PathVariable(value = "order_id") String order_id)
 	{
 		return sales_OrderService.getSalesOrdTransInfo(order_id);
+	}
+	
+	@GetMapping("/getSalesOrdTransInfoFast/{order_id}")
+	public Map<String,Object> getSalesOrdTransInfoFast(@PathVariable(value = "order_id") String order_id)
+	{
+		return sales_OrderService.getSalesOrdTransInfoFast(order_id);
 	}
 
 	@GetMapping(value = "/getSalesOrderDetails/{orderid}")
@@ -505,18 +517,35 @@ public class SalesController {
 		return sales_OrderService.getSalesOrdTermsCon(order_id);
 	}
 	
+	@GetMapping("/getSalesOrdTermsConFast/{order_id}")
+	public Map<String,Object> getSalesOrdTermsConFast(@PathVariable(value = "order_id") String order_id)
+	{
+		return sales_OrderService.getSalesOrdTermsConFast(order_id);
+	}
+	
 	@GetMapping("/getSalesOrdShipDtls/{order_id}")
 	public Sales_Order_Shipment_DtlsDTO getSalesOrdShipDtls(@PathVariable(value = "order_id") String order_id)
 	{
 		return sales_OrderService.getSalesOrdShipDtls(order_id);
 	}
-
+	
+	@GetMapping("/getSalesOrdShipDtlsFast/{order_id}")
+	public Map<String,Object> getSalesOrdShipDtlsFast(@PathVariable(value = "order_id") String order_id)
+	{
+		return sales_OrderService.getSalesOrdShipDtlsFast(order_id);
+	}
+	
 	@GetMapping("/getSalesOrdDocs/{order_id}")
 	public List<Sales_Order_DocsDTO> getSalesOrdDocs(@PathVariable(value = "order_id") String order_id)
 	{
 		return sales_OrderService.getSalesOrdDocs(order_id);
 	}
 	
+	@GetMapping("/getSalesOrdDocsFast/{order_id}")
+	public List<Map<String,Object>> getSalesOrdDocsFast(@PathVariable(value = "order_id") String order_id)
+	{
+		return sales_OrderService.getSalesOrdDocsFast(order_id);
+	}
 	
 	@PutMapping("/updateEffectiveSalesOrder/{id}")
 	public ResponseEntity<Sales_Order> updateEffectiveSalesOrder(@PathVariable(value="id") long id,@Valid @RequestBody Sales_Order iMaster)
@@ -1342,6 +1371,12 @@ public class SalesController {
 		return delivery_challanService.getGrndetailsforWeighment(grnid,company);
 	}
 	
+	@GetMapping("/updateGatepass/{id}/{gatepass}")
+	public ResponseEntity<StatusDTO> updateGatepass(@PathVariable(value="id") Long id,@PathVariable(value = "gatepass") String gatepass)
+	{
+		StatusDTO check=delivery_challanService.updateGatepass(id,gatepass);
+		return ResponseEntity.ok().body(check);
+	}
 	
 	/************** End Delivery Challan **************/
 	
@@ -1654,6 +1689,12 @@ public class SalesController {
 	public Map<String,Object> getGatepassByChallan(@PathVariable(value = "challan") String challan)
 	{
 		return sales_InvoiceService.getGatepassByChallan(challan);
+	}
+	
+	@GetMapping(value = "/getSoSiList")
+	public List<Map<String,Object>> getSoSiList()
+	{
+		return sales_InvoiceService.getSoSiList();
 	}
 	
 	/*@GetMapping(value = "/createEinvoiceGeneration/{id}/{einvjson}")
@@ -4285,5 +4326,16 @@ public class SalesController {
 		return sales_OrderService.getSalesOrderList(salesprocess, fin_year);
 	}
 	
-	
+    @GetMapping("/getSOItemDltsArmy/{orderid}")
+   	public List<Map<String,Object>> getSOItemDltsArmy(@PathVariable(value = "orderid") String orderid)
+   	{
+   		return sales_OrderService.getSOItemDltsArmy(orderid);
+   	}
+    
+    @GetMapping("/getsalesOrderDtls/{orderid}")
+   	public Map<String,Object> getsalesOrderDtls(@PathVariable(value = "orderid") String orderid)
+   	{
+   		return sales_OrderService.getsalesOrderDtls(orderid);
+   	}
+    
 }

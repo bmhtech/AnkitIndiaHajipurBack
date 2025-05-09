@@ -3167,6 +3167,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return salesOrdBroker;
 	}
 	
+	public List<Map<String,Object>> getSalesOrdBrokerDtlsFast(String order_id)
+	{
+		return sales_Order_Broker_DtlsRepository.getSalesOrdBrokerDtlsFast(order_id);
+	}
+	
 	public List<Sales_Order_Summary_dynDTO> getSalesOrdSummDyna(String order_id)
 	{
 		List<Sales_Order_Summary_dyn> modelList=sales_Order_Summary_dynRepository.getSalesOrdSummDyna(order_id);
@@ -3200,6 +3205,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return salesOrdDoc;
 	}
 	
+	public List<Map<String,Object>> getSalesOrdDocsFast(String order_id)
+	{
+		return sales_Order_DocsRepository.getSalesOrdDocsFast(order_id);
+	}
+	
 	public Sales_Order_Shipment_DtlsDTO getSalesOrdShipDtls(String order_id)
 	{
 		Sales_Order_Shipment_Dtls modelList=sales_Order_Shipment_DtlsRepository.getSalesOrdShipDtls(order_id);
@@ -3211,6 +3221,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return salesOrdShip;
 	}
 	
+	public Map<String,Object> getSalesOrdShipDtlsFast(String order_id)
+	{
+		return sales_Order_Shipment_DtlsRepository.getSalesOrdShipDtlsFast(order_id);
+	}
+	
 	public Sales_Order_Trans_InfoDTO getSalesOrdTransInfo(String order_id)
 	{
 		Sales_Order_Trans_Info modelList=sales_Order_Trans_InfoRepository.getSalesOrdTransInfo(order_id);
@@ -3220,6 +3235,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		Sales_Order_Trans_InfoDTO salesOrdTrans=new ModelMapper().map(modelList,listType);
 		
 		return salesOrdTrans;
+	}
+	
+	public Map<String,Object> getSalesOrdTransInfoFast(String order_id)
+	{
+		return sales_Order_Trans_InfoRepository.getSalesOrdTransInfoFast(order_id);
 	}
 	
 	public Sales_Order_SummaryDTO getSalesOrdSumm(String order_id)
@@ -3242,6 +3262,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		Sales_Order_Terms_ConDTO salesOrdTermsCon=new ModelMapper().map(modelList,listType);
 		
 		return salesOrdTermsCon;
+	}
+	
+	public Map<String,Object> getSalesOrdTermsConFast(String order_id)
+	{
+		return sales_Order_Terms_ConRepository.getSalesOrdTermsConFast(order_id);
 	}
 	
 	public Sales_transaction getSalesStockDetailsThruLoad(String orderid,String bunit,String itemid,String packingid,String loadingid) {
@@ -4305,4 +4330,13 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return wm_unload_adviceRepository.getGrnWeighment(grnid);
 	}
 	
+	public List<Map<String, Object>> getSOItemDltsArmy(String orderid)
+	{
+		return sales_Order_Item_DtlsRepository.getSOItemDltsArmy(orderid);
+	}
+	
+	public Map<String, Object> getsalesOrderDtls(String orderid)
+	{
+		return sales_OrderRepository.getsalesOrderDtls(orderid);
+	}
 }

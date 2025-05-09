@@ -94,6 +94,8 @@ public interface Sales_OrderService {
 	
 	public List<Sales_Order_Broker_DtlsDTO> getSalesOrdBrokerDtls(String order_id);
 	
+	public List<Map<String,Object>> getSalesOrdBrokerDtlsFast(String order_id);
+	
 	public List<Sales_Order_Summary_dynDTO> getSalesOrdSummDyna(String order_id);
 	
 	public List<Map<String,Object>> getSalesOrdJobItemDtls(String orderid);
@@ -104,13 +106,21 @@ public interface Sales_OrderService {
 	
 	public List<Sales_Order_DocsDTO> getSalesOrdDocs(String order_id);
 	
+	public List<Map<String,Object>> getSalesOrdDocsFast(String order_id);
+	
 	public Sales_Order_Shipment_DtlsDTO getSalesOrdShipDtls(String order_id);
 	
+	public Map<String,Object> getSalesOrdShipDtlsFast(String order_id);
+	
 	public Sales_Order_Trans_InfoDTO getSalesOrdTransInfo(String order_id);
+	
+	public Map<String,Object> getSalesOrdTransInfoFast(String order_id);
 	
 	public Sales_Order_SummaryDTO getSalesOrdSumm(String order_id);
 	
 	public Sales_Order_Terms_ConDTO getSalesOrdTermsCon(String order_id);
+	
+	public Map<String,Object> getSalesOrdTermsConFast(String order_id);
 	
 	public Sales_Order findOne(long id);
 	
@@ -206,5 +216,9 @@ public interface Sales_OrderService {
 	public List<Map<String, Object>> getSaleOrderItemThroughGrn(String salesid,String grnid);
 	
 	public Map<String, Object> getGrnWeighment(String grnid);
+	
+	public List<Map<String, Object>> getSOItemDltsArmy(String orderid);
+
+	public Map<String, Object> getsalesOrderDtls(String orderid);
 	
 }

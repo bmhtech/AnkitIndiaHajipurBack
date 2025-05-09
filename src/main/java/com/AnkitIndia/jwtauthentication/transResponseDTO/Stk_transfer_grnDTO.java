@@ -2,6 +2,8 @@ package com.AnkitIndia.jwtauthentication.transResponseDTO;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
+
 public class Stk_transfer_grnDTO {
 	
 	private Long id;
@@ -60,6 +62,16 @@ public class Stk_transfer_grnDTO {
 	
 	private String ref_type;
 	
+	private String sale_inv_status;
+	
+	public String getSale_inv_status() {
+		return sale_inv_status;
+	}
+
+	public void setSale_inv_status(String sale_inv_status) {
+		this.sale_inv_status = sale_inv_status;
+	}
+
 	public String getRef_type() {
 		return ref_type;
 	}
