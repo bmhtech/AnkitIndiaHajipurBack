@@ -3351,6 +3351,15 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					waybilldate=waybillfulldatespit[2]+waybillfulldatespit[1]+waybillfulldatespit[0];
 					//System.out.println("WayBill: "+waybilldate);
 					//waybilldate=waybillfulldate.replace("/", "");
+					
+					// creted for manual ewaybill genration 
+					/*ackno="";
+					ackdate=""; 
+					signedQRCode="";
+					irnno="";
+					waybill=op.get().getWaybill();
+					waybillfulldate="";
+					waybilldate="";*/
 				}
 				else
 				{

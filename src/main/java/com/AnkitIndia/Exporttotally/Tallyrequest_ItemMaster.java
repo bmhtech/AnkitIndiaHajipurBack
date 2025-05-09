@@ -105,9 +105,15 @@ public class Tallyrequest_ItemMaster {
     				        "</RATEDETAILS.LIST>\n"+
     				        "<GSTSLABRATES.LIST>        </GSTSLABRATES.LIST>\n"+
     				       "</STATEWISEDETAILS.LIST>\n"+
-    				        
-    		        
-    						"    </GSTDETAILS.LIST>\n"+        
+    						"    </GSTDETAILS.LIST>\n"+ 
+    				       
+    						// new hsn xml
+    						"<HSNDETAILS.LIST>\n"+ 
+     				       "<APPLICABLEFROM>20240401</APPLICABLEFROM>\n"+
+     				       "<HSNCODE>"+hsncode+"</HSNCODE>\n"+
+     				       "<SRCOFHSNDETAILS>Specify Details Here</SRCOFHSNDETAILS>\n"+
+     				       "</HSNDETAILS.LIST>\n"+
+     				       
     				        "    <LANGUAGENAME.LIST>\n"+
     				        "    <NAME.LIST TYPE=\"String\">\n"+
     				        "    <NAME>"+itemname+"</NAME>\n"+
@@ -160,9 +166,15 @@ public class Tallyrequest_ItemMaster {
     				        "</RATEDETAILS.LIST>\n"+
     				        "<GSTSLABRATES.LIST>        </GSTSLABRATES.LIST>\n"+
     				       "</STATEWISEDETAILS.LIST>\n"+
-    				        
-    		        
-    						"    </GSTDETAILS.LIST>\n"+        
+    						"    </GSTDETAILS.LIST>\n"+   
+    				       
+							//new hsn xml
+							"<HSNDETAILS.LIST>\n"+ 
+							"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n"+
+							"<HSNCODE>"+hsncode+"</HSNCODE>\n"+
+							"<SRCOFHSNDETAILS>Specify Details Here</SRCOFHSNDETAILS>\n"+
+							"</HSNDETAILS.LIST>\n"+
+
     				        "    <LANGUAGENAME.LIST>\n"+
     				        "    <NAME.LIST TYPE=\"String\">\n"+
     				        "    <NAME>"+itemname+"</NAME>\n"+
@@ -265,9 +277,15 @@ System.out.println("TXML  :: " + TXML);
     				        "</RATEDETAILS.LIST>\n"+
     				        "<GSTSLABRATES.LIST>        </GSTSLABRATES.LIST>\n"+
     				       "</STATEWISEDETAILS.LIST>\n"+
-    				        
-    		        
-    						"    </GSTDETAILS.LIST>\n"+        
+    						"    </GSTDETAILS.LIST>\n"+   
+    				       
+							//new hsn xml
+							"<HSNDETAILS.LIST>\n"+ 
+							"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n"+
+							"<HSNCODE>"+hsncode+"</HSNCODE>\n"+
+							"<SRCOFHSNDETAILS>Specify Details Here</SRCOFHSNDETAILS>\n"+
+							"</HSNDETAILS.LIST>\n"+
+
     				        "    <LANGUAGENAME.LIST>\n"+
     				        "    <NAME.LIST TYPE=\"String\">\n"+
     				        "    <NAME>"+itemname+"</NAME>\n"+
@@ -320,9 +338,15 @@ System.out.println("TXML  :: " + TXML);
     				        "</RATEDETAILS.LIST>\n"+
     				        "<GSTSLABRATES.LIST>        </GSTSLABRATES.LIST>\n"+
     				       "</STATEWISEDETAILS.LIST>\n"+
-    				        
-    		        
-    						"    </GSTDETAILS.LIST>\n"+        
+    						"    </GSTDETAILS.LIST>\n"+   
+    				       
+							//new hsn xml
+							"<HSNDETAILS.LIST>\n"+ 
+							"<APPLICABLEFROM>20240401</APPLICABLEFROM>\n"+
+							"<HSNCODE>"+hsncode+"</HSNCODE>\n"+
+							"<SRCOFHSNDETAILS>Specify Details Here</SRCOFHSNDETAILS>\n"+
+							"</HSNDETAILS.LIST>\n"+
+
     				        "    <LANGUAGENAME.LIST>\n"+
     				        "    <NAME.LIST TYPE=\"String\">\n"+
     				        "    <NAME>"+itemname+"</NAME>\n"+
