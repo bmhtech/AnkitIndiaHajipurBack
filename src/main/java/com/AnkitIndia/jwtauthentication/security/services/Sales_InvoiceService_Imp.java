@@ -3429,7 +3429,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					}
 				
 				
-				String statename=cust_bussiness_partnerRepository.gettallycreditnotestate(op.get().getParty()).getState();//party
+					String statename=cust_bussiness_partnerRepository.gettallycreditnotestate(op.get().getParty()).getState();//party
 				
 					 //item details starts here	
 					List<Sales_Invoice_Item_Dtls> itemDetails= sales_Invoice_Item_DtlsRepository.getSalesInvItmDtls(op.get().getInvoice_id());//item details

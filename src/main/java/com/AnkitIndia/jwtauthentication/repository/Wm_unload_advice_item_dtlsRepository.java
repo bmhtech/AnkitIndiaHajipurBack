@@ -65,4 +65,7 @@ public interface Wm_unload_advice_item_dtlsRepository extends JpaRepository<Wm_u
 	@Query("select w from Wm_unload_advice_item_dtls w where w.unadviceno = :adviceid and w.modified_type = 'INSERTED'  and w.item_name LIKE '%WHEAT%'")
 	List<Wm_unload_advice_item_dtls> getUnloadAdvItemListreport(@Param("adviceid") String adviceid);
 	
+	@Modifying(clearAutomatically = true)
+    @Query("UPDATE Wm_unload_advice_item_dtls w SET w.itc_item_qty =:itc_item_qty WHERE w.unadviceid = :unadviceid and w.modified_type = 'INSERTED' ")
+    int updateItcitemQty(@Param("unadviceid") String unadviceid, @Param("itc_item_qty") double itc_item_qty);
 }
