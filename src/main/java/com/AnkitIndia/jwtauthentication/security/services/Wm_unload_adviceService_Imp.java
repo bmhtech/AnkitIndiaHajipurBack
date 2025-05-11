@@ -121,6 +121,7 @@ import com.AnkitIndia.jwtauthentication.responseDTO.Pur_good_receipt_brokerDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Pur_goods_receipt_other_informationDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Sales_Order_Pagination_DTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.SequenceIdDTO;
+import com.AnkitIndia.jwtauthentication.responseDTO.StatusDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Status_tableDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Supp_bussiness_partner_addressDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.VehicleMasterDTO;
@@ -574,6 +575,7 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 				itemDts.setUpdated_on(ldt);
 				itemDts.setDeleted_by("NA");
 				itemDts.setDeleted_on(ldt);
+				itemDts.setItc_item_qty(0.000);
 				
 				//14-04-2022  quantity check  pur ord track
 				
@@ -1312,6 +1314,7 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 				itemDts.setUpdated_on(wAdvice.getUpdated_on());
 				itemDts.setDeleted_by("NA");
 				itemDts.setDeleted_on(ldt);
+				itemDts.setItc_item_qty(0.000);
 				
 				itemDts.setPur_orderid(wAdvice.getReferance_id());
 			
@@ -2645,6 +2648,20 @@ public class Wm_unload_adviceService_Imp implements Wm_unload_adviceService {
 	{
 		return wm_unload_adviceRepository.searchpendingUnAdviceReport(fromdate,todate);
 	}
+	
+	public List<Map<String,Object>> getUnloadItemDtls(Long id,String unadviceid){
+		return wm_unload_adviceRepository.getUnloadItemDtls(id,unadviceid);
+	}
+	
+	@Transactional
+    public StatusDTO updateItcitemQty(String unadviceid, double itc_qty)
+    {
+		StatusDTO result = new StatusDTO();
+		wm_unload_advice_item_dtlsRepository.updateItcitemQty(unadviceid,itc_qty);
+		result.setStatus("Yes");
+		return result;
+    }
+	
 }
 
 

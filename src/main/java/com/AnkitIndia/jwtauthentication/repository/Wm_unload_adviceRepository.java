@@ -334,4 +334,7 @@ public interface Wm_unload_adviceRepository extends JpaRepository<Wm_unload_advi
 	@Query(value = "SELECT w.weighment_id,w.vehicle_id,w.vehicle_no FROM wm_unload_advice w,pur_good_receipt p WHERE w.`unadviceid`=p.`referance_id` AND p.`modified_type`='INSERTED' AND w.`modified_type`='INSERTED' AND p.`grn_id`=:grnid", nativeQuery=true)
 	Map<String,Object> getGrnWeighment(@Param("grnid") String grnid);
 	
+	@Query(value="SELECT w.`unadviceid`,w.`ula_date`,w.`unadviceno`,w.`referance_id`,w.`vehicle_id`,wi.`item_code`,wi.`item_name`,wi.`packing`,wi.`packing_name`,wi.`s_qty`,wi.`quantity`,wi.itc_item_qty \r\n"
+			+ "FROM `wm_unload_advice_item_dtls` wi LEFT JOIN `wm_unload_advice` w ON wi.`unadviceid`=w.`unadviceid` AND w.`modified_type`='INSERTED' WHERE wi.`modified_type`='INSERTED' AND w.id=:id AND wi.`unadviceid`=:unadviceid", nativeQuery=true)
+	List<Map<String,Object>> getUnloadItemDtls(@Param("id") Long id, @Param("unadviceid") String unadviceid);
 }

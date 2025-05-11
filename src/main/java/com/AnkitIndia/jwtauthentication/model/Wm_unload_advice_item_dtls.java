@@ -108,11 +108,12 @@ public class Wm_unload_advice_item_dtls extends CommonProperties{
 	@Column(columnDefinition="varchar(100) default 'NA'")
 	private String price_based_on;
 	 
+	@Column(columnDefinition = "Double(10,3) default 0.000")
+	private double itc_item_qty;
+	
 	@ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "wmula_id")
     private Wm_unload_advice wm_unload_advice;
-	
-	
 	
 	//Static
 //	@OneToOne(fetch = FetchType.EAGER,mappedBy="Wm_unload_advice_item_dtls",cascade =CascadeType.ALL)

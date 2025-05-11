@@ -14,6 +14,7 @@ import com.AnkitIndia.jwtauthentication.model.Wm_unload_advice_item_dtls;
 import com.AnkitIndia.jwtauthentication.responseDTO.DailygatewheatinwardreportDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Pur_Order_Pagination_DTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.SequenceIdDTO;
+import com.AnkitIndia.jwtauthentication.responseDTO.StatusDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Status_tableDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.VehicleMasterDTO;
 import com.AnkitIndia.jwtauthentication.responseDTO.Wm_unload_adviceDTO;
@@ -206,4 +207,7 @@ public interface Wm_unload_adviceService {
 	
 	public List<Map<String,Object>> searchpendingUnAdviceReport(String fromdate,String todate);
 	
+	public List<Map<String,Object>> getUnloadItemDtls(Long id,String unadviceid);
+	
+	public StatusDTO updateItcitemQty(String unadviceid,double itc_item_qty);
 }

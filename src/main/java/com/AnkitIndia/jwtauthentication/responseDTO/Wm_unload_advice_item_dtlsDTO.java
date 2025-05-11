@@ -57,7 +57,16 @@ public class Wm_unload_advice_item_dtlsDTO {
 	
 	private String price_based_on;
 	
+	private double itc_item_qty;
 	
+	public double getItc_item_qty() {
+		return itc_item_qty;
+	}
+
+	public void setItc_item_qty(double itc_item_qty) {
+		this.itc_item_qty = itc_item_qty;
+	}
+
 	public String getPrice_based_on() {
 		return price_based_on;
 	}
