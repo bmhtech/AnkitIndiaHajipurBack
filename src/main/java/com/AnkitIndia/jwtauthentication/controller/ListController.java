@@ -4318,6 +4318,13 @@ public class ListController {
 				return wm_unload_wgmntService.getUnloadWeightmentWtmultipopupmultipleItem(wgment_id);
 			}
 			
+			@GetMapping("/getUnloadItemDtls/{id}/{unadviceid}")
+			public List<Map<String,Object>> getUnloadItemDtls(@PathVariable(value="id") Long id,
+															  @PathVariable(value = "unadviceid") String unadviceid)
+			{
+				return wm_unload_adviceService.getUnloadItemDtls(id,unadviceid);
+			}
+			
 			/*@GetMapping("/getGroupItemLedgerForJob/{group}")
 			public List<Map<String,Object>> getGroupItemLedgerForJob(@PathVariable(value = "group") String group)
 			{

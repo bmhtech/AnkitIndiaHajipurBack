@@ -558,6 +558,14 @@ public class WeighmentController {
 		return wm_unload_adviceService.unloadadvicejobworkRetriveList(unadviceid);
 	}
 	
+	@GetMapping("/updateItcitemQty/{unadviceid}/{itc_qty}")
+	public ResponseEntity<StatusDTO> updateItcitemQty(@PathVariable(value = "unadviceid") String unadviceid,
+						@PathVariable(value = "itc_qty") double itc_qty)
+	{
+		StatusDTO check=wm_unload_adviceService.updateItcitemQty(unadviceid,itc_qty);
+		return ResponseEntity.ok().body(check);
+	}
+	
 /*	@Autowired
 	Pur_OrderService pur_OrderService;
 	@GetMapping("/gettotalqtyanduom/{pur_orderid}")

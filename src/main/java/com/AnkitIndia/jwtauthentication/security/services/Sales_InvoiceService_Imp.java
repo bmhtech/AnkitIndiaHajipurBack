@@ -3376,6 +3376,15 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					waybilldate=waybillfulldatespit[2]+waybillfulldatespit[1]+waybillfulldatespit[0];
 					//System.out.println("WayBill: "+waybilldate);
 					//waybilldate=waybillfulldate.replace("/", "");
+					
+					// creted for manual ewaybill genration 
+					/*ackno="";
+					ackdate=""; 
+					signedQRCode="";
+					irnno="";
+					waybill=op.get().getWaybill();
+					waybillfulldate="";
+					waybilldate="";*/
 				}
 				else
 				{
@@ -3420,7 +3429,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 					}
 				
 				
-				String statename=cust_bussiness_partnerRepository.gettallycreditnotestate(op.get().getParty()).getState();//party
+					String statename=cust_bussiness_partnerRepository.gettallycreditnotestate(op.get().getParty()).getState();//party
 				
 					 //item details starts here	
 					List<Sales_Invoice_Item_Dtls> itemDetails= sales_Invoice_Item_DtlsRepository.getSalesInvItmDtls(op.get().getInvoice_id());//item details
