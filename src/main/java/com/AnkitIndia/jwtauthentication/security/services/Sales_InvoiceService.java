@@ -167,4 +167,10 @@ public interface Sales_InvoiceService {
 	 
 	 public List<Map<String, Object>> getSoSiList();
 	 
+	 public List<Map<String,Object>> getChargesMatrixSalesdetailsFast(String delivery_cid);
+	 
+	 public Map<String,Object> getAppChargesSalesdetailsFast(String delivery_cid);
+	 
+	 public Map<String, Object> getSalesOrderDetailsthdeliverchallan_fast(String deliveryid);
+	 
 	}

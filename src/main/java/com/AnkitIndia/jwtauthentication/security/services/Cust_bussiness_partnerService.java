@@ -139,4 +139,6 @@ public interface Cust_bussiness_partnerService {
 	
 	public List<Map<String, Object>> custShipAddDtlsRetriveList(String cp_id);
 	
+	public Map<String, Object> getCustomershipdtls(String mainid,String custid);
+	
 }

@@ -12,6 +12,8 @@ public class Wm_loading_advice_Shipment_DtlsDTO {
 	
 	private String ship_addr;
     
+	private String ship_addr_code;
+	
 	private String ship_details;
     
 	private String pay_addr;
@@ -33,6 +35,14 @@ public class Wm_loading_advice_Shipment_DtlsDTO {
 	private LocalDateTime deleted_on;
 	
 	private String deleted_by;
+
+	public String getShip_addr_code() {
+		return ship_addr_code;
+	}
+
+	public void setShip_addr_code(String ship_addr_code) {
+		this.ship_addr_code = ship_addr_code;
+	}
 
 	public String getAdvice_id() {
 		return advice_id;

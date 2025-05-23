@@ -4081,4 +4081,23 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 		 {
 			 return sales_InvoiceRepository.getSoSiList();
 		 }
+		 
+		 public List<Map<String, Object>> getChargesMatrixSalesdetailsFast(String delivery_cid) {
+				List<Map<String, Object>> dcthrusoappcharges = delivery_challanRepository
+						.getDCthruSOappchargesFast(delivery_cid);
+				return dcthrusoappcharges;
+			}
+		 
+		 public Map<String, Object> getAppChargesSalesdetailsFast(String delivery_cid) {
+				Map<String, Object> dcthrusoappcharges = delivery_challanRepository
+						.getAppChargesSalesOrderDetailsthruDC(delivery_cid);
+				return dcthrusoappcharges;
+			}
+		 
+		 public Map<String, Object> getSalesOrderDetailsthdeliverchallan_fast(String deliveryid)
+			{
+				Map<String,Object> dcthsalesdetails= delivery_challanRepository.getDCthruSalesOrderDetailsFast(deliveryid);
+				return dcthsalesdetails;
+			}
+		 
 }
