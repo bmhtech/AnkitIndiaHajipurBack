@@ -110,6 +110,8 @@ public interface Sales_OrderService {
 	
 	public Sales_Order_Shipment_DtlsDTO getSalesOrdShipDtls(String order_id);
 	
+	public Map<String,Object> getSalesOrdShipDtlsNew(String order_id);
+	
 	public Map<String,Object> getSalesOrdShipDtlsFast(String order_id);
 	
 	public Sales_Order_Trans_InfoDTO getSalesOrdTransInfo(String order_id);

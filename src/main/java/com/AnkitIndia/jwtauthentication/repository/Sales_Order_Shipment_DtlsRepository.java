@@ -20,4 +20,8 @@ public interface Sales_Order_Shipment_DtlsRepository extends JpaRepository<Sales
 
 	@Query(value="select s.* from sales_order_shipment_dtls s where s.modified_type = 'INSERTED' and s.order_id =:order_id ",nativeQuery = true)
 	Map<String,Object> getSalesOrdShipDtlsFast(@Param("order_id") String order_id);
+	
+	@Query( value="SELECT s.*,c.`cp_name` FROM sales_order_shipment_dtls s LEFT JOIN cust_bussiness_partner c ON s.`ship_addr`=c.`cp_id` WHERE s.modified_type = 'INSERTED' AND c.`modified_type`='INSERTED' AND s.`modified_type`=c.`modified_type` AND s.order_id =:order_id",nativeQuery = true)
+	Map<String,Object> getSalesOrdShipDtlsNew(@Param("order_id") String order_id);
+
 }

@@ -3221,6 +3221,11 @@ public List<Sales_OrderDTO> findSalesOrdersbackup(String bunit,String party,Stri
 		return salesOrdShip;
 	}
 	
+	public Map<String,Object> getSalesOrdShipDtlsNew(String order_id)
+	{
+		return sales_Order_Shipment_DtlsRepository.getSalesOrdShipDtlsNew(order_id);
+	}
+	
 	public Map<String,Object> getSalesOrdShipDtlsFast(String order_id)
 	{
 		return sales_Order_Shipment_DtlsRepository.getSalesOrdShipDtlsFast(order_id);

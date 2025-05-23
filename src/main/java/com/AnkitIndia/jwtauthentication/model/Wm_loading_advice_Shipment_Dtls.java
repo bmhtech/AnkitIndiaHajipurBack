@@ -35,6 +35,9 @@ public class Wm_loading_advice_Shipment_Dtls extends CommonProperties{
 	@Column(columnDefinition = "varchar(50) default 'NA'")
 	private String ship_addr;
     
+	@Column(columnDefinition = "varchar(50) default 'NA'")
+	private String ship_addr_code;
+	
 	@Column(columnDefinition = "varchar(250) default 'NA'")
 	private String ship_details;
     

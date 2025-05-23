@@ -660,6 +660,12 @@ public class ListController {
 		return new ResponseEntity<Cust_bussiness_partner_delv_toDTO>(cToDTO, new HttpHeaders(), HttpStatus.OK);
 	}
 	
+	@GetMapping("/getCustomershipdtls/{mainid}/{custid}")
+	public Map<String, Object> getCustomershipdtls(@PathVariable(value = "mainid") String mainid,@PathVariable(value = "custid") String custid)
+	{
+		return cust_bussiness_partnerService.getCustomershipdtls(mainid,custid);
+	}
+	
 	@GetMapping("/getSuppBUnitName")
 	public List<Supp_bussiness_partner_delv_fromDTO> getSuppBUnitName()
 	{

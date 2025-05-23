@@ -529,6 +529,12 @@ public class SalesController {
 		return sales_OrderService.getSalesOrdShipDtls(order_id);
 	}
 	
+	@GetMapping("/getSalesOrdShipDtlsNew/{order_id}")
+	public Map<String,Object> getSalesOrdShipDtlsNew(@PathVariable(value = "order_id") String order_id)
+	{
+		return sales_OrderService.getSalesOrdShipDtlsNew(order_id);
+	}
+	
 	@GetMapping("/getSalesOrdShipDtlsFast/{order_id}")
 	public Map<String,Object> getSalesOrdShipDtlsFast(@PathVariable(value = "order_id") String order_id)
 	{
@@ -1378,6 +1384,11 @@ public class SalesController {
 		return ResponseEntity.ok().body(check);
 	}
 	
+	@GetMapping(value = "/getLoadingAdviceTransDtlsFast/{delveryid}")
+	public Map<String, Object> getLoadingAdviceTransDtlsFast(@PathVariable(value = "delveryid") String delveryid) {
+		return delivery_challanService.getLoadingAdviceTransDtlsFast(delveryid);
+	}
+	
 	/************** End Delivery Challan **************/
 	
 	/***************** Gate Pass ****************/
@@ -1522,6 +1533,11 @@ public class SalesController {
 		return sales_InvoiceService.getSalesInvItmDtlswtAltName(invoice_id);
 	}
 	
+	@GetMapping("/getChargesMatrixSalesdetailsFast/{delivery_cid}")
+	public List<Map<String,Object>> getChargesMatrixSalesdetailsFast(@PathVariable(value="delivery_cid") String delivery_cid) {
+		return sales_InvoiceService.getChargesMatrixSalesdetailsFast(delivery_cid);
+	}
+	
 	
 	@GetMapping("/retriveinvoicejobworkprice/{invoice_id}")
 	public List<Map<String,Object>> retriveinvoicejobworkprice(@PathVariable(value = "invoice_id") String invoice_id)
@@ -1529,7 +1545,16 @@ public class SalesController {
 		return sales_InvoiceService.retriveinvoicejobworkprice(invoice_id);
 	}
 	
+
+	@GetMapping("/getAppChargesSalesdetailsFast/{delivery_cid}")
+	public Map<String,Object> getAppChargesSalesdetailsFast(@PathVariable(value="delivery_cid") String delivery_cid) {
+		return sales_InvoiceService.getAppChargesSalesdetailsFast(delivery_cid);
+	}
 	
+	@GetMapping(value = "/getSalesOrderDetailsthdeliverchallan_fast/{delveryid}")
+	public Map<String, Object> getSalesOrderDetailsthdeliverchallan_fast(@PathVariable(value = "delveryid") String delveryid) {
+		return sales_InvoiceService.getSalesOrderDetailsthdeliverchallan_fast(delveryid);
+	}
 	
 	@GetMapping("/getSalesInvItmDtls1/{invoice_id}")
 	public List<Sales_Invoice_Item_DtlsDTO> getSalesInvItmDtls1(@PathVariable(value = "invoice_id") String invoice_id)

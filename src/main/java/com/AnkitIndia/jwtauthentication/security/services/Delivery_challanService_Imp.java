@@ -1638,11 +1638,12 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		return dcDtls;
 	}
 	
-	public Map<String,Object> getDeliveryChallanDtlsFast(String delivery_cid) {
-		Map<String,Object> modelList=dChallanRepository.getDeliveryChallanDtlsFast(delivery_cid);
-			
-		return modelList;
+	public Map<String,Object> getDeliveryChallanDtlsFast(String delivery_cid) 
+	{
+		return dChallanRepository.getDeliveryChallanDtlsFast(delivery_cid);
 	}
+	
+	
 	
 	public Delivery_challan findOne(long id)
 	{
@@ -2505,5 +2506,10 @@ public List<Delivery_challanDTO> getMultipleDelvChallansApp(String party,String 
 		result.setStatus("Yes");
 		return result;
 	 }
+	
+	 public Map<String, Object> getLoadingAdviceTransDtlsFast(String deliveryid) {
+			return dChallanRepository.getLoadingAdviceTransDtlsthruDC(deliveryid);
+	 }
+	 
 	 
 }
