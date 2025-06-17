@@ -1724,16 +1724,17 @@ public class ReportController {
 			return sales_transportService.getTransJVCode(prefix,currDate);
 		}
 		
-		@GetMapping("/getSalesTransportReport/{business_unit}/{fromdate}/{todate}/{inv_type}/{trans_type}/{transporter_code}")
+		@GetMapping("/getSalesTransportReport/{business_unit}/{fromdate}/{todate}/{inv_type}/{trans_type}/{transporter_code}/{customer}")
 	    public List<Map<String, Object>> getSalesTransportReport(@PathVariable(value = "business_unit") String business_unit,
 	    		@PathVariable(value = "fromdate") String fromdate,
 	    		@PathVariable(value = "todate") String todate,
 	    		@PathVariable(value = "inv_type") String inv_type,
 	    		@PathVariable(value = "trans_type") String trans_type,
-	    		@PathVariable(value = "transporter_code") String transporter_code) 
+	    		@PathVariable(value = "transporter_code") String transporter_code,
+	    		@PathVariable(value = "customer") String customer) 
 		{
-		 System.out.println("business_unit::"+business_unit+"//"+fromdate+"//"+todate+"//"+inv_type+"//"+trans_type+"//"+transporter_code);
-			return delivery_challanService.getSalesTransportReport(business_unit,fromdate,todate,inv_type,trans_type,transporter_code);
+		 System.out.println("business_unit::"+business_unit+"//"+fromdate+"//"+todate+"//"+inv_type+"//"+trans_type+"//"+transporter_code+"//"+customer);
+			return delivery_challanService.getSalesTransportReport(business_unit,fromdate,todate,inv_type,trans_type,transporter_code,customer);
 		}
 		
 		@GetMapping("/getPurchaseTransportReport/{business_unit}/{fromdate}/{todate}/{pur_inv_type}/{trans_type}")

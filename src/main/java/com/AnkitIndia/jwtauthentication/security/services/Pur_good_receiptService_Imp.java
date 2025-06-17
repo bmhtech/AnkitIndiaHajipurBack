@@ -305,6 +305,7 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		pur_good_receipt.setGrndate(pur_good_receipt.getGrn_date());
 		pur_good_receipt.setGrnno(pur_good_receipt.getGrn_no());
 		pur_good_receipt.setChallan_status("No");
+		pur_good_receipt.setStack_maintain("No"); // Stack Maintain No
 		
 		//bill_status
 		pur_good_receipt.setBill_status("0");
@@ -718,6 +719,7 @@ public class Pur_good_receiptService_Imp implements Pur_good_receiptService{
 		pur_good_receipt.setStack_maintain(PGR.get().getStack_maintain()); // Stack Maintain yes or no 
 		pur_good_receipt.setGrndate(pur_good_receipt.getGrn_date());
 		pur_good_receipt.setGrnno(pur_good_receipt.getGrn_no());
+		pur_good_receipt.setChallan_status(PGR.get().getChallan_status());
 		
 	    pur_good_receipt.setPur_return_status(PGR.get().getPur_return_status());
 		

@@ -133,7 +133,7 @@ public interface Delivery_challanService {
 	
 	public List<Map<String, Object>> getchallanReport(String fromdate,String todate);
 	
-	public List<Map<String, Object>> getSalesTransportReport(String bunit,String fromdate,String todate,String inv_type,String trans_typ,String transporter_code);
+	public List<Map<String, Object>> getSalesTransportReport(String bunit,String fromdate,String todate,String inv_type,String trans_typ,String transporter_code,String customer);
 	
 	public List<Map<String,Object>> getDeliveryChallanReportThrouhgLA(String loadingid);
 	
