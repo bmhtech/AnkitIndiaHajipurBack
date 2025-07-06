@@ -31,6 +31,9 @@ public interface Trans_bussiness_partnerRepository extends JpaRepository<Trans_b
 	@Query(value="select bp_id,bp_name from trans_bussiness_partner where modified_type = 'INSERTED' and bp_active =:status ", nativeQuery = true)
 	List<Map<String, Object>> getTransporterMNCListFast(@Param("status") boolean status);
 	
+	@Query(value="select bp_id,bp_name,bp_id as bp_Id from trans_bussiness_partner where modified_type = 'INSERTED' and bp_active =:status ", nativeQuery = true)
+	List<Map<String, Object>> getTransporterListFastbp_Id(@Param("status") boolean status);
+	
 	@Query( "select t from Trans_bussiness_partner t where t.modified_type = 'INSERTED' and t.bp_Id =:transid ")
 	List<Trans_bussiness_partner> getTransporterThruCustomer(@Param("transid") String transid);
 	
