@@ -97,7 +97,7 @@ public class Sales_Invoice extends CommonProperties{
 	@Column(columnDefinition="tinyint(1) default 0")
 	private boolean brokage_app;
 
-	@Column(columnDefinition="varchar(150) default 0")
+	@Column(columnDefinition="varchar(250) default 0")
 	private String remarks;
 	
 	@Column(columnDefinition="varchar(50) default 0")

@@ -285,5 +285,10 @@ public interface Wm_loading_adviceRepository extends JpaRepository<Wm_loading_ad
     @Query("UPDATE Wm_loading_advice w SET w.terminate ='1', w.terminated_by=:username WHERE w.weighment_id = :wgment_id")
     int terminateloading(@Param("wgment_id") String wgment_id,@Param("username") String username);
 	
+	@Query(value="select * from wm_loading_advice where modified_type='INSERTED' AND advice_id=:adviceid",nativeQuery=true)
+	Map<String, Object> loadAdviceDetails(@Param("adviceid") String adviceid);
+	
+	@Query(value="SELECT l.* FROM wm_loading_advice l,wm_unload_wgmnt w WHERE l.advice_id=w.advice AND l.modified_type='INSERTED' AND w.modified_type='INSERTED' AND wgment_id=:wid",nativeQuery=true)
+	Map<String, Object> getLoadingDtlsByWeighmentId(@Param("wid") String wid);
 	
 }

@@ -437,6 +437,20 @@ public class WeighmentController {
 		return wm_loading_adviceService.custPayment(advicedate,party,ref_type);
 	}
 	
+	@GetMapping("/loadAdviceDetails/{advid}")
+    public Map<String, Object> loadAdviceDetails(@PathVariable(value = "advid") String advid) 
+	{
+		//System.out.println("enter controller:"+advid);
+		return wm_loading_adviceService.loadAdviceDetails(advid);
+	}
+	
+	@GetMapping("/getLoadingDtlsByWeighmentId/{wid}")
+    public Map<String, Object> getLoadingDtlsByWeighmentId(@PathVariable(value = "wid") String wid) 
+	{
+		//System.out.println("enter controller:"+wid);
+		return wm_loading_adviceService.getLoadingDtlsByWeighmentId(wid);
+	}
+	
 	/******************* Loading Advice End*******************/
 	
 	/******************* Unload Advice ******************/
