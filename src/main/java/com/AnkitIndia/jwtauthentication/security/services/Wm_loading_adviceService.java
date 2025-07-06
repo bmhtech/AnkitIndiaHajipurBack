@@ -140,4 +140,9 @@ public interface Wm_loading_adviceService {
 	public StatusDTO checkAdviceinCashUpdate(String advicedate,String party,String ref_type,double total_amt,String advice_id);
 	
 	public StatusDTO custPayment(String advicedate,String party,String ref_type);
+	
+	public Map<String, Object> loadAdviceDetails(String advice);
+	
+	public Map<String, Object> getLoadingDtlsByWeighmentId(String wid);
+	
 }

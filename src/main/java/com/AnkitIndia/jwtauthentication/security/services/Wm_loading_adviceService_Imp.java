@@ -2083,4 +2083,15 @@ public class Wm_loading_adviceService_Imp implements Wm_loading_adviceService{
 			
 		return res;
 	}
+	
+	public Map<String, Object> loadAdviceDetails(String advice)
+	{
+		return wm_loading_adviceRepository.loadAdviceDetails(advice);
+	}
+	
+	public Map<String, Object> getLoadingDtlsByWeighmentId(String wid)
+	{
+		return wm_loading_adviceRepository.getLoadingDtlsByWeighmentId(wid);
+	}
+	
 }
