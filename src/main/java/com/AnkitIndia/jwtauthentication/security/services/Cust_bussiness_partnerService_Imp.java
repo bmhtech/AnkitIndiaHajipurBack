@@ -1815,4 +1815,11 @@ public class Cust_bussiness_partnerService_Imp implements Cust_bussiness_partner
  	{
  		return cust_bussiness_partner_shipping_addr_dtlsRepository.custShipAddDtlsRetriveList(cp_id);
  	}
+ 	
+ 	public Map<String, Object> getCustomershipdtls(String mainid,String custid)
+ 	{
+ 		System.out.println("check cust id:: "+mainid+" /ship id/ "+custid);
+ 		return cust_bussiness_partner_shipping_addr_dtlsRepository.getCustomershipdtls(mainid,custid);
+ 	}
+ 	
 }

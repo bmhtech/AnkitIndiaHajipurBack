@@ -429,4 +429,49 @@ public interface Delivery_challanRepository extends JpaRepository<Delivery_chall
 	@Query("UPDATE Delivery_challan p SET p.gatepass=:gatepass WHERE p.id = :id AND p.modified_type='INSERTED'" )
 	int updateGatepass(@Param("id") long id,@Param("gatepass") String gatepass);
 	
+	@Query(value= "SELECT s.*\r\n"
+			+ "FROM delivery_challan d\r\n"
+			+ "LEFT JOIN wm_loading_advice w ON w.advice_id=d.referance_id\r\n"
+			+ "LEFT JOIN sales_order_summary_dyn s ON s.order_id=w.referance_id\r\n"
+			+ "WHERE d.`modified_type`='INSERTED'\r\n"
+			+ "AND w.`modified_type`='INSERTED'\r\n"
+			+ "AND s.`modified_type`='INSERTED'\r\n"
+			+ "AND d.`modified_type`=w.`modified_type`\r\n"
+			+ "AND d.`modified_type`=s.`modified_type`\r\n"
+			+ "AND d.`delivery_cid`=:delivery_cid",nativeQuery=true)
+	List<Map<String, Object>> getDCthruSOappchargesFast(@Param("delivery_cid") String delivery_cid);
+	
+	@Query(value= "SELECT s.*\r\n"
+			+ "FROM delivery_challan d\r\n"
+			+ "LEFT JOIN wm_loading_advice w ON w.advice_id=d.referance_id\r\n"
+			+ "LEFT JOIN sales_order s ON s.order_id=w.referance_id\r\n"
+			+ "WHERE d.`modified_type`='INSERTED'\r\n"
+			+ "AND w.`modified_type`='INSERTED'\r\n"
+			+ "AND s.`modified_type`='INSERTED'\r\n"
+			+ "AND d.`modified_type`=w.`modified_type`\r\n"
+			+ "AND d.`modified_type`=s.`modified_type`\r\n"
+			+ "AND d.`delivery_cid`=:delivery_cid",nativeQuery=true)
+	Map<String, Object> getAppChargesSalesOrderDetailsthruDC(@Param("delivery_cid") String delivery_cid);
+	
+	@Query(value= "SELECT s.*\r\n"
+			+ "FROM delivery_challan d\r\n"
+			+ "LEFT JOIN wm_loading_advice w ON w.advice_id=d.referance_id\r\n"
+			+ "LEFT JOIN sales_order s ON s.order_id=w.referance_id\r\n"
+			+ "WHERE d.`modified_type`='INSERTED'\r\n"
+			+ "AND w.`modified_type`='INSERTED'\r\n"
+			+ "AND s.`modified_type`='INSERTED'\r\n"
+			+ "AND d.`modified_type`=w.`modified_type`\r\n"
+			+ "AND d.`modified_type`=s.`modified_type`\r\n"
+			+ "AND d.`delivery_cid`=:delivery_cid",nativeQuery=true)
+	Map<String, Object> getDCthruSalesOrderDetailsFast(@Param("delivery_cid") String delivery_cid);
+	
+	@Query(value= "SELECT w.*\r\n"
+			+ "FROM delivery_challan d\r\n"
+			+ "LEFT JOIN wm_loading_advice_trans_info w ON w.advice_id=d.referance_id\r\n"
+			+ "WHERE d.`modified_type`='INSERTED'\r\n"
+			+ "AND w.`modified_type`='INSERTED'\r\n"
+			+ "AND d.`modified_type`=w.`modified_type`\r\n"
+			+ "AND d.`delivery_cid`=:delivery_cid",nativeQuery=true)
+	Map<String, Object> getLoadingAdviceTransDtlsthruDC(@Param("delivery_cid") String delivery_cid);
+	
 }

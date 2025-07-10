@@ -61,11 +61,9 @@ public interface Delivery_challanService {
 	
 	public List<Delivery_challanDTO> deliveryChallanList(String invtype,String party,String invdate,String comp,String parentmodel);
 	
-	
 	public List<Map<String, Object>> getDelvChallansnew(String invtype,String party,String invdate,String comp,String parentmodel);
 	
 	public List<Map<String, Object>> getDelvChallansnewjobwork(String invtype,String party,String invdate,String comp,String parentmodel);
-	
 	
 	public List<Delivery_challanDTO> getMultipleDelvChallans(String invtype,String party,String invdate,String comp,String parentmodel);
 	
@@ -167,4 +165,6 @@ public interface Delivery_challanService {
 	
 	public StatusDTO updateGatepass(Long id,String gatepass);
 	 
+	public Map<String,Object> getLoadingAdviceTransDtlsFast(String delv_id);
+	
 }
