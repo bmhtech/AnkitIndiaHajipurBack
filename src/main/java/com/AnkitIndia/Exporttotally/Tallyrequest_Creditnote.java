@@ -40,15 +40,15 @@ public class Tallyrequest_Creditnote {
 	                + "<REQUESTDATA>\n"
 	                + "<TALLYMESSAGE xmlns:UDF=\"TallyUDF\">\n"
 	                + "<VOUCHER REMOTEID=\""+guid+"\" VCHTYPE=\"Credit Note\" ACTION=\"Create\" OBJVIEW=\"Accounting Voucher View\">\n"      
-	             // + "<DATE>20220402</DATE>\n"
+	                //+ "<DATE>20220402</DATE>\n"
 	                + "<DATE>"+date+"</DATE>\n"
 	                
-	     + "<REFERENCEDATE>"+saleinvoicedate+"</REFERENCEDATE>\n"
-	      //      + "<BILLOFLADINGDATE>20220402</BILLOFLADINGDATE>\n"
+	     			+ "<REFERENCEDATE>"+saleinvoicedate+"</REFERENCEDATE>\n"
+	     			//+ "<BILLOFLADINGDATE>20220402</BILLOFLADINGDATE>\n"
 	                + "<BILLOFLADINGDATE>"+date+"</BILLOFLADINGDATE>\n"
-	             //  + "<BILLOFLADINGDATE>20220402</BILLOFLADINGDATE>\n"
+	                //+ "<BILLOFLADINGDATE>20220402</BILLOFLADINGDATE>\n"
 	            
-	                 + "<GSTREGISTRATIONTYPE>Regular</GSTREGISTRATIONTYPE>\n"
+	                + "<GSTREGISTRATIONTYPE>Regular</GSTREGISTRATIONTYPE>\n"
 	                + "<STATENAME>"+statename+"</STATENAME>\n"
 	                + "<VOUCHERTYPENAME>Credit Note</VOUCHERTYPENAME>\n"
 	                + "<COUNTRYOFRESIDENCE>India</COUNTRYOFRESIDENCE>\n"
@@ -58,7 +58,7 @@ public class Tallyrequest_Creditnote {
 	                
 	                + "<PARTYNAME>"+partyname+"</PARTYNAME>\n"
 	                + "<PARTYLEDGERNAME>"+partyname+"</PARTYLEDGERNAME>\n"
- + "<REFERENCE>"+saleinvoiceno+"</REFERENCE>\n"
+	                + "<REFERENCE>"+saleinvoiceno+"</REFERENCE>\n"
 	                + "<PARTYMAILINGNAME>"+partyname+"</PARTYMAILINGNAME>\n"
 	                + "<CONSIGNEEMAILINGNAME>"+partyname+"</CONSIGNEEMAILINGNAME>\n"
 	                + "<CONSIGNEESTATENAME>"+statename+"</CONSIGNEESTATENAME>\n"
@@ -75,16 +75,16 @@ public class Tallyrequest_Creditnote {
 	                   
 	                + "<FBTPAYMENTTYPE>Default</FBTPAYMENTTYPE>\n"
 	                + "<PERSISTEDVIEW>Accounting Voucher View</PERSISTEDVIEW>\n"
-	   + "<BASICSHIPPEDBY>"+broker+"</BASICSHIPPEDBY>\n"             
+	                + "<BASICSHIPPEDBY>"+broker+"</BASICSHIPPEDBY>\n"             
 	                + "<BASICBUYERNAME>"+partyname+"</BASICBUYERNAME>\n"
-	  + "<BASICFINALDESTINATION>"+supplier_address+"</BASICFINALDESTINATION>\n"         //new aadded on 12/11      
+	                + "<BASICFINALDESTINATION>"+supplier_address+"</BASICFINALDESTINATION>\n"         //new aadded on 12/11      
 	                
-	  // + "<BASICFINALDESTINATION>"+address+"</BASICFINALDESTINATION>\n"
+	                // + "<BASICFINALDESTINATION>"+address+"</BASICFINALDESTINATION>\n"
 	                + "<BASICSHIPVESSELNO>"+trucknumber+"</BASICSHIPVESSELNO>\n"
 	                + "<CONSIGNEECOUNTRYNAME>India</CONSIGNEECOUNTRYNAME>\n"
 	                + "<VCHENTRYMODE>As Voucher</VCHENTRYMODE>\n"
-	// + "<EFFECTIVEDATE>20220402</EFFECTIVEDATE>\n"
-	    + "<EFFECTIVEDATE>"+date+"</EFFECTIVEDATE>\n"  
+	                // + "<EFFECTIVEDATE>20220402</EFFECTIVEDATE>\n"
+	                + "<EFFECTIVEDATE>"+date+"</EFFECTIVEDATE>\n"  
 	    
 	                + "<ALLLEDGERENTRIES.LIST>\n"
 	                + "<LEDGERNAME>"+partyname+"</LEDGERNAME>\n"
@@ -95,7 +95,8 @@ public class Tallyrequest_Creditnote {
 	                + "<BILLALLOCATIONS.LIST>\n"
 	               // + "<NAME>2</NAME>\n"
 	                
- + "<NAME>"+invoicenumber+"</NAME>"
+	              	//+ "<NAME>"+invoicenumber+"</NAME>"// Credit Note No. as against reference
+ 					+ "<NAME>"+saleinvoiceno+"</NAME>" // SI No. as against reference  
  
 	                + "<BILLTYPE>Agst Ref</BILLTYPE>\n"
 	                + "<TDSDEDUCTEEISSPECIALRATE>No</TDSDEDUCTEEISSPECIALRATE>\n"
