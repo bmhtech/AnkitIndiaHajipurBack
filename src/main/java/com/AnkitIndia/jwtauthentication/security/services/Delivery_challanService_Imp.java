@@ -842,7 +842,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setSales_invoice_id(op.get().getSales_invoice_id());
 		
 		dChallan.setChallandate(dChallan.getChallan_date());
-		dChallan.setChallanno(dChallan.getChallan_no());
+		dChallan.setChallanno(op.get().getChallan_no());
 		
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
 		
