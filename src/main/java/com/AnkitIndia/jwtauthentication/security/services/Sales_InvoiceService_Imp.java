@@ -1396,7 +1396,7 @@ public class Sales_InvoiceService_Imp implements Sales_InvoiceService{
 			sinvoice.setPayment_status(false);
 			sinvoice.setReturn_approval_status(op.get().getReturn_approval_status());
 			sinvoice.setInvoicedate(sinvoice.getInvoice_date());
-			sinvoice.setInvoiceno(sinvoice.getInvoice_no());
+			sinvoice.setInvoiceno(op.get().getInvoice_no());
 			sinvoice.setState(cust_bussiness_partnerRepository.gettallycreditnotestate(sinvoice.getParty()).getState());
 			
 			if(Utility.isNullOrEmpty(sinvoice.getParty())) {
