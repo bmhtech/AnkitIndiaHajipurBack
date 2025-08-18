@@ -2047,6 +2047,12 @@ public class ListController {
 		return trans_bussiness_partner.getTransporterMNCListFast();
 	}
 	
+	@GetMapping("/getTransporterListFastbp_Id")
+	public List<Map<String, Object>> getTransporterListFastbp_Id()
+	{
+		return trans_bussiness_partner.getTransporterListFastbp_Id();
+	}
+	
 	@GetMapping("/getTransporterThruCustomer/{custid}")
 	public List<Trans_bussiness_partnerDTO> getTransporterThruCustomer(@PathVariable(value = "custid") String custid)
 	{

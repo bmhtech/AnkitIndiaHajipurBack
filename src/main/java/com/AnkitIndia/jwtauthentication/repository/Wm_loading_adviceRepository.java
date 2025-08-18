@@ -222,7 +222,8 @@ public interface Wm_loading_adviceRepository extends JpaRepository<Wm_loading_ad
 	@Query(value="SELECT m.id as id,m.advice_id as advice_id,m.advice_date as advice_date,m.advice_no as advice_no,m.advice_type as advice_type,m.delvchallan_status as delvchallan_status,m.looseitem as looseitem,m.customer_name as customer_name,m.vehicle_no as vehicle_no,(SELECT loading_name FROM loading_point  WHERE loading_id =m.load_point) AS load_point,CASE  WHEN  m.referance_id LIKE 'SO%' THEN (SELECT order_no FROM `sales_order`  WHERE modified_type = 'INSERTED' AND order_id =m.referance_id) WHEN m.referance_id LIKE 'ST%' THEN  (SELECT order_no FROM stock_transfer  WHERE modified_type = 'INSERTED' AND order_id = m.referance_id) WHEN m.referance_id LIKE 'PRA%' THEN (SELECT purreturnno FROM pur_return_approval_note  WHERE modified_type = 'INSERTED' AND purreturnid = m.referance_id ) ELSE  0 END AS order_no, CASE  WHEN  m.referance_id LIKE 'SO%' THEN (SELECT order_date FROM `sales_order`  WHERE modified_type = 'INSERTED' AND order_id =m.referance_id)  WHEN m.referance_id LIKE 'ST%' THEN (SELECT order_date FROM stock_transfer  WHERE modified_type = 'INSERTED' AND order_id = m.referance_id) WHEN m.referance_id LIKE 'PRA%' THEN (SELECT purreturndate FROM pur_return_approval_note  WHERE modified_type = 'INSERTED' AND purreturnid = m.referance_id ) ELSE  0 END AS order_date,m.weighment_status as weighment_status, m.terminate AS terminate,m.weight_bridge_location FROM wm_loading_advice m WHERE  m.advice_date =:fromdate  AND m.modified_type = 'INSERTED' AND m.fin_year =:finyear",nativeQuery=true)
 	 List<Map<String,Object>> getsearchdatanewfast(@Param("fromdate") String fromdate,@Param("finyear") String finyear);
 	
-	@Query(value ="select advice_date , advice_no, customer_name, vehicle_no from wm_loading_advice where delvchallan_status=0 AND weighment_status=2 AND modified_type='INSERTED' and advice_date>=:fromdate and advice_date<=:todate",nativeQuery=true)
+	//@Query(value ="select advice_date , advice_no, customer_name, vehicle_no from wm_loading_advice where delvchallan_status=0 AND weighment_status=2 AND modified_type='INSERTED' and advice_date>=:fromdate and advice_date<=:todate",nativeQuery=true) // commented on 2025-06-02 as termanation not included
+	@Query(value ="SELECT advice_date , advice_no, customer_name, vehicle_no, IF(weighment_status=2,'2nd Wgt',IF(weighment_status=1,'1st Wgt','No Wgt')) AS wgt_status FROM wm_loading_advice WHERE delvchallan_status=0 AND terminate=0 AND modified_type='INSERTED' AND advice_date>=:fromdate AND advice_date<=:todate",nativeQuery=true)
 	List<Map<String, Object>> getLoadingAdviceReport(@Param("fromdate") String fromdate,@Param("todate") String todate);
 	
 	@Query(value ="select count(s.id) from wm_loading_advice_itm_dtls s where s.modified_type = 'INSERTED' and s.order_id = :orderid",nativeQuery=true)
@@ -284,5 +285,10 @@ public interface Wm_loading_adviceRepository extends JpaRepository<Wm_loading_ad
     @Query("UPDATE Wm_loading_advice w SET w.terminate ='1', w.terminated_by=:username WHERE w.weighment_id = :wgment_id")
     int terminateloading(@Param("wgment_id") String wgment_id,@Param("username") String username);
 	
+	@Query(value="select * from wm_loading_advice where modified_type='INSERTED' AND advice_id=:adviceid",nativeQuery=true)
+	Map<String, Object> loadAdviceDetails(@Param("adviceid") String adviceid);
+	
+	@Query(value="SELECT l.* FROM wm_loading_advice l,wm_unload_wgmnt w WHERE l.advice_id=w.advice AND l.modified_type='INSERTED' AND w.modified_type='INSERTED' AND wgment_id=:wid",nativeQuery=true)
+	Map<String, Object> getLoadingDtlsByWeighmentId(@Param("wid") String wid);
 	
 }

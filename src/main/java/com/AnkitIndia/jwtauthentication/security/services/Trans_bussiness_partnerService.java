@@ -48,6 +48,8 @@ public interface Trans_bussiness_partnerService {
 	
 	public List<Map<String, Object>> getTransporterMNCListFast();
 	
+	public List<Map<String, Object>> getTransporterListFastbp_Id();
+	
 	public List<Trans_bussiness_partnerDTO> getTransporterThruCustomer(String custid);
 	
 	public List<Trans_bussiness_partnerDTO> getTransporterThruSupplier(String suppid);

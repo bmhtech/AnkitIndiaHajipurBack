@@ -871,6 +871,10 @@ public class Trans_bussiness_partnerService_Imp implements Trans_bussiness_partn
 		return val;
 	}
 	
+	public List<Map<String, Object>> getTransporterListFastbp_Id(){
+		return trans_bussiness_partnerRepository.getTransporterListFastbp_Id(true);
+	}
+	
 	public List<Trans_bussiness_partnerDTO> getTransporterThruCustomer(String custid) {
 		 
 		Set<Trans_bussiness_partner> tPartnerSet=new HashSet<Trans_bussiness_partner>();

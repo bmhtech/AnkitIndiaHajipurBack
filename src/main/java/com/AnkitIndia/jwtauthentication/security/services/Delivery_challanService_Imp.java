@@ -842,7 +842,7 @@ public class Delivery_challanService_Imp implements Delivery_challanService {
 		dChallan.setSales_invoice_id(op.get().getSales_invoice_id());
 		
 		dChallan.setChallandate(dChallan.getChallan_date());
-		dChallan.setChallanno(dChallan.getChallan_no());
+		dChallan.setChallanno(op.get().getChallan_no());
 		
 		dChallan.setInv_type_name(invoice_typeRepository.getSalesInvTypesDtls(dChallan.getInv_type()).getInvtype_name());
 		
@@ -2289,31 +2289,66 @@ public List<Delivery_challanDTO> getMultipleDelvChallansApp(String party,String 
 		    
 		    return list;
 		}
-	 public List<Map<String, Object>> getSalesTransportReport(String business_unit,String fromdate,String todate,String inv_type,String trans_type,String transporter_code)
+	 public List<Map<String, Object>> getSalesTransportReport(String business_unit,String fromdate,String todate,String inv_type,String trans_type,String transporter_code,String customer)
 	 {
 		 List<Map<String,Object>> modelList =new ArrayList<Map<String,Object>>();
 		 
 		
 			if(inv_type.compareToIgnoreCase("INV00003")==0)			
 			{
-				if(transporter_code.compareToIgnoreCase("No")==0)				
+				if(transporter_code.compareToIgnoreCase("No")==0 && customer.compareToIgnoreCase("No")==0)				
 				{
 					modelList.addAll(dChallanRepository.getChallanTransportModeReportJW(business_unit,fromdate,todate,inv_type,trans_type));
 				}
-				else 
+				else if(transporter_code.compareToIgnoreCase("No")!=0 && customer.compareToIgnoreCase("No")==0)				
 				{
 					modelList.addAll(dChallanRepository.getChallanTransportModeReportJWwithTrans(business_unit,fromdate,todate,inv_type,trans_type,transporter_code));
+				}
+				else if(transporter_code.compareToIgnoreCase("No")==0 && customer.compareToIgnoreCase("No")!=0)				
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportJWwithCustomer(business_unit,fromdate,todate,inv_type,trans_type,customer));
+				}
+				else 
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportJWwithTransAndCustomer(business_unit,fromdate,todate,inv_type,trans_type,transporter_code,customer));
+				}
+			}
+			else if(inv_type.compareToIgnoreCase("All")==0)			
+			{
+				if(transporter_code.compareToIgnoreCase("No")==0 && customer.compareToIgnoreCase("No")==0)
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportAllInv(business_unit,fromdate,todate,trans_type));
+				}
+				else if(transporter_code.compareToIgnoreCase("No")!=0 && customer.compareToIgnoreCase("No")==0)
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportwithTransAllInv(business_unit,fromdate,todate,trans_type,transporter_code));
+				}
+				else if(transporter_code.compareToIgnoreCase("No")==0 && customer.compareToIgnoreCase("No")!=0)
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportwithCustomerAllInv(business_unit,fromdate,todate,trans_type,customer));
+				}
+				else 
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportwithTransAndCustomerAllInv(business_unit,fromdate,todate,trans_type,transporter_code,customer));
 				}
 			}
 			else
 			{
-				if(transporter_code.compareToIgnoreCase("No")==0)
+				if(transporter_code.compareToIgnoreCase("No")==0 && customer.compareToIgnoreCase("No")==0)
 				{
 					modelList.addAll(dChallanRepository.getChallanTransportModeReport(business_unit,fromdate,todate,inv_type,trans_type));
 				}
-				else 
+				else if(transporter_code.compareToIgnoreCase("No")!=0 && customer.compareToIgnoreCase("No")==0)
 				{
 					modelList.addAll(dChallanRepository.getChallanTransportModeReportwithTrans(business_unit,fromdate,todate,inv_type,trans_type,transporter_code));
+				}
+				if(transporter_code.compareToIgnoreCase("No")==0 && customer.compareToIgnoreCase("No")!=0)
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportwithCustomer(business_unit,fromdate,todate,inv_type,trans_type,customer));
+				}
+				else 
+				{
+					modelList.addAll(dChallanRepository.getChallanTransportModeReportwithTransAndCustomer(business_unit,fromdate,todate,inv_type,trans_type,transporter_code,customer));
 				}
 			}
 		 
